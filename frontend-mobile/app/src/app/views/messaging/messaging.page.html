@@ -1,0 +1,22 @@
+<ion-content class="ion-padding" #content>
+  <div class="chat-container">
+    <div *ngFor="let msg of chatCtrl.messages()" 
+         [class]="msg.isMe ? 'message-wrapper me' : 'message-wrapper them'">
+      <div class="bubble">
+        {{ msg.text }}
+        <span class="time">{{ msg.createdAt | date:'HH:mm' }}</span>
+      </div>
+    </div>
+  </div>
+</ion-content>
+
+<ion-footer class="ion-no-border">
+  <ion-toolbar class="chat-input-toolbar">
+    <ion-item lines="none" class="input-item">
+      <ion-input [(ngModel)]="newMessage" placeholder="Type a message..." (keyup.enter)="send()"></ion-input>
+      <ion-button slot="end" fill="clear" (click)="send()">
+        <ion-icon name="send" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-toolbar>
+</ion-footer>

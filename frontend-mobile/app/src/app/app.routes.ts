@@ -9,5 +9,6 @@ export const routes: Routes = [
   // Dashboard Pages
   { path: 'home', loadComponent: () => import('./views/home/home.page').then(m => m.HomePage) },
   { path: 'tasks', loadComponent: () => import('./views/tasks/tasks.page').then(m => m.TasksPage) },
+{ path: 'messaging', loadComponent: () => import('./views/messaging/messaging.page').then(m => m.MessagingPage) },  
   { path: 'notifications', loadComponent: () => import('./views/notifications/notifications.page').then(m => m.NotificationsPage) },
 ];
