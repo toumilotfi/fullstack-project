@@ -1,8 +1,8 @@
-export interface AppNotification {
-  id: string;
+export interface Notification {
+  id: number;
   title: string;
-  body: string;
-  type: 'task' | 'message' | 'system';
-  createdAt: Date;
+  description: string;
+  time: string;
   isRead: boolean;
+  type: 'alert' | 'message' | 'system';
 }

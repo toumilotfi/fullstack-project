@@ -1,0 +1,42 @@
+<ion-content class="neon-bg">
+  <div class="glass-container">
+    
+    <div class="header-section">
+      <h3>Join <span class="brand">TaskFlow</span></h3>
+      <p>Create your professional identity.</p>
+    </div>
+
+    <div class="input-stack">
+      <div class="neon-input-group">
+        <ion-icon name="person-outline"></ion-icon>
+        <input type="text" placeholder=" " [(ngModel)]="user.name">
+        <label>Full Name</label>
+        <div class="glow-bar"></div>
+      </div>
+
+      <div class="neon-input-group">
+        <ion-icon name="mail-outline"></ion-icon>
+        <input type="email" placeholder=" " [(ngModel)]="user.email">
+        <label>Email Address</label>
+        <div class="glow-bar"></div>
+      </div>
+
+      <div class="neon-input-group">
+        <ion-icon name="lock-closed-outline"></ion-icon>
+        <input type="password" placeholder=" " [(ngModel)]="user.password">
+        <label>Password</label>
+        <div class="glow-bar"></div>
+      </div>
+    </div>
+
+    <button class="liquid-btn" (click)="handleRegister()">
+      <span>Create Account</span>
+      <div class="liquid"></div>
+    </button>
+
+    <div class="footer-text">
+      Already a member? <a routerLink="/login">Sign In</a>
+    </div>
+
+  </div>
+</ion-content>

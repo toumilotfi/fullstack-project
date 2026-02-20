@@ -1,0 +1,35 @@
+<ion-content class="pro-bg">
+  <div class="profile-card">
+    <div class="avatar-ring">
+      <img src="https://i.pravatar.cc/300?u=ahmed" />
+    </div>
+    <h2>Ahmed Ali</h2>
+    <p class="role">Senior Developer</p>
+    <div class="chips">
+      <span>Pro Member</span>
+      <span>Tunisia</span>
+    </div>
+  </div>
+
+  <div class="settings-group">
+    <h3>General</h3>
+    <div class="glass-item">
+      <ion-icon name="person-outline"></ion-icon>
+      <span>Edit Profile</span>
+      <ion-icon name="chevron-forward" class="end"></ion-icon>
+    </div>
+    <div class="glass-item">
+      <ion-icon name="notifications-outline"></ion-icon>
+      <span>Notifications</span>
+      <ion-toggle checked></ion-toggle>
+    </div>
+  </div>
+
+  <div class="settings-group">
+    <h3>Security</h3>
+    <div class="glass-item danger" (click)="auth.logout()">
+      <ion-icon name="log-out-outline"></ion-icon>
+      <span>Sign Out</span>
+    </div>
+  </div>
+</ion-content>

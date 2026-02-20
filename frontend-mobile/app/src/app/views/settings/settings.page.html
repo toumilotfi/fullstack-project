@@ -1,0 +1,30 @@
+<ion-content class="ion-padding">
+  <div class="header-section">
+    <h1>Settings</h1>
+  </div>
+
+  <ion-list lines="inset">
+    <ion-list-header>
+      <ion-label>Preferences</ion-label>
+    </ion-list-header>
+
+    <ion-item mode="ios">
+      <ion-icon name="notifications-outline" slot="start"></ion-icon>
+      <ion-label>Push Notifications</ion-label>
+      <ion-toggle slot="end" [checked]="true"></ion-toggle>
+    </ion-item>
+
+    <ion-item mode="ios">
+      <ion-icon name="moon-outline" slot="start"></ion-icon>
+      <ion-label>Dark Mode</ion-label>
+      <ion-toggle slot="end"></ion-toggle>
+    </ion-item>
+  </ion-list>
+
+  <div class="logout-section">
+    <ion-button expand="block" color="danger" fill="clear" (click)="logout()">
+      <ion-icon name="log-out-outline" slot="start"></ion-icon>
+      Logout
+    </ion-button>
+  </div>
+</ion-content>

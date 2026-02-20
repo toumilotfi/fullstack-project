@@ -1,39 +1,47 @@
 import { Injectable, signal } from '@angular/core';
-import { Task } from '../models/task.model';
 
-@Injectable({
-  providedIn: 'root'
-})
+// 1. Define the Interface directly here or import it
+export interface Task {
+  id: number;
+  title: string;
+  category: string;
+  priority: 'High' | 'Medium' | 'Low';
+  progress: number;
+  timeLeft: string;
+}
+
+@Injectable({ providedIn: 'root' })
 export class TaskController {
-  // Signal to hold our tasks (Mock Database)
+  // 2. Use a Signal for Reactive Data (The 2026 Standard)
   public tasks = signal<Task[]>([
     {
-      id: '1',
-      title: 'Design System Update',
-      description: 'Update the mobile UI kit to version 2.0',
+      id: 1,
+      title: 'Fix Approval Logic',
+      category: 'Development',
       priority: 'High',
-      status: 'In Progress',
-      dueDate: '2026-02-25',
-      progress: 65
+      progress: 75,
+      timeLeft: '2h left'
     },
     {
-      id: '2',
-      title: 'Fix Login Bug',
-      description: 'Users report issues with password reset links',
+      id: 2,
+      title: 'Design Profile UI',
+      category: 'Design',
       priority: 'Medium',
-      status: 'To Do',
-      dueDate: '2026-02-22',
-      progress: 0
+      progress: 30,
+      timeLeft: '4h left'
+    },
+    {
+      id: 3,
+      title: 'Client Meeting',
+      category: 'Marketing',
+      priority: 'Low',
+      progress: 100,
+      timeLeft: 'Done'
     }
   ]);
 
-  getTasks() {
-    return this.tasks();
-  }
-
-  getCompletionStats() {
-    const total = this.tasks().length;
-    const completed = this.tasks().filter(t => t.status === 'Completed').length;
-    return (completed / total) || 0;
+  // Method to add a new task (Optional but good for MVC)
+  addTask(t: Task) {
+    this.tasks.update(values => [...values, t]);
   }
 }

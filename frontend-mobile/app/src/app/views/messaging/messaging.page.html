@@ -1,22 +1,59 @@
-<ion-content class="ion-padding" #content>
-  <div class="chat-container">
-    <div *ngFor="let msg of chatCtrl.messages()" 
-         [class]="msg.isMe ? 'message-wrapper me' : 'message-wrapper them'">
-      <div class="bubble">
-        {{ msg.text }}
-        <span class="time">{{ msg.createdAt | date:'HH:mm' }}</span>
+<ion-content class="chat-bg" [scrollY]="true">
+  
+  <div class="chat-header">
+    <div class="user-info">
+      <div class="avatar-container">
+        <img src="https://i.pravatar.cc/150?u=manager" alt="User">
+        <div class="status-dot"></div>
+      </div>
+      <div class="text-info">
+        <h3>Project Manager</h3>
+        <p>Active Now</p>
       </div>
     </div>
+    <ion-button fill="clear" class="icon-btn">
+      <ion-icon name="call-outline"></ion-icon>
+    </ion-button>
   </div>
+
+  <div class="message-list">
+    <div class="time-divider"><span>Today</span></div>
+
+    <div *ngFor="let msg of messages" 
+         [class]="msg.isMe ? 'message-wrapper me' : 'message-wrapper other'">
+      
+      <div class="avatar" *ngIf="!msg.isMe">
+        <img src="https://i.pravatar.cc/150?u=manager">
+      </div>
+      
+      <div class="bubble">
+        <p>{{ msg.text }}</p>
+        <span class="timestamp">
+          {{ msg.time }}
+          <ion-icon *ngIf="msg.isMe" name="checkmark-done-outline"></ion-icon>
+        </span>
+      </div>
+    </div>
+
+    <div class="message-wrapper other typing">
+      <div class="avatar"><img src="https://i.pravatar.cc/150?u=manager"></div>
+      <div class="bubble dot-loader">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+
+  </div>
+
 </ion-content>
 
 <ion-footer class="ion-no-border">
-  <ion-toolbar class="chat-input-toolbar">
-    <ion-item lines="none" class="input-item">
-      <ion-input [(ngModel)]="newMessage" placeholder="Type a message..." (keyup.enter)="send()"></ion-input>
-      <ion-button slot="end" fill="clear" (click)="send()">
-        <ion-icon name="send" slot="icon-only"></ion-icon>
-      </ion-button>
-    </ion-item>
-  </ion-toolbar>
+  <div class="glass-input-bar">
+    <button class="attach-btn">
+      <ion-icon name="add-circle-outline"></ion-icon>
+    </button>
+    <input type="text" placeholder="Type a message..." [(ngModel)]="newMsg" (keyup.enter)="sendMessage()">
+    <button class="send-btn" (click)="sendMessage()">
+      <ion-icon name="send"></ion-icon>
+    </button>
+  </div>
 </ion-footer>

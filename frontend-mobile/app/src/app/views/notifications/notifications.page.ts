@@ -13,7 +13,8 @@ import { NotificationController } from '../../controllers/notification.controlle
 export class NotificationsPage {
   public notifyCtrl = inject(NotificationController);
 
-  markRead(id: string) {
-    this.notifyCtrl.markAsRead(id);
+  markAllAsRead() {
+    // Logic to clear the red badge
+    console.log('Notifications cleared');
   }
 }

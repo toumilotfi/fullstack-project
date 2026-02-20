@@ -1,35 +1,23 @@
-<ion-content class="ion-padding">
-  <div class="welcome-header">
-    <h2>Hello, {{ userName }}! 👋</h2>
-    <p>You have <strong>{{ taskCtrl.tasks().length }}</strong> tasks for today.</p>
-  </div>
-
-  <div class="stats-grid">
-    <div class="stat-card blue">
-      <ion-icon name="list-outline"></ion-icon>
-      <h3>{{ taskCtrl.tasks().length }}</h3>
-      <span>Total Tasks</span>
+<ion-content class="pro-bg">
+  
+  <app-glass-header title="Dashboard" subtitle="Feb 20, 2026">
+    <div class="header-avatar">
+      <img src="https://i.pravatar.cc/150?u=ahmed" />
     </div>
-    <div class="stat-card orange">
-      <ion-icon name="time-outline"></ion-icon>
-      <h3>2</h3>
-      <span>Pending</span>
-    </div>
+  </app-glass-header>
+
+  <div class="section-label">
+    <h2>Ongoing Tasks</h2>
+    <span>View All</span>
   </div>
 
-  <div class="section-title">
-    <h3>Recent Tasks</h3>
-    <ion-note routerLink="/tasks">View All</ion-note>
+  <div class="task-list-container">
+    <app-task-card 
+      *ngFor="let t of taskCtrl.tasks()" 
+      [task]="t">
+    </app-task-card>
   </div>
 
-  <ion-list lines="none">
-    <ion-item *ngFor="let task of taskCtrl.tasks()" class="task-item">
-      <div class="priority-indicator" [class]="task.priority.toLowerCase()"></div>
-      <ion-label>
-        <h2>{{ task.title }}</h2>
-        <p>{{ task.description }}</p>
-      </ion-label>
-      <ion-badge slot="end" color="light">{{ task.status }}</ion-badge>
-    </ion-item>
-  </ion-list>
+  <div style="height: 100px;"></div>
+
 </ion-content>

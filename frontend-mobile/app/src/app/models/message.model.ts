@@ -1,7 +1,7 @@
 export interface Message {
-  id: string;
-  senderId: string;
+  id: number;
   text: string;
-  createdAt: Date;
-  isMe: boolean; // Helper for UI alignment
+  time: string;
+  isMe: boolean; // Determines if bubble is left or right
+  senderName?: string;
 }

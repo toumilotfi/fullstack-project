@@ -1,29 +1,42 @@
-import { Component, inject, signal, computed } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { TaskController } from '../../controllers/task.controller';
+import { UiController } from '../../controllers/ui.controller';
+import { TaskController } from '../../controllers/task.controller'; // Import the Controller
 
 @Component({
   selector: 'app-tasks',
   templateUrl: './tasks.page.html',
   styleUrls: ['./tasks.page.scss'],
   standalone: true,
-  imports: [CommonModule, IonicModule]
+  imports: [CommonModule, FormsModule, IonicModule]
 })
-export class TasksPage {
+export class TasksPage implements OnInit {
+  // Inject the controllers
+  public ui = inject(UiController);
   public taskCtrl = inject(TaskController);
-  
-  // State for filtering
-  public filter = signal<'All' | 'To Do' | 'In Progress' | 'Completed'>('All');
 
-  // Computed signal to filter tasks automatically when the filter changes
-  public filteredTasks = computed(() => {
-    const allTasks = this.taskCtrl.tasks();
-    if (this.filter() === 'All') return allTasks;
-    return allTasks.filter(t => t.status === this.filter());
-  });
+  // Local variable for adding a new task (simple input)
+  newTaskTitle = '';
 
-  segmentChanged(event: any) {
-    this.filter.set(event.detail.value);
+  ngOnInit() {
+    this.ui.setHasLayout(true); // Show the bottom bar
+  }
+
+  addNewTask() {
+    if (!this.newTaskTitle.trim()) return;
+
+    // Call the controller to add the task
+    this.taskCtrl.addTask({
+      id: Date.now(),
+      title: this.newTaskTitle,
+      category: 'General',
+      priority: 'Medium',
+      progress: 0,
+      timeLeft: 'Just now'
+    });
+
+    this.newTaskTitle = ''; // Clear input
   }
 }

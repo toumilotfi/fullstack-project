@@ -1,32 +1,34 @@
-<ion-content class="ion-padding">
-  <div class="header-section">
-    <h1>Notifications</h1>
-    <p>Stay updated with your team</p>
+<ion-content class="pro-bg">
+  <div class="notif-header">
+    <h2>Notifications</h2>
+    <div class="icon-btn" (click)="notifyCtrl.clearNotifications()">
+      <ion-icon name="checkmark-done-all-outline"></ion-icon>
+    </div>
   </div>
 
-  <ion-list lines="none">
-    <ion-item-sliding *ngFor="let note of notifyCtrl.notifications()">
-      <ion-item class="notification-item" [class.unread]="!note.isRead" (click)="markRead(note.id)">
-        <div class="icon-box" [class]="note.type">
-          <ion-icon [name]="note.type === 'task' ? 'briefcase-outline' : 'notifications-outline'"></ion-icon>
-        </div>
-        
-        <ion-label>
-          <div class="title-row">
-            <h2>{{ note.title }}</h2>
-            <span class="time">{{ note.createdAt | date:'shortTime' }}</span>
-          </div>
-          <p>{{ note.body }}</p>
-        </ion-label>
-        
-        <div class="unread-dot" *ngIf="!note.isRead"></div>
-      </ion-item>
+  <div class="notif-list">
+    <div class="glass-notif unread">
+      <div class="avatar-box">
+        <img src="https://i.pravatar.cc/150?u=boss" />
+        <div class="type-icon"><ion-icon name="chatbubble"></ion-icon></div>
+      </div>
+      <div class="content">
+        <h4>New Comment</h4>
+        <p><strong>Sarah</strong> commented on "Design System".</p>
+        <span>2 min ago</span>
+      </div>
+      <div class="status-dot"></div>
+    </div>
 
-      <ion-item-options side="end">
-        <ion-item-option color="danger" (click)="markRead(note.id)">
-          <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
-        </ion-item-option>
-      </ion-item-options>
-    </ion-item-sliding>
-  </ion-list>
+    <div class="glass-notif">
+      <div class="avatar-box">
+        <div class="system-icon"><ion-icon name="calendar"></ion-icon></div>
+      </div>
+      <div class="content">
+        <h4>Meeting Reminder</h4>
+        <p>Team sync starts in 30 minutes.</p>
+        <span>1 hour ago</span>
+      </div>
+    </div>
+  </div>
 </ion-content>
