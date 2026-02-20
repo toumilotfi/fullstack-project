@@ -1,0 +1,35 @@
+<ion-content class="ion-padding">
+  <div class="welcome-header">
+    <h2>Hello, {{ userName }}! 👋</h2>
+    <p>You have <strong>{{ taskCtrl.tasks().length }}</strong> tasks for today.</p>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-card blue">
+      <ion-icon name="list-outline"></ion-icon>
+      <h3>{{ taskCtrl.tasks().length }}</h3>
+      <span>Total Tasks</span>
+    </div>
+    <div class="stat-card orange">
+      <ion-icon name="time-outline"></ion-icon>
+      <h3>2</h3>
+      <span>Pending</span>
+    </div>
+  </div>
+
+  <div class="section-title">
+    <h3>Recent Tasks</h3>
+    <ion-note routerLink="/tasks">View All</ion-note>
+  </div>
+
+  <ion-list lines="none">
+    <ion-item *ngFor="let task of taskCtrl.tasks()" class="task-item">
+      <div class="priority-indicator" [class]="task.priority.toLowerCase()"></div>
+      <ion-label>
+        <h2>{{ task.title }}</h2>
+        <p>{{ task.description }}</p>
+      </ion-label>
+      <ion-badge slot="end" color="light">{{ task.status }}</ion-badge>
+    </ion-item>
+  </ion-list>
+</ion-content>
