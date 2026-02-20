@@ -1,0 +1,32 @@
+<ion-content class="ion-padding">
+  <div class="header-section">
+    <h1>Notifications</h1>
+    <p>Stay updated with your team</p>
+  </div>
+
+  <ion-list lines="none">
+    <ion-item-sliding *ngFor="let note of notifyCtrl.notifications()">
+      <ion-item class="notification-item" [class.unread]="!note.isRead" (click)="markRead(note.id)">
+        <div class="icon-box" [class]="note.type">
+          <ion-icon [name]="note.type === 'task' ? 'briefcase-outline' : 'notifications-outline'"></ion-icon>
+        </div>
+        
+        <ion-label>
+          <div class="title-row">
+            <h2>{{ note.title }}</h2>
+            <span class="time">{{ note.createdAt | date:'shortTime' }}</span>
+          </div>
+          <p>{{ note.body }}</p>
+        </ion-label>
+        
+        <div class="unread-dot" *ngIf="!note.isRead"></div>
+      </ion-item>
+
+      <ion-item-options side="end">
+        <ion-item-option color="danger" (click)="markRead(note.id)">
+          <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+</ion-content>

@@ -1,0 +1,46 @@
+h1 { font-weight: 700; font-size: 26px; color: #1a1a1a; margin-bottom: 5px; }
+p { color: #6c757d; margin-bottom: 25px; }
+
+.notification-item {
+  --background: #fff;
+  margin-bottom: 8px;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  transition: 0.3s ease;
+
+  &.unread {
+    --background: #f0f7ff;
+    border-left: 4px solid var(--ion-color-primary);
+  }
+
+  .icon-box {
+    width: 45px;
+    height: 45px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+    font-size: 20px;
+    
+    &.task { background: #e8f0fe; color: #1a73e8; }
+    &.system { background: #fef7e0; color: #f9ab00; }
+  }
+
+  h2 { font-weight: 600; font-size: 15px; color: #1a1a1a; }
+  p { font-size: 13px; color: #666; }
+
+  .title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .time { font-size: 11px; color: #999; }
+  }
+
+  .unread-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--ion-color-primary);
+    border-radius: 50%;
+  }
+}
