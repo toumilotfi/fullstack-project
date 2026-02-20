@@ -8,6 +8,13 @@
 4 Distributed Systems Concepts This project applies several fundamental distributed systems concepts:- Microservices Architecture- Asynchronous, Event-Driven Communication- Service Isolation and Fault Tolerance- Scalability and Load Balancing- Eventual Consistency
 
 Technology Stack Frontend: Angular (Admin Dashboard), Ionic (Mobile Application) Backend: Java, Spring Boot, Spring Cloud Database: PostgreSQL (Database per Service) Messaging: Kafka or RabbitMQ Containerization: Docker and Docker Compose
+
+
+
+
+
+
+
   User                                   Admin
    |                                        |
    |                                        |
