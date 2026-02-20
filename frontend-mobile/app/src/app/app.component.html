@@ -1,3 +1,51 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <ion-menu contentId="main-content" *ngIf="uiCtrl.showLayout()" mode="ios">
+    <ion-header class="ion-no-border">
+      <ion-toolbar color="primary">
+        <ion-title>TaskFlow</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content>
+      <ion-list lines="none" class="ion-margin-top">
+        <ion-menu-toggle auto-hide="false">
+          <ion-item routerLink="/home" routerLinkActive="active-item" mode="ios">
+            <ion-icon slot="start" name="grid-outline"></ion-icon>
+            <ion-label>Dashboard</ion-label>
+          </ion-item>
+          <ion-item routerLink="/tasks" routerLinkActive="active-item" mode="ios">
+            <ion-icon slot="start" name="list-outline"></ion-icon>
+            <ion-label>My Tasks</ion-label>
+          </ion-item>
+          <ion-item routerLink="/profile" routerLinkActive="active-item" mode="ios">
+            <ion-icon slot="start" name="person-circle-outline"></ion-icon>
+            <ion-label>Profile</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+
+  <div class="ion-page" id="main-content">
+    <ion-header *ngIf="uiCtrl.showLayout()" class="ion-no-border">
+      <ion-toolbar mode="ios">
+        <ion-buttons slot="start">
+          <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title>TaskFlow</ion-title>
+        <ion-buttons slot="end">
+          <ion-button routerLink="/messaging">
+            <ion-icon slot="icon-only" name="chatbubble-ellipses-outline"></ion-icon>
+          </ion-button>
+          <ion-button routerLink="/notifications">
+            <ion-icon slot="icon-only" name="notifications-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content>
+      <ion-router-outlet></ion-router-outlet>
+    </ion-content>
+  </div>
 </ion-app>

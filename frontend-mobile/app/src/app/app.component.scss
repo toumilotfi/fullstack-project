@@ -1,0 +1,15 @@
+.active-item {
+  --background: var(--ion-color-primary-light, #f4f5f8);
+  --color: var(--ion-color-primary);
+  border-radius: 0 50px 50px 0;
+  font-weight: 600;
+  
+  ion-icon {
+    color: var(--ion-color-primary);
+  }
+}
+
+ion-item {
+  margin-bottom: 5px;
+  --padding-start: 16px;
+}
