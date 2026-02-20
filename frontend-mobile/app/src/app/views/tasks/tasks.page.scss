@@ -1,0 +1,54 @@
+h1 { font-weight: 700; font-size: 26px; color: #1a1a1a; margin-bottom: 5px; }
+p { color: #6c757d; margin-bottom: 20px; }
+
+ion-segment {
+  background: #f4f5f8;
+  border-radius: 12px;
+  padding: 4px;
+}
+
+.modern-card {
+  margin: 0 0 16px 0;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+  border: 1px solid #f0f0f0;
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    
+    .due-date { font-size: 12px; color: #999; font-weight: 500; }
+  }
+
+  h3 { font-weight: 700; color: #1a1a1a; margin: 0 0 8px 0; }
+  p { font-size: 14px; color: #666; margin-bottom: 15px; }
+
+  .progress-container {
+    margin: 15px 0;
+    .progress-text {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    ion-progress-bar { height: 8px; border-radius: 10px; }
+  }
+
+  .card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    ion-chip { --background: #f0f4ff; height: 28px; font-size: 12px; }
+  }
+}
+
+.empty-state {
+  text-align: center;
+  padding: 50px 20px;
+  color: #ccc;
+  ion-icon { font-size: 64px; }
+}

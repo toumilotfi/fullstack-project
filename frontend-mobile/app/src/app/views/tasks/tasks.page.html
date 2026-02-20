@@ -1,0 +1,56 @@
+<ion-content class="ion-padding">
+  <div class="header-content">
+    <h1>Project Tasks</h1>
+    <p>Manage and track your progress</p>
+  </div>
+
+  <ion-segment value="All" mode="ios" (ionChange)="segmentChanged($event)">
+    <ion-segment-button value="All">
+      <ion-label>All</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="To Do">
+      <ion-label>Pending</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="Completed">
+      <ion-label>Done</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <div class="task-list ion-margin-top">
+    <ion-card *ngFor="let task of filteredTasks()" class="modern-card">
+      <ion-card-content>
+        <div class="card-header">
+          <ion-badge [color]="task.priority === 'High' ? 'danger' : 'warning'" mode="ios">
+            {{ task.priority }}
+          </ion-badge>
+          <span class="due-date">{{ task.dueDate }}</span>
+        </div>
+
+        <h3>{{ task.title }}</h3>
+        <p>{{ task.description }}</p>
+
+        <div class="progress-container">
+          <div class="progress-text">
+            <span>Progress</span>
+            <span>{{ task.progress }}%</span>
+          </div>
+          <ion-progress-bar [value]="task.progress / 100" color="primary"></ion-progress-bar>
+        </div>
+
+        <div class="card-footer">
+          <ion-chip outline="true" color="primary">
+            <ion-label>{{ task.status }}</ion-label>
+          </ion-chip>
+          <ion-button fill="clear" size="small">
+            <ion-icon slot="icon-only" name="chevron-forward-outline"></ion-icon>
+          </ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <div class="empty-state" *ngIf="filteredTasks().length === 0">
+    <ion-icon name="clipboard-outline"></ion-icon>
+    <p>No tasks found in this category.</p>
+  </div>
+</ion-content>
