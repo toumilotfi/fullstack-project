@@ -1,0 +1,35 @@
+.pending-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 20px;
+
+  .icon-container {
+    background: #fff9e6;
+    padding: 30px;
+    border-radius: 50%;
+    margin-bottom: 24px;
+    
+    .main-icon {
+      font-size: 80px;
+      color: #ffc409;
+    }
+  }
+
+  h1 { font-weight: 700; font-size: 26px; color: #1a1a1a; }
+  p { color: #6c757d; line-height: 1.5; margin-bottom: 30px; }
+
+  .status-badge {
+    background: #f4f5f8;
+    padding: 12px 24px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ion-color-primary);
+  }
+}

@@ -1,0 +1,19 @@
+<ion-content class="ion-padding ion-text-center">
+  <div class="pending-wrapper">
+    <div class="icon-container">
+      <ion-icon name="time-outline" class="main-icon"></ion-icon>
+    </div>
+    
+    <h1>Account Pending</h1>
+    <p>Your registration request has been sent to the administrator. Please wait for approval to access your dashboard.</p>
+
+    <div class="status-badge">
+      <ion-spinner name="dots" color="primary"></ion-spinner>
+      <span>Status: Waiting for Admin</span>
+    </div>
+
+    <ion-button fill="clear" color="medium" class="ion-margin-top" (click)="handleLogout()">
+      Return to Login
+    </ion-button>
+  </div>
+</ion-content>
