@@ -15,31 +15,3 @@ Technology Stack Frontend: Angular (Admin Dashboard), Ionic (Mobile Application)
 
 
 
-  User                                   Admin
-   |                                        |
-   |                                        |
-   |---- Register --------------------------|
-   |---- Login -----------------------------|
-   |---- Send Message to Admin -------------|
-   |---- View Inbox ------------------------|
-   |---- View Sent Messages ----------------|
-   |---- View Tasks ------------------------|
-   |---- Complete Task ---------------------|
-   |---- View Notifications ----------------|
-   |---- Mark Notification as Read ---------|
-
-                                            |---- Login
-                                            |---- Approve User
-                                            |---- Create User
-                                            |---- Update User
-                                            |---- Delete User
-                                            |---- Assign Task
-                                            |---- Send Notification
-                                            |---- Send Message to User
-                                            |---- View All Users
-                                            |---- View All Tasks
-                                            |---- View Chat Inbox
-                                            |---- View Chat Sent
-
-
-                                            test
