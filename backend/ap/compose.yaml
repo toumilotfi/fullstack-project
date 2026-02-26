@@ -1,0 +1,18 @@
+version: '3.9'
+
+services:
+  db:
+    image: postgres:17
+    container_name: PROJECT
+    environment:
+      POSTGRES_USER: lotfi
+      POSTGRES_PASSWORD: 92570533Lt@
+      POSTGRES_DB: project
+    ports:
+      - "5333:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  db_data:
