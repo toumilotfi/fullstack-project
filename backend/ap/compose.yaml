@@ -3,7 +3,7 @@ version: '3.9'
 services:
   db:
     image: postgres:17
-    container_name: PROJECT
+    container_name: project
     environment:
       POSTGRES_USER: lotfi
       POSTGRES_PASSWORD: 92570533Lt@
