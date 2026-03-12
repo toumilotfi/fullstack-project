@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = "*")
 @RequestMapping(AppConstants.API_BASE_URL + "/auth")
 public class AuthenticationController {
     @Autowired

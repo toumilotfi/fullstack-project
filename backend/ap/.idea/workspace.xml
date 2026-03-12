@@ -4,22 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="569108ca-8ae9-4fe5-960d-046a858d3bf8" name="Changes" comment="instal spring boot f">
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/ap/AppConstants.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/ap/Controllers/AdminController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/ap/Controllers/AuthenticationController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/ap/Service/AdminConsumer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/ap/Service/AuthService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/ap/Service/ChatProducer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/ap/Service/EmailService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/ap/Service/NotificationService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/ap/Service/TaskService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/ap/Service/UserConsumer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="569108ca-8ae9-4fe5-960d-046a858d3bf8" name="Changes" comment=" spring boot Add authentication service and admin email approval feature">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/ap/Controllers/MessageController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/ap/Controllers/NotificationController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/ap/Controllers/TasksController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/ap/Controllers/UserControler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/compose.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/ap/Controllers/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/ap/Controllers/AdminController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/ap/Controllers/AuthenticationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/ap/Controllers/AuthenticationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/ap/Service/TaskService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/ap/Service/TaskService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../frontend-mobile/app/.vscode/extensions.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend-mobile/app/.vscode/extensions.json" afterDir="false" />
@@ -224,7 +217,10 @@
       <workItem from="1772976903837" duration="9309000" />
       <workItem from="1773046788542" duration="7201000" />
       <workItem from="1773154448239" duration="6133000" />
-      <workItem from="1773218206447" duration="478000" />
+      <workItem from="1773218206447" duration="4920000" />
+      <workItem from="1773233598466" duration="8489000" />
+      <workItem from="1773270192130" duration="45000" />
+      <workItem from="1773322064587" duration="3224000" />
     </task>
     <task id="LOCAL-00001" summary="instal spring boot">
       <option name="closed" value="true" />
@@ -250,7 +246,15 @@
       <option name="project" value="LOCAL" />
       <updated>1771677338455</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary=" spring boot Add authentication service and admin email approval feature">
+      <option name="closed" value="true" />
+      <created>1773218902344</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1773218902344</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -283,6 +287,7 @@
     </ignored-roots>
     <MESSAGE value="instal spring boot" />
     <MESSAGE value="instal spring boot f" />
-    <option name="LAST_COMMIT_MESSAGE" value="instal spring boot f" />
+    <MESSAGE value=" spring boot Add authentication service and admin email approval feature" />
+    <option name="LAST_COMMIT_MESSAGE" value=" spring boot Add authentication service and admin email approval feature" />
   </component>
 </project>
