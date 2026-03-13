@@ -4,9 +4,27 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="569108ca-8ae9-4fe5-960d-046a858d3bf8" name="Changes" comment=" spring boot Add admin controllers user and task with notificate users with email,ahmed you can youse the api from the githeb thanks if you need samth* &quot;send to me email lotfitoumi56@gmail.com&quot;">
+    <list default="true" id="569108ca-8ae9-4fe5-960d-046a858d3bf8" name="Changes" comment=" spring boot Add  crud notification controllers">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/ap/Service/ChatConsumer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/ap/WebSocketConfig/WebSocketConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/ap/api.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/ap/rabbit/RabbitConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/ap/Controllers/NotificationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/ap/Controllers/NotificationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/ap/Controllers/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/ap/Controllers/AdminController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/ap/Controllers/UserControler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/ap/Controllers/UserControler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/ap/Service/AdminConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/ap/Service/AdminConsumer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/ap/Service/ChatProducer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/ap/Service/ChatProducer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/ap/Service/UserConsumer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ap/ApApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ap/ApApplication.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ap/models/ChatMessage.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ap/models/ChatMessage.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ap/models/Email.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ap/models/Email.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ap/models/Notification.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ap/models/Notification.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ap/models/Task.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ap/models/Task.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ap/models/TaskComplete.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ap/models/TaskComplete.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ap/models/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ap/models/User.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../frontend-mobile/app/.vscode/extensions.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend-mobile/app/.vscode/extensions.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../frontend-mobile/app/angular.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend-mobile/app/angular.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../frontend-mobile/app/src/app/app.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend-mobile/app/src/app/app.component.html" afterDir="false" />
@@ -87,6 +105,9 @@
     &quot;accountId&quot;: &quot;d702ab17-32ce-4d64-8129-56b66a8ad690&quot;
   }
 }</component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="jar://$USER_HOME$/.jdks/liberica-full-25.0.1/lib/src.zip!/java.base/java/net/SocketTimeoutException.java" root0="SKIP_INSPECTION" />
+  </component>
   <component name="KubernetesApiPersistence">{}</component>
   <component name="KubernetesApiProvider">{
   &quot;isMigrated&quot;: true
@@ -119,8 +140,8 @@
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RequestMappingsPanelOrder0": "0",
     "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "700",
-    "RequestMappingsPanelWidth1": "699",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
     "RunOnceActivity.MCP Project settings loaded": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
@@ -139,7 +160,10 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "reference.projectsettings.compiler.annotationProcessors",
     "to.speed.mode.migration.done": "true",
     "vue.rearranger.settings.migration": "true"
   }
@@ -151,6 +175,8 @@
   </component>
   <component name="RunManager" selected="Spring Boot.ApApplication">
     <configuration name="ApApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="ALTERNATIVE_JRE_PATH" value="$USER_HOME$/.jdks/jbr-21.0.7" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <module name="ap" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.ap.ApApplication" />
       <method v="2">
@@ -176,6 +202,10 @@
       </deployment>
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue="Docker.compose.yaml.db: Compose Deployment" />
+      <item itemvalue="Spring Boot.ApApplication" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Docker.compose.yaml.db: Compose Deployment" />
@@ -212,7 +242,9 @@
       <workItem from="1773218206447" duration="4920000" />
       <workItem from="1773233598466" duration="8489000" />
       <workItem from="1773270192130" duration="45000" />
-      <workItem from="1773322064587" duration="7974000" />
+      <workItem from="1773322064587" duration="10500000" />
+      <workItem from="1773388545194" duration="3434000" />
+      <workItem from="1773392032469" duration="8837000" />
     </task>
     <task id="LOCAL-00001" summary="instal spring boot">
       <option name="closed" value="true" />
@@ -254,7 +286,15 @@
       <option name="project" value="LOCAL" />
       <updated>1773325436692</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary=" spring boot Add  crud notification controllers">
+      <option name="closed" value="true" />
+      <created>1773330223036</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1773330223036</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -289,6 +329,7 @@
     <MESSAGE value="instal spring boot f" />
     <MESSAGE value=" spring boot Add authentication service and admin email approval feature" />
     <MESSAGE value=" spring boot Add admin controllers user and task with notificate users with email,ahmed you can youse the api from the githeb thanks if you need samth* &quot;send to me email lotfitoumi56@gmail.com&quot;" />
-    <option name="LAST_COMMIT_MESSAGE" value=" spring boot Add admin controllers user and task with notificate users with email,ahmed you can youse the api from the githeb thanks if you need samth* &quot;send to me email lotfitoumi56@gmail.com&quot;" />
+    <MESSAGE value=" spring boot Add  crud notification controllers" />
+    <option name="LAST_COMMIT_MESSAGE" value=" spring boot Add  crud notification controllers" />
   </component>
 </project>

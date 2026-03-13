@@ -1,10 +1,12 @@
 package com.example.ap.Controllers;
-
+import com.example.ap.Service.ChatProducer;
 import com.example.ap.AppConstants;
+import com.example.ap.Repositories.ChatMessageRepository;
 import com.example.ap.Repositories.TaskRepository;
 import com.example.ap.Repositories.UserRepository;
 import com.example.ap.Service.EmailService;
 import com.example.ap.Service.NotificationService;
+import com.example.ap.models.ChatMessage;
 import com.example.ap.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +20,8 @@ import java.util.Optional;
 @CrossOrigin
 public class AdminController {
     @Autowired
+    private ChatMessageRepository chatMessageRepository;
+    @Autowired
     private UserRepository userRepository;
     @Autowired
     private NotificationService notificationService;
@@ -25,6 +29,12 @@ public class AdminController {
     private EmailService emailService;
     @Autowired
     private TaskRepository taskRepository;
+    
+    private final ChatProducer chatProducer;
+
+    public AdminController(ChatProducer chatProducer) {
+        this.chatProducer = chatProducer;
+    }
     // Approve a user
     @PutMapping("/users/approve/{id}")
     public User approveUser(@PathVariable Integer id) {
@@ -98,6 +108,38 @@ public class AdminController {
         }
         return "User not found!";
     }
-    // --- TASK CRUD ---
+    // --- message CRUD ---
+    @PostMapping("/message/user")
+    public String adminToUser(
+            @RequestParam Integer adminId,
+            @RequestParam Integer userId,
+            @RequestParam String message
+    ) {
+        userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
 
+        ChatMessage chat = new ChatMessage(
+                adminId,
+                userId,
+                "ADMIN",
+                message,
+                LocalDateTime.now()
+        );
+        // Save message so user can see it later
+        chatMessageRepository.save(chat);
+        // Send to RabbitMQ
+        chatProducer.sendToUser(chat);
+
+        return "Message sent to user";
+    }
+
+    @GetMapping("/messages")
+    public List<ChatMessage> getAdminMessages() {
+        return chatMessageRepository.findBySenderIdOrderByCreatedAtAsc(1);
+    }
+
+    @GetMapping("/messages/inbox")
+    public List<ChatMessage> getAdminInbox() {
+        return chatMessageRepository.findByReceiverIdOrderByCreatedAtAsc(1);
+    }
 }

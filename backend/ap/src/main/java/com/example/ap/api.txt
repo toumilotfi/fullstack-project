@@ -1,0 +1,141 @@
+POST http://localhost:8080/api/v1/auth/login
+POST http://localhost:8080/api/v1/auth/register
+PUT  http://localhost:8080/api/v1/auth/update/{id}
+
+POST http://localhost:8080/api/v1/User/logout
+POST http://localhost:8080/api/v1/User/message/admin
+GET  http://localhost:8080/api/v1/User/messages/{userId}
+GET  http://localhost:8080/api/v1/User/messages/inbox/{userId}
+GET  http://localhost:8080/api/v1/User/not/{userId}
+PUT  http://localhost:8080/api/v1/User/read/{id}
+
+GET    http://localhost:8080/api/v1/admin/users
+GET    http://localhost:8080/api/v1/admin/users/{id}
+POST   http://localhost:8080/api/v1/admin/users/new
+PUT    http://localhost:8080/api/v1/admin/users/{id}
+DELETE http://localhost:8080/api/v1/admin/users/{id}
+PUT    http://localhost:8080/api/v1/admin/users/approve/{id}
+
+POST http://localhost:8080/api/v1/admin/message/user
+GET  http://localhost:8080/api/v1/admin/messages
+GET  http://localhost:8080/api/v1/admin/messages/inbox
+GET  http://localhost:8080/api/v1/admin/test-email
+
+POST http://localhost:8080/api/v1/Not/notifications
+POST http://localhost:8080/api/v1/Not/notify/{userId}
+POST http://localhost:8080/api/v1/Not/notify/all
+GET  http://localhost:8080/api/v1/Not/notifications/status/{userId}
+
+POST   http://localhost:8080/api/v1/Task/tasks
+GET    http://localhost:8080/api/v1/Task/tasks
+GET    http://localhost:8080/api/v1/Task/tasks/{id}
+PUT    http://localhost:8080/api/v1/Task/tasks/{id}
+DELETE http://localhost:8080/api/v1/Task/tasks/{id}
+and this for more anderstand for you ahmed
+# =========================
+# AUTHENTICATION APIs
+# =========================
+
+# Login user
+POST http://localhost:8080/api/v1/auth/login
+
+# Register new user
+POST http://localhost:8080/api/v1/auth/register
+
+# Update user profile
+PUT http://localhost:8080/api/v1/auth/update/{id}
+
+
+# =========================
+# USER APIs
+# =========================
+
+# Logout user
+POST http://localhost:8080/api/v1/User/logout
+
+# User sends message to admin
+POST http://localhost:8080/api/v1/User/message/admin
+
+# Get messages sent by a user
+GET http://localhost:8080/api/v1/User/messages/{userId}
+
+# Get messages received by a user
+GET http://localhost:8080/api/v1/User/messages/inbox/{userId}
+
+# Get notifications for a user
+GET http://localhost:8080/api/v1/User/not/{userId}
+
+# Mark a notification as read
+PUT http://localhost:8080/api/v1/User/read/{id}
+
+
+# =========================
+# ADMIN APIs
+# =========================
+
+# Get all users
+GET http://localhost:8080/api/v1/admin/users
+
+# Get a specific user by ID
+GET http://localhost:8080/api/v1/admin/users/{id}
+
+# Create a new user
+POST http://localhost:8080/api/v1/admin/users/new
+
+# Update a user
+PUT http://localhost:8080/api/v1/admin/users/{id}
+
+# Delete a user
+DELETE http://localhost:8080/api/v1/admin/users/{id}
+
+# Approve a user account
+PUT http://localhost:8080/api/v1/admin/users/approve/{id}
+
+# Admin sends message to user
+POST http://localhost:8080/api/v1/admin/message/user
+
+# Get messages sent by admin
+GET http://localhost:8080/api/v1/admin/messages
+
+# Get messages received by admin
+GET http://localhost:8080/api/v1/admin/messages/inbox
+
+# Test email sending
+GET http://localhost:8080/api/v1/admin/test-email
+
+
+# =========================
+# NOTIFICATION APIs
+# =========================
+
+# Send notification to specific user
+POST http://localhost:8080/api/v1/Not/notifications
+
+# Send admin notification to a specific user
+POST http://localhost:8080/api/v1/Not/notify/{userId}
+
+# Send notification to all users
+POST http://localhost:8080/api/v1/Not/notify/all
+
+# Get notification status for a user
+GET http://localhost:8080/api/v1/Not/notifications/status/{userId}
+
+
+# =========================
+# TASK APIs
+# =========================
+
+# Create a new task
+POST http://localhost:8080/api/v1/Task/tasks
+
+# Get all tasks
+GET http://localhost:8080/api/v1/Task/tasks
+
+# Get a specific task
+GET http://localhost:8080/api/v1/Task/tasks/{id}
+
+# Update a task
+PUT http://localhost:8080/api/v1/Task/tasks/{id}
+
+# Delete a task
+DELETE http://localhost:8080/api/v1/Task/tasks/{id}
