@@ -4,27 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="569108ca-8ae9-4fe5-960d-046a858d3bf8" name="Changes" comment=" spring boot Add  crud notification controllers">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/ap/Service/ChatConsumer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/ap/WebSocketConfig/WebSocketConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/ap/api.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/ap/rabbit/RabbitConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="569108ca-8ae9-4fe5-960d-046a858d3bf8" name="Changes" comment=" spring boot update for the task you caan finde the api in file api.txt">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/ap/Controllers/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/ap/Controllers/AdminController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/ap/Controllers/UserControler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/ap/Controllers/UserControler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/ap/Service/AdminConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/ap/Service/AdminConsumer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/ap/Service/ChatProducer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/ap/Service/ChatProducer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/ap/Service/UserConsumer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ap/ApApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ap/ApApplication.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ap/models/ChatMessage.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ap/models/ChatMessage.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ap/models/Email.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ap/models/Email.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ap/models/Notification.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ap/models/Notification.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/ap/Controllers/AuthenticationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/ap/Controllers/AuthenticationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/ap/Controllers/TasksController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/ap/Controllers/TasksController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/ap/Service/EmailService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/ap/Service/EmailService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/ap/api.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/ap/api.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/ap/models/Task.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/ap/models/Task.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/ap/models/Task.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ap/models/Task.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ap/models/TaskComplete.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ap/models/TaskComplete.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ap/models/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ap/models/User.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../frontend-mobile/app/.vscode/extensions.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend-mobile/app/.vscode/extensions.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../frontend-mobile/app/angular.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend-mobile/app/angular.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../frontend-mobile/app/src/app/app.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend-mobile/app/src/app/app.component.html" afterDir="false" />
@@ -134,40 +122,40 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Docker.compose.yaml.db: Compose Deployment.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.MCP Project settings loaded": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Spring Boot.ApApplication.executor": "Run",
-    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "junie.onboarding.icon.badge.shown": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/lotfi/Desktop/fullstack-project/backend/ap",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "reference.projectsettings.compiler.annotationProcessors",
-    "to.speed.mode.migration.done": "true",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Docker.compose.yaml.db: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Spring Boot.ApApplication.executor&quot;: &quot;Run&quot;,
+    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/lotfi/Desktop/fullstack-project/backend/ap&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.projectsettings.compiler.annotationProcessors&quot;,
+    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="com.example.ap.models" />
@@ -244,7 +232,14 @@
       <workItem from="1773270192130" duration="45000" />
       <workItem from="1773322064587" duration="10500000" />
       <workItem from="1773388545194" duration="3434000" />
-      <workItem from="1773392032469" duration="8837000" />
+      <workItem from="1773392032469" duration="9088000" />
+      <workItem from="1773494354899" duration="3582000" />
+      <workItem from="1773498302896" duration="6658000" />
+      <workItem from="1773581508375" duration="5000" />
+      <workItem from="1773581881500" duration="1654000" />
+      <workItem from="1773583566622" duration="387000" />
+      <workItem from="1773584230135" duration="12468000" />
+      <workItem from="1773652531946" duration="3998000" />
     </task>
     <task id="LOCAL-00001" summary="instal spring boot">
       <option name="closed" value="true" />
@@ -294,7 +289,15 @@
       <option name="project" value="LOCAL" />
       <updated>1773330223036</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary=" spring boot Add  crud all the controllers with chat with RabbitMQ  with WebSocket also you can finde ol the api in the project in file name apitxt and is more details">
+      <option name="closed" value="true" />
+      <created>1773401036830</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1773401036830</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -330,6 +333,8 @@
     <MESSAGE value=" spring boot Add authentication service and admin email approval feature" />
     <MESSAGE value=" spring boot Add admin controllers user and task with notificate users with email,ahmed you can youse the api from the githeb thanks if you need samth* &quot;send to me email lotfitoumi56@gmail.com&quot;" />
     <MESSAGE value=" spring boot Add  crud notification controllers" />
-    <option name="LAST_COMMIT_MESSAGE" value=" spring boot Add  crud notification controllers" />
+    <MESSAGE value=" spring boot Add  crud all the controllers with chat with RabbitMQ  with WebSocket also you can finde ol the api in the project in file name apitxt and is more details" />
+    <MESSAGE value=" spring boot update for the task you caan finde the api in file api.txt" />
+    <option name="LAST_COMMIT_MESSAGE" value=" spring boot update for the task you caan finde the api in file api.txt" />
   </component>
 </project>

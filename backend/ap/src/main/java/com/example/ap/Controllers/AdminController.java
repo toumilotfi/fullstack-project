@@ -16,8 +16,8 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping(AppConstants.API_BASE_URL + "/admin")
-@CrossOrigin
 public class AdminController {
     @Autowired
     private ChatMessageRepository chatMessageRepository;

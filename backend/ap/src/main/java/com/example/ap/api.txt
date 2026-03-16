@@ -1,6 +1,7 @@
 POST http://localhost:8080/api/v1/auth/login
 POST http://localhost:8080/api/v1/auth/register
 PUT  http://localhost:8080/api/v1/auth/update/{id}
+POST http://localhost:8080/api/v1/auth/forgot-password
 
 POST http://localhost:8080/api/v1/User/logout
 POST http://localhost:8080/api/v1/User/message/admin
@@ -44,6 +45,8 @@ POST http://localhost:8080/api/v1/auth/register
 
 # Update user profile
 PUT http://localhost:8080/api/v1/auth/update/{id}
+# Forgot password (send new password by email)
+POST http://localhost:8080/api/v1/auth/forgot-password
 
 
 # =========================
@@ -125,17 +128,9 @@ GET http://localhost:8080/api/v1/Not/notifications/status/{userId}
 # TASK APIs
 # =========================
 
-# Create a new task
-POST http://localhost:8080/api/v1/Task/tasks
-
-# Get all tasks
-GET http://localhost:8080/api/v1/Task/tasks
-
-# Get a specific task
-GET http://localhost:8080/api/v1/Task/tasks/{id}
-
-# Update a task
-PUT http://localhost:8080/api/v1/Task/tasks/{id}
-
-# Delete a task
-DELETE http://localhost:8080/api/v1/Task/tasks/{id}
+POST http://localhost:8080/api/v1/Task/tasks GET
+http://localhost:8080/api/v1/Task/tasks GET
+http://localhost:8080/api/v1/Task/tasks/{id} PUT
+http://localhost:8080/api/v1/Task/tasks/{id} DELETE
+http://localhost:8080/api/v1/Task/tasks/{id} PUT
+http://localhost:8080/api/v1/Task/tasks/{id}/respond

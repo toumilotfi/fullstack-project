@@ -1,7 +1,9 @@
 package com.example.ap.models;
+
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
+
 @Entity
 @Table(name = "tasks")
 public class Task {
@@ -22,26 +24,35 @@ public class Task {
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
-
     @Column(name = "completed", nullable = false)
     private boolean completed = false;
 
+    // New field: user response
+    @Column(name = "user_response", length = 1000)
+    private String userResponse;
+
+    // New field: response time
+    @Column(name = "response_at")
+    private LocalDateTime responseAt;
+
+    public Task() {
+    }
 
     public Task(Integer id) {
         this.id = id;
     }
 
-    public Task() {
-    }
-
-
-    public Task(String title, Integer id, String description, Integer assignedToUserId, LocalDateTime createdAt, boolean completed) {
+    public Task(String title, Integer id, String description, Integer assignedToUserId,
+                LocalDateTime createdAt, boolean completed,
+                String userResponse, LocalDateTime responseAt) {
         this.title = title;
         this.id = id;
         this.description = description;
         this.assignedToUserId = assignedToUserId;
         this.createdAt = createdAt;
         this.completed = completed;
+        this.userResponse = userResponse;
+        this.responseAt = responseAt;
     }
 
     public Integer getId() {
@@ -92,15 +103,38 @@ public class Task {
         this.completed = completed;
     }
 
+    public String getUserResponse() {
+        return userResponse;
+    }
+
+    public void setUserResponse(String userResponse) {
+        this.userResponse = userResponse;
+    }
+
+    public LocalDateTime getResponseAt() {
+        return responseAt;
+    }
+
+    public void setResponseAt(LocalDateTime responseAt) {
+        this.responseAt = responseAt;
+    }
+
     @Override
     public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        Task task = (Task) o;
-        return completed == task.completed && Objects.equals(id, task.id) && Objects.equals(title, task.title) && Objects.equals(description, task.description) && Objects.equals(assignedToUserId, task.assignedToUserId) && Objects.equals(createdAt, task.createdAt);
+        if (this == o) return true;
+        if (!(o instanceof Task task)) return false;
+        return completed == task.completed &&
+                Objects.equals(id, task.id) &&
+                Objects.equals(title, task.title) &&
+                Objects.equals(description, task.description) &&
+                Objects.equals(assignedToUserId, task.assignedToUserId) &&
+                Objects.equals(createdAt, task.createdAt) &&
+                Objects.equals(userResponse, task.userResponse) &&
+                Objects.equals(responseAt, task.responseAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, description, assignedToUserId, createdAt, completed);
+        return Objects.hash(id, title, description, assignedToUserId, createdAt, completed, userResponse, responseAt);
     }
 }

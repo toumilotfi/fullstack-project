@@ -70,5 +70,25 @@ public Task updateTask(@PathVariable Integer id, @RequestBody Task taskDetails) 
 public void deleteTask(@PathVariable Integer id) {
     taskRepository.deleteById(id);
 }
+    @PutMapping("/tasks/{id}/respond")
+    public Task respondToTask(@PathVariable Integer id, @RequestBody String response) {
 
+        Task task = taskRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Task not found"));
+
+        task.setUserResponse(response);
+        task.setCompleted(true);
+        task.setResponseAt(LocalDateTime.now());
+
+        Task updatedTask = taskRepository.save(task);
+
+        // Send notification to admin
+        notificationService.createNotification(
+                1, // admin user id (replace with real admin id)
+                "Task Response Received",
+                "User responded to task: " + task.getTitle()
+        );
+
+        return updatedTask;
+    }
 }
