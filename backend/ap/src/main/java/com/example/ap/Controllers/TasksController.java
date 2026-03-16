@@ -105,4 +105,29 @@ public Task approveTask(@PathVariable Integer id) {
 
         return updatedTask;
     }
+// When a User clicks "Reject" on their phone
+@PutMapping("/tasks/{id}/decline")
+public Task declineTask(@PathVariable Integer id) {
+    Task task = taskRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Task not found"));
+
+    task.setStatus("DECLINED");
+    Task updatedTask = taskRepository.save(task);
+
+    notificationService.createNotification(1, "Mission Declined", "Agent declined task: " + task.getTitle());
+    return updatedTask;
+}
+
+// When the Admin reviews the report and wants the User to edit it
+@PutMapping("/tasks/{id}/request-revision")
+public Task requestRevision(@PathVariable Integer id) {
+    Task task = taskRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Task not found"));
+
+    task.setStatus("REVISION_REQUESTED");
+    Task updatedTask = taskRepository.save(task);
+
+    notificationService.createNotification(task.getAssignedToUserId(), "Revision Requested", "Admin requested changes on task: " + task.getTitle());
+    return updatedTask;
+}
 }
