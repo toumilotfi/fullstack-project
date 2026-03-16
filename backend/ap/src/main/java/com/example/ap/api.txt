@@ -23,17 +23,15 @@ GET  http://localhost:8080/api/v1/admin/messages
 GET  http://localhost:8080/api/v1/admin/messages/inbox
 GET  http://localhost:8080/api/v1/admin/test-email
 
-POST http://localhost:8080/api/v1/Not/notifications
-POST http://localhost:8080/api/v1/Not/notify/{userId}
-POST http://localhost:8080/api/v1/Not/notify/all
-GET  http://localhost:8080/api/v1/Not/notifications/status/{userId}
-
-POST   http://localhost:8080/api/v1/Task/tasks
-GET    http://localhost:8080/api/v1/Task/tasks
-GET    http://localhost:8080/api/v1/Task/tasks/{id}
-PUT    http://localhost:8080/api/v1/Task/tasks/{id}
+POST http://localhost:8080/api/v1/Task/tasks
+GET  http://localhost:8080/api/v1/Task/tasks
+GET  http://localhost:8080/api/v1/Task/tasks/{id}
+PUT  http://localhost:8080/api/v1/Task/tasks/{id}
 DELETE http://localhost:8080/api/v1/Task/tasks/{id}
-and this for more anderstand for you ahmed
+PUT  http://localhost:8080/api/v1/Task/tasks/{id}/respond
+PUT  http://localhost:8080/api/v1/Task/tasks/approve/{id}
+
+and this for more information for you ahmed
 # =========================
 # AUTHENTICATION APIs
 # =========================
@@ -129,9 +127,26 @@ GET http://localhost:8080/api/v1/Not/notifications/status/{userId}
 # TASK APIs
 # =========================
 
-POST http://localhost:8080/api/v1/Task/tasks GET
-http://localhost:8080/api/v1/Task/tasks GET
-http://localhost:8080/api/v1/Task/tasks/{id} PUT
-http://localhost:8080/api/v1/Task/tasks/{id} DELETE
-http://localhost:8080/api/v1/Task/tasks/{id} PUT
-http://localhost:8080/api/v1/Task/tasks/{id}/respond
+# =========================
+# TASK APIs
+# =========================
+
+# Create a new task
+POST http://localhost:8080/api/v1/Task/tasks
+
+# Get all tasks
+GET http://localhost:8080/api/v1/Task/tasks
+
+# Get a specific task
+GET http://localhost:8080/api/v1/Task/tasks/{id}
+
+# Update a task
+PUT http://localhost:8080/api/v1/Task/tasks/{id}
+
+# Delete a task
+DELETE http://localhost:8080/api/v1/Task/tasks/{id}
+
+# User responds to a task
+PUT http://localhost:8080/api/v1/Task/tasks/{id}/respond
+# Admin aprove a task
+PUT  http://localhost:8080/api/v1/Task/tasks/approve/{id}

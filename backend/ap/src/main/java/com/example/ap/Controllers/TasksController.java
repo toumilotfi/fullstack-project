@@ -91,4 +91,23 @@ public void deleteTask(@PathVariable Integer id) {
 
         return updatedTask;
     }
+    @PutMapping("/tasks/approve/{id}")
+    public Task approveTask(@PathVariable Integer id) {
+
+        Task task = taskRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Task not found"));
+
+        task.setApproved(true);
+
+        Task updatedTask = taskRepository.save(task);
+
+        // Notify the user
+        notificationService.createNotification(
+                task.getAssignedToUserId(),
+                "Task Approved",
+                "Your task has been approved: " + task.getTitle()
+        );
+
+        return updatedTask;
+    }
 }

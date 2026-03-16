@@ -11,7 +11,8 @@ public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
+    @Column(name = "approved", nullable = false)
+    private boolean approved = false;
     @Column(nullable = false)
     private String title;
 
@@ -54,7 +55,13 @@ public class Task {
         this.userResponse = userResponse;
         this.responseAt = responseAt;
     }
+    public boolean isApproved() {
+        return approved;
+    }
 
+    public void setApproved(boolean approved) {
+        this.approved = approved;
+    }
     public Integer getId() {
         return id;
     }
