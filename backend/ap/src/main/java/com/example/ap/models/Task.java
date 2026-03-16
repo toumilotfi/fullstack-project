@@ -12,7 +12,6 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    // 🚨 NEW: The status string replaces both 'completed' and 'approved'
     @Column(name = "status", nullable = false)
     private String status = "ASSIGNED";
 
@@ -28,11 +27,9 @@ public class Task {
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
-    // New field: user response
     @Column(name = "user_response", length = 1000)
     private String userResponse;
 
-    // New field: response time
     @Column(name = "response_at")
     private LocalDateTime responseAt;
 
@@ -51,12 +48,11 @@ public class Task {
         this.description = description;
         this.assignedToUserId = assignedToUserId;
         this.createdAt = createdAt;
-        this.status = status; // 🚨 CHANGED
+        this.status = status; 
         this.userResponse = userResponse;
         this.responseAt = responseAt;
     }
 
-    // 🚨 NEW GETTERS AND SETTERS
     public String getStatus() {
         return status;
     }
@@ -130,13 +126,13 @@ public class Task {
                 Objects.equals(description, task.description) &&
                 Objects.equals(assignedToUserId, task.assignedToUserId) &&
                 Objects.equals(createdAt, task.createdAt) &&
-                Objects.equals(status, task.status) && // 🚨 UPDATED
+                Objects.equals(status, task.status) && 
                 Objects.equals(userResponse, task.userResponse) &&
                 Objects.equals(responseAt, task.responseAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, description, assignedToUserId, createdAt, status, userResponse, responseAt); // 🚨 UPDATED
+        return Objects.hash(id, title, description, assignedToUserId, createdAt, status, userResponse, responseAt); 
     }
 }
