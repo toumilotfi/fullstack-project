@@ -84,15 +84,17 @@ public Task respondToTask(@PathVariable Integer id, @RequestBody String response
     notificationService.createNotification(1, "Task Response Received", "User responded to task: " + task.getTitle());
     return updatedTask;
 }
-    @PutMapping("/tasks/approve/{id}")
-    public Task approveTask(@PathVariable Integer id) {
+   @PutMapping("/tasks/approve/{id}")
+public Task approveTask(@PathVariable Integer id) {
+    Task task = taskRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Task not found"));
 
-        Task task = taskRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Task not found"));
+    task.setStatus("APPROVED"); // 🚨 Changed from setApproved(true)
+    Task updatedTask = taskRepository.save(task);
 
-        task.setApproved(true);
-
-        Task updatedTask = taskRepository.save(task);
+    notificationService.createNotification(task.getAssignedToUserId(), "Task Approved", "Your task has been approved: " + task.getTitle());
+    return updatedTask;
+}
 
         // Notify the user
         notificationService.createNotification(
