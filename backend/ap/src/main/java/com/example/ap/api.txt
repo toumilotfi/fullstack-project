@@ -2,6 +2,7 @@ POST http://localhost:8080/api/v1/auth/login
 POST http://localhost:8080/api/v1/auth/register
 PUT  http://localhost:8080/api/v1/auth/update/{id}
 POST http://localhost:8080/api/v1/auth/forgot-password
+POST http://localhost:8080/api/v1/auth/forgot-password
 
 POST http://localhost:8080/api/v1/User/logout
 POST http://localhost:8080/api/v1/User/message/admin
