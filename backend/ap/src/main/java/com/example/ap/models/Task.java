@@ -11,8 +11,10 @@ public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(name = "approved", nullable = false)
-    private boolean approved = false;
+
+    @Column(name = "status", nullable = false)
+    private String status = "ASSIGNED";
+
     @Column(nullable = false)
     private String title;
 
@@ -25,14 +27,9 @@ public class Task {
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
-    @Column(name = "completed", nullable = false)
-    private boolean completed = false;
-
-    // New field: user response
     @Column(name = "user_response", length = 1000)
     private String userResponse;
 
-    // New field: response time
     @Column(name = "response_at")
     private LocalDateTime responseAt;
 
@@ -44,24 +41,26 @@ public class Task {
     }
 
     public Task(String title, Integer id, String description, Integer assignedToUserId,
-                LocalDateTime createdAt, boolean completed,
+                LocalDateTime createdAt, String status,
                 String userResponse, LocalDateTime responseAt) {
         this.title = title;
         this.id = id;
         this.description = description;
         this.assignedToUserId = assignedToUserId;
         this.createdAt = createdAt;
-        this.completed = completed;
+        this.status = status; 
         this.userResponse = userResponse;
         this.responseAt = responseAt;
     }
-    public boolean isApproved() {
-        return approved;
+
+    public String getStatus() {
+        return status;
     }
 
-    public void setApproved(boolean approved) {
-        this.approved = approved;
+    public void setStatus(String status) {
+        this.status = status;
     }
+
     public Integer getId() {
         return id;
     }
@@ -102,14 +101,6 @@ public class Task {
         this.createdAt = createdAt;
     }
 
-    public boolean isCompleted() {
-        return completed;
-    }
-
-    public void setCompleted(boolean completed) {
-        this.completed = completed;
-    }
-
     public String getUserResponse() {
         return userResponse;
     }
@@ -130,18 +121,18 @@ public class Task {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Task task)) return false;
-        return completed == task.completed &&
-                Objects.equals(id, task.id) &&
+        return Objects.equals(id, task.id) &&
                 Objects.equals(title, task.title) &&
                 Objects.equals(description, task.description) &&
                 Objects.equals(assignedToUserId, task.assignedToUserId) &&
                 Objects.equals(createdAt, task.createdAt) &&
+                Objects.equals(status, task.status) && 
                 Objects.equals(userResponse, task.userResponse) &&
                 Objects.equals(responseAt, task.responseAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, description, assignedToUserId, createdAt, completed, userResponse, responseAt);
+        return Objects.hash(id, title, description, assignedToUserId, createdAt, status, userResponse, responseAt); 
     }
 }
