@@ -4,12 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="569108ca-8ae9-4fe5-960d-046a858d3bf8" name="Changes" comment=" spring boot add forgot-password and task responce from users">
+    <list default="true" id="569108ca-8ae9-4fe5-960d-046a858d3bf8" name="Changes" comment=" spring boot update tasks">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/ap/Controllers/TasksController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/ap/Controllers/TasksController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/ap/api.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/ap/api.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/ap/models/Task.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/ap/models/Task.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/ap/models/Task.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/ap/models/Task.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../frontend-mobile/app/.vscode/extensions.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend-mobile/app/.vscode/extensions.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../frontend-mobile/app/angular.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend-mobile/app/angular.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../frontend-mobile/app/src/app/app.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend-mobile/app/src/app/app.component.html" afterDir="false" />
@@ -236,7 +232,8 @@
       <workItem from="1773581881500" duration="1654000" />
       <workItem from="1773583566622" duration="387000" />
       <workItem from="1773584230135" duration="12468000" />
-      <workItem from="1773652531946" duration="6846000" />
+      <workItem from="1773652531946" duration="9508000" />
+      <workItem from="1773671500291" duration="4065000" />
     </task>
     <task id="LOCAL-00001" summary="instal spring boot">
       <option name="closed" value="true" />
@@ -310,7 +307,15 @@
       <option name="project" value="LOCAL" />
       <updated>1773660918241</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary=" spring boot update tasks">
+      <option name="closed" value="true" />
+      <created>1773663618573</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1773663618573</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -350,6 +355,7 @@
     <MESSAGE value=" spring boot update for the task you caan finde the api in file api.txt" />
     <MESSAGE value=" spring boot add forgot-password" />
     <MESSAGE value=" spring boot add forgot-password and task responce from users" />
-    <option name="LAST_COMMIT_MESSAGE" value=" spring boot add forgot-password and task responce from users" />
+    <MESSAGE value=" spring boot update tasks" />
+    <option name="LAST_COMMIT_MESSAGE" value=" spring boot update tasks" />
   </component>
 </project>
