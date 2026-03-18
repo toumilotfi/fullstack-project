@@ -1,0 +1,274 @@
+/* ==========================================================================
+   GLOBAL RESETS & WRAPPERS
+   ========================================================================== */
+* { 
+  box-sizing: border-box; 
+}
+
+.dashboard-wrapper { 
+  padding: 40px; 
+  background: #0b1120; 
+  min-height: 100vh; 
+  color: #fff; 
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  max-width: 1600px; 
+  margin: 0 auto; 
+}
+
+/* Premium Glassmorphism */
+.glass { 
+  background: rgba(30, 41, 59, 0.6); 
+  backdrop-filter: blur(16px); 
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08); 
+  border-radius: 20px; 
+}
+
+/* ==========================================================================
+   SYSTEM HEADER & BRANDING
+   ========================================================================== */
+.hero-section { 
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+  margin-bottom: 40px; 
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.brand h1 { font-size: 2.8rem; font-weight: 900; margin: 0 0 5px 0; letter-spacing: -1px; }
+.brand p { color: #64748b; font-size: 1.1rem; margin: 0; }
+
+.live-indicator { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.pulse-dot { width: 10px; height: 10px; background: #10b981; border-radius: 50%; box-shadow: 0 0 12px #10b981; animation: pulse 2s infinite; }
+.status-text { color: #10b981; font-size: 0.8rem; font-weight: 900; letter-spacing: 1.5px; }
+
+.header-tools { display: flex; align-items: center; gap: 20px; }
+.date-display { display: flex; align-items: center; gap: 10px; padding: 14px 24px; color: #818cf8; font-weight: 800; font-size: 0.95rem; }
+
+/* ==========================================================================
+   🚀 MODERN NOTIFICATION RADAR (UPGRADED)
+   ========================================================================== */
+.bell-wrapper { 
+  position: relative; 
+  display: flex; 
+}
+
+.bell-btn { 
+  width: 55px; height: 55px; 
+  border-radius: 16px; 
+  display: flex; align-items: center; justify-content: center; 
+  font-size: 1.8rem; cursor: pointer; transition: all 0.3s ease; 
+  color: #fff; 
+  border: 1px solid rgba(255, 255, 255, 0.1); 
+  background: rgba(30, 41, 59, 0.6);
+  backdrop-filter: blur(10px);
+}
+
+.bell-btn:hover, .bell-btn.active { 
+  background: rgba(244, 63, 94, 0.15); 
+  border-color: #f43f5e; color: #f43f5e; 
+  box-shadow: 0 10px 25px rgba(244, 63, 94, 0.2);
+  transform: translateY(-2px);
+}
+
+.bell-badge { 
+  position: absolute; top: -5px; right: -5px; 
+  background: #f43f5e; color: white; 
+  width: 24px; height: 24px; 
+  display: flex; align-items: center; justify-content: center; 
+  border-radius: 50%; font-size: 0.75rem; font-weight: 900; 
+  border: 3px solid #0b1120;
+  box-shadow: 0 0 15px rgba(244, 63, 94, 0.8);
+}
+
+/* Floating Ultra-Glass Dropdown */
+.notification-dropdown { 
+  position: absolute; 
+  top: calc(100% + 20px); /* Better spacing from bell */
+  right: -10px; 
+  width: 420px; /* Wider, more premium feel */
+  max-width: 90vw; 
+  z-index: 9999; 
+  background: rgba(15, 23, 42, 0.85); /* Darker core */
+  backdrop-filter: blur(24px); /* Extreme blur */
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.15); 
+  border-radius: 24px; /* Smoother outer corners */
+  box-shadow: 0 30px 60px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.05) inset; 
+  overflow: hidden; 
+  transform-origin: top right;
+  animation: dropdownPop 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes dropdownPop {
+  0% { opacity: 0; transform: scale(0.9) translateY(-15px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.dropdown-header { 
+  padding: 20px 25px; 
+  border-bottom: 1px solid rgba(255,255,255,0.08); 
+  background: transparent; 
+  display: flex; justify-content: space-between; align-items: center; 
+}
+
+.dropdown-header h3 { 
+  margin: 0; font-size: 1rem; color: #fff; 
+  text-transform: uppercase; font-weight: 900; letter-spacing: 1.5px; 
+}
+
+/* Added padding to the body so items float inside */
+.dropdown-body { 
+  padding: 15px; 
+  max-height: 450px; 
+  overflow-y: auto; 
+}
+
+/* Individual Floating Notification Cards */
+.intel-item { 
+  display: flex; gap: 16px; 
+  padding: 18px; 
+  background: rgba(255, 255, 255, 0.02); 
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  border-radius: 18px; /* Inner card radius */
+  margin-bottom: 10px; /* Spacing between cards */
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* The Hover Magic */
+.intel-item:hover { 
+  background: rgba(255, 255, 255, 0.06); 
+  border-color: rgba(255, 255, 255, 0.15);
+  transform: translateY(-3px) scale(1.01); 
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+.intel-item:last-child { margin-bottom: 0; }
+
+/* Modern "Squircle" Icons */
+.intel-icon { 
+  min-width: 50px; height: 50px; flex-shrink: 0; 
+  border-radius: 14px; /* Not a circle, a modern squarish shape */
+  display: flex; align-items: center; justify-content: center; 
+  font-size: 1.5rem; 
+}
+
+.intel-content { flex: 1; min-width: 0; }
+
+.intel-sender { 
+  display: block; font-weight: 900; font-size: 0.85rem; 
+  letter-spacing: 0.5px; margin-bottom: 4px;
+}
+
+.intel-text { 
+  margin: 0; font-size: 0.9rem; color: #94a3b8; /* Softer text color */
+  line-height: 1.5; word-wrap: break-word; 
+}
+
+.intel-time { 
+  display: inline-block; font-size: 0.75rem; font-weight: 800; 
+  color: #64748b; margin-top: 8px; 
+  background: rgba(0,0,0,0.2); padding: 4px 8px; border-radius: 6px;
+}
+
+/* Premium Empty State */
+.empty-intel { 
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 40px 20px; text-align: center; color: #64748b; 
+}
+.empty-intel ion-icon { font-size: 4rem; color: #334155; margin-bottom: 15px; opacity: 0.6;}
+.empty-intel p { margin: 0; font-size: 1rem; font-weight: 700; letter-spacing: 0.5px; }
+
+/* Icon Colors Update */
+.text-blue { color: #60a5fa; } 
+.text-orange { color: #f59e0b; }
+.intel-icon.text-blue { background: rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.3); box-shadow: 0 0 15px rgba(59, 130, 246, 0.2); }
+.intel-icon.text-orange { background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.3); box-shadow: 0 0 15px rgba(245, 158, 11, 0.2); }
+
+
+/* ==========================================================================
+   STATS GRID & BELOW (Unchanged, perfectly styled)
+   ========================================================================== */
+.stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 25px; margin-bottom: 40px; }
+.stat-card { padding: 30px; display: flex; align-items: center; gap: 20px; transition: 0.3s; }
+.stat-card:hover { transform: translateY(-5px); }
+.icon-box { min-width: 65px; height: 65px; border-radius: 18px; display: flex; align-items: center; justify-content: center; font-size: 2rem; }
+
+.blue { background: rgba(59, 130, 246, 0.15); color: #3b82f6; }
+.orange { background: rgba(245, 158, 11, 0.15); color: #f59e0b; }
+.green { background: rgba(16, 185, 129, 0.15); color: #10b981; }
+.purple { background: rgba(139, 92, 246, 0.15); color: #8b5cf6; }
+
+.label { display: block; color: #94a3b8; font-size: 0.8rem; text-transform: uppercase; font-weight: 700; letter-spacing: 1px; }
+.value { font-size: 2.5rem; font-weight: 900; margin: 5px 0 0 0; line-height: 1; }
+
+.comm-matrix { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 40px; }
+.comm-card { padding: 35px; }
+.broadcast { border-top: 5px solid #f43f5e; }
+.targeted { border-top: 5px solid #3b82f6; }
+
+.card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
+.card-header h3 { margin: 0; display: flex; align-items: center; gap: 10px; font-size: 1.2rem; }
+.target-tag { font-size: 0.7rem; font-weight: 800; color: #cbd5e1; background: rgba(255,255,255,0.1); padding: 6px 12px; border-radius: 8px; }
+
+textarea, select, input { width: 100%; background: #0f172a; border: 1px solid #1e293b; border-radius: 14px; padding: 18px; color: white; margin-bottom: 20px; outline: none; transition: 0.2s; font-size: 0.95rem; }
+textarea:focus, select:focus, input:focus { border-color: #6366f1; background: #161e2e; }
+textarea { min-height: 130px; resize: none; }
+
+.btn-deploy { width: 100%; padding: 18px; border: none; border-radius: 14px; color: white; font-size: 1rem; font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: 0.3s; }
+.deploy-red { background: #f43f5e; box-shadow: 0 5px 20px rgba(244, 63, 94, 0.3); }
+.deploy-blue { background: #3b82f6; box-shadow: 0 5px 20px rgba(59, 130, 246, 0.3); }
+.btn-deploy:hover { transform: translateY(-3px); filter: brightness(1.15); }
+
+.activity-feed { padding: 35px; }
+.feed-container { margin-top: 25px; max-height: 300px; overflow-y: auto; padding-right: 10px; }
+.feed-item { display: flex; align-items: center; gap: 20px; padding: 20px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+.log-indicator { min-width: 12px; height: 12px; border-radius: 50%; background: #f43f5e; box-shadow: 0 0 12px #f43f5e; }
+.log-indicator.is-direct { background: #3b82f6; box-shadow: 0 0 12px #3b82f6; }
+.log-title { font-size: 0.85rem; font-weight: 900; color: #818cf8; text-transform: uppercase; }
+.log-message { margin: 6px 0 0 0; color: #cbd5e1; font-size: 1rem; }
+.log-time { margin-left: auto; color: #64748b; font-weight: 700; }
+.empty-logs { text-align: center; color: #64748b; padding: 30px; font-size: 0.9rem; }
+
+.custom-scrollbar::-webkit-scrollbar { width: 6px; }
+.custom-scrollbar::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); border-radius: 10px; }
+.custom-scrollbar::-webkit-scrollbar-thumb { background: #475569; border-radius: 10px; }
+.custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #64748b; }
+/* 🚨 NEW: Force the SVGs to be visible and centered */
+.modern-svg {
+  width: 24px;
+  height: 24px;
+  display: block;
+}
+
+.intel-icon {
+  display: flex !important; /* Ensure it's a flexbox */
+  align-items: center;
+  justify-content: center;
+  /* Keep your existing dimensions from the last CSS I gave you */
+  min-width: 50px;
+  height: 50px;
+  border-radius: 14px;
+}
+/* 🚨 Ensures icons are sized and perfectly centered */
+.modern-svg {
+  width: 22px;
+  height: 22px;
+  display: block;
+}
+
+.intel-icon {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  min-width: 50px;
+  height: 50px;
+  border-radius: 14px;
+}
+
+/* Ensure the background classes don't override the white icon color */
+.intel-icon svg path {
+  fill: #ffffff !important;
+}
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }

@@ -1,0 +1,92 @@
+<div class="page-container">
+  <header class="view-header">
+    <div class="title-meta">
+      <h1>Active Personnel</h1>
+      <p>Synchronized with Lotfi's Central Database</p>
+    </div>
+    <button class="primary-btn" (click)="openModal()">
+      <ion-icon name="person-add-sharp"></ion-icon> 
+      <span>Provision New Account</span>
+    </button>
+  </header>
+
+  <div class="table-container glass">
+    <table class="tactical-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Operative</th>
+          <th>Security Email</th>
+          <th>Status</th>
+          <th class="text-right">Tactical Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of adminService.users()" class="table-row">
+          <td class="id-col">#{{ user.id }}</td>
+          <td class="name-col">
+            <div class="user-info">
+              <span class="full-name">{{ user.firstName }} {{ user.lastName }}</span>
+              <span class="role-tag">{{ user.role || 'AGENT' }}</span>
+            </div>
+          </td>
+          <td class="email-col">{{ user.email }}</td>
+          <td>
+            <div class="status-pill" [class.active]="user.userActive">
+              <span class="status-dot"></span>
+              {{ user.userActive ? 'AUTHORIZED' : 'LOCKED' }}
+            </div>
+          </td>
+          <td class="actions-col">
+            <div class="btn-group">
+              <button class="action-btn update-btn" (click)="openModal(user)">
+                <ion-icon name="sync-outline"></ion-icon>
+                <span>UPDATE</span>
+              </button>
+
+              <button class="action-btn delete-btn" (click)="deleteUser(user.id!)">
+                <ion-icon name="trash-sharp"></ion-icon>
+                <span>DELETE</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="modal-overlay" *ngIf="isModalOpen" (click)="closeModal()">
+  <div class="modal-card glass" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>{{ isEditing ? 'Update Personnel Record' : 'Provision New Account' }}</h2>
+      <div class="line-divider"></div>
+    </div>
+    
+    <div class="form-grid">
+      <div class="input-field">
+        <label>First Name</label>
+        <input type="text" [(ngModel)]="formData.firstName" placeholder="First Name">
+      </div>
+      <div class="input-field">
+        <label>Last Name</label>
+        <input type="text" [(ngModel)]="formData.lastName" placeholder="Last Name">
+      </div>
+      <div class="input-field span-2">
+        <label>Security Email</label>
+        <input type="email" [(ngModel)]="formData.email" placeholder="agent@system.com">
+      </div>
+      <div class="input-field span-2">
+        <label>Access Key (Password)</label>
+        <input type="password" [(ngModel)]="formData.secretPassword" placeholder="••••••••">
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="abort-btn" (click)="closeModal()">ABORT</button>
+      <button class="save-btn" (click)="save()">
+        {{ isEditing ? 'PUSH UPDATES' : 'COMMIT TO DB' }}
+      </button>
+    </div>
+  </div>
+</div>

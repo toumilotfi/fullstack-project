@@ -1,0 +1,31 @@
+<div class="login-page">
+  <div class="login-card glass">
+    <div class="logo">
+      <ion-icon name="shield-half-outline"></ion-icon>
+      <h2>TaskFlow <span>Admin</span></h2>
+    </div>
+    
+    <p>Authentication Required for Command Access</p>
+
+    <form (submit)="onLogin(); $event.preventDefault()">
+      <div class="input-group">
+        <label>Operator Email</label>
+        <input type="email" name="email" [(ngModel)]="credentials.email" placeholder="admin@example.com" required>
+      </div>
+
+      <div class="input-group">
+        <label>Access Key</label>
+        <input type="password" name="password" [(ngModel)]="credentials.password" placeholder="••••••••" required>
+      </div>
+
+      <button type="submit" class="login-btn">
+        Authorize Access
+      </button>
+      
+      <div class="error-box" *ngIf="errorMessage">
+        <ion-icon name="alert-circle-outline"></ion-icon>
+        {{ errorMessage }}
+      </div>
+    </form>
+  </div>
+</div>
