@@ -10,6 +10,7 @@ export class Task {
   approved: boolean;  
   
   userResponse?: string; 
+  status: string | undefined;
 
   constructor(data: Partial<Task> = {}) {
     this.id = data.id;

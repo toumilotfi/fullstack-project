@@ -1,15 +1,30 @@
 import { Component, inject, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonicModule, ToastController } from '@ionic/angular'; 
+import { IonicModule, ToastController } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms'; 
+import { FormsModule } from '@angular/forms';
 
 import { AuthController } from '../../controllers/auth.controller';
 import { TaskController } from '../../controllers/task.controller';
 import { NotificationController } from '../../controllers/notification.controller';
 import { ChatController } from '../../controllers/chat.controller';
 import { Task } from '../../models/task.model';
+import { addIcons } from 'ionicons';
+import { 
+  personOutline, 
+  chatbubblesOutline, 
+  syncOutline,
+  albumsOutline,
+  notificationsOutline
+} from 'ionicons/icons';
 
+addIcons({
+  personOutline,
+  chatbubblesOutline,
+  syncOutline,
+  albumsOutline,
+  notificationsOutline
+});
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -18,44 +33,70 @@ import { Task } from '../../models/task.model';
   styleUrls: ['./home.page.scss']
 })
 export class HomePage implements OnInit, OnDestroy {
+
+  // 🔌 Inject
   public auth = inject(AuthController);
   public taskCtrl = inject(TaskController);
   public notifyCtrl = inject(NotificationController);
   public chatCtrl = inject(ChatController);
-  private toastController = inject(ToastController); 
+  private toastController = inject(ToastController);
 
-  private poller: any;
-  
+  private poller!: ReturnType<typeof setInterval>;
+
+  // 🧠 STATE
   activeView: 'DASHBOARD' | 'EXECUTION' = 'DASHBOARD';
   activeTask: Task | null = null;
-  taskReport: string = '';
-  isSending: boolean = false;
+  activeTasks: Task[] = [];
 
+  taskReport = '';
+  isSending = false;
+today: Date = new Date();
+  // 🚀 INIT
   ngOnInit() {
     this.refreshDashboard();
-    this.poller = setInterval(() => this.refreshDashboard(), 5000);
+    this.startPolling();
   }
 
-  ngOnDestroy() { 
-    if (this.poller) clearInterval(this.poller); 
+  ngOnDestroy() {
+    this.stopPolling();
   }
 
-  getActiveTasks() {
-    return this.taskCtrl.userTasks().filter(t => !t.completed);
+  // 🔁 POLLING (clean)
+  private startPolling() {
+    this.poller = setInterval(() => {
+      this.refreshDashboard();
+    }, 5000);
+  }
+
+  private stopPolling() {
+    if (this.poller) {
+      clearInterval(this.poller);
+    }
+  }
+
+  // 📊 DATA
+  private updateActiveTasks() {
+    this.activeTasks = this.taskCtrl
+      .userTasks()
+      .filter(t => t.status !== 'COMPLETED'); // 🔥 FIX (مش completed boolean)
   }
 
   refreshDashboard() {
     const user = this.auth.currentUser();
-    if (user?.id) {
-      this.taskCtrl.loadUserTasks(user.id);
-      this.notifyCtrl.loadNotifications(user.id);
-    }
+
+    if (!user?.id) return;
+
+    this.taskCtrl.loadUserTasks(user.id);
+    this.notifyCtrl.loadNotifications(user.id);
+
+    this.updateActiveTasks(); // 🔥 مهم
   }
 
+  // 🎯 ACTIONS
   acceptTask(task: Task) {
     this.activeTask = task;
     this.activeView = 'EXECUTION';
-    this.taskReport = ''; 
+    this.taskReport = '';
   }
 
   goHome() {
@@ -66,44 +107,57 @@ export class HomePage implements OnInit, OnDestroy {
 
   rejectTask(task: Task) {
     if (!task.id) return;
+
     this.taskCtrl.rejectTask(task.id).subscribe({
       next: () => {
         this.showToast('PROTOCOL ABORTED', 'medium');
         this.refreshDashboard();
       },
-      error: () => this.showToast('TERMINATION ERROR', 'danger')
+      error: () => {
+        this.showToast('TERMINATION ERROR', 'danger');
+      }
     });
   }
 
-  async submitToInspector() {
+  submitToInspector() {
     if (!this.activeTask?.id || !this.taskReport.trim()) {
       this.showToast('DATA REQUIRED', 'warning');
       return;
     }
 
     this.isSending = true;
-    this.taskCtrl.submitTaskResponse(this.activeTask.id, this.taskReport).subscribe({
-      next: () => {
-        this.showToast('INTEL TRANSMITTED', 'success');
-        this.isSending = false;
-        this.goHome();
-        this.refreshDashboard();
-      },
-      error: () => { 
-        this.isSending = false; 
-        this.showToast('UPLINK FAILED', 'danger'); 
-      }
-    });
+
+    this.taskCtrl
+      .submitTaskResponse(this.activeTask.id, this.taskReport)
+      .subscribe({
+        next: () => {
+          this.showToast('INTEL TRANSMITTED', 'success');
+          this.isSending = false;
+          this.goHome();
+          this.refreshDashboard();
+        },
+        error: () => {
+          this.isSending = false;
+          this.showToast('UPLINK FAILED', 'danger');
+        }
+      });
   }
 
+  // ⚡ PERFORMANCE
+  trackByTaskId(index: number, task: Task) {
+    return task.id;
+  }
+
+  // 🔔 TOAST
   async showToast(msg: string, color: string) {
-    const toast = await this.toastController.create({ 
-      message: msg, 
-      duration: 2000, 
-      color: color, 
+    const toast = await this.toastController.create({
+      message: msg,
+      duration: 2000,
+      color,
       position: 'top',
-      cssClass: 'cyber-toast' 
+      cssClass: 'cyber-toast'
     });
+
     await toast.present();
   }
 }

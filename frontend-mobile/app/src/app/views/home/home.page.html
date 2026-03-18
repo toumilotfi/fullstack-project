@@ -1,70 +1,108 @@
 <ion-content class="app-page-bg" [fullscreen]="true">
-  
+
+  <!-- 🛰️ TOP BAR -->
   <div class="top-status-bar">
-    <div class="agent-signature">
+  <div class="agent-signature">
+
+    <div class="avatar-box">
+      <ion-icon name="person-circle-outline"></ion-icon>
       <div class="pulse-ring"></div>
-      <div class="signature-text">
-        <span class="label">NEURAL SIGNATURE</span>
-        <p>{{ auth.currentUser()?.lastName }} // ARCH-{{ auth.currentUser()?.id }}</p>
-      </div>
     </div>
+
+    <div class="signature-text">
+      <p>
+        Hey {{ auth.currentUser()?.firstName || 'Agent' }} 👋
+      </p>
+     
+<span class="label">
+  Happy {{ today | date:'EEEE' }}, let’s get things done 
+</span>
+
+    </div>
+
   </div>
+</div>
 
+  <!-- 🧠 MAIN -->
   <div class="main-layout">
-    <div *ngIf="activeView === 'DASHBOARD'">
-      <header class="hero-block">
-        <h1 class="agent-name">{{ auth.currentUser()?.firstName }}</h1>
-        <div class="cyber-line"></div>
-      </header>
 
+    <ng-container *ngIf="activeView === 'DASHBOARD'">
+
+      <!-- HERO -->
+     
+      <!-- TASKS -->
       <section class="directives-section">
-        <div class="section-meta">
-          <p>ACTIVE PROTOCOLS // {{ getActiveTasks().length }}</p>
-          <span class="line"></span>
-        </div>
-        
+
+
+<div class="section-meta">
+  <p>Hey  {{ auth.currentUser()?.firstName || 'AGENT' }}! 🚀 Ready You have  {{ activeTasks.length }} tasks today?</p>
+  <span class="line"></span>
+</div>
         <div class="mission-stack">
-          <div class="elite-card" *ngFor="let task of getActiveTasks()">
+
+          <div 
+            class="elite-card"
+            *ngFor="let task of activeTasks; trackBy: trackByTaskId"
+          >
             <div class="card-body">
+
               <div class="card-header">
                 <span class="task-ref">#0{{ task.id }}</span>
                 <span class="security-tag">LEVEL 4 SECURE</span>
               </div>
+
               <h3>{{ task.title }}</h3>
               <p>{{ task.description }}</p>
-              
+
               <div class="card-actions">
-                <button class="btn-abort" (click)="rejectTask(task)">ABORT</button>
-                <button class="btn-execute" (click)="acceptTask(task)">EXECUTE</button>
+                <button class="btn-abort" (click)="rejectTask(task)">
+                  ABORT
+                </button>
+
+                <button class="btn-execute" (click)="acceptTask(task)">
+                  EXECUTE
+                </button>
               </div>
+
             </div>
           </div>
+
         </div>
       </section>
-    </div>
+
+    </ng-container>
   </div>
 
-  <div class="command-dock">
-    <div class="dock-nav" routerLink="/profile">
+  <!-- 🛠️ DOCK -->
+  <nav class="command-dock">
+
+    <a class="dock-nav" routerLink="/profile" routerLinkActive="active">
       <ion-icon name="person-outline"></ion-icon>
       <span>Agent</span>
-    </div>
-    <div class="dock-nav" routerLink="/messaging">
+    </a>
+
+    <a class="dock-nav" routerLink="/messaging" routerLinkActive="active">
       <ion-icon name="chatbubbles-outline"></ion-icon>
       <span>Comms</span>
-    </div>
-    <div class="dock-main" (click)="refreshDashboard()">
+    </a>
+
+    <!-- 🔥 MAIN ACTION -->
+    <button class="dock-main" (click)="refreshDashboard()">
       <div class="main-inner">
         <ion-icon name="sync-outline"></ion-icon>
       </div>
-    </div>
-    <div class="dock-nav" routerLink="/tasks">
-      <ion-icon name="layers-outline"></ion-icon>
+    </button>
+
+    <a class="dock-nav" routerLink="/tasks" routerLinkActive="active">
+      <ion-icon name="albums-outline"></ion-icon>
       <span>Archive</span>
-    </div>
-    <div class="dock-nav" routerLink="/notifications">
+    </a>
+
+    <a class="dock-nav" routerLink="/notifications" routerLinkActive="active">
       <ion-icon name="notifications-outline"></ion-icon>
       <span>Alerts</span>
-    </div>
-  </div>
+    </a>
+
+  </nav>
+
 </ion-content>

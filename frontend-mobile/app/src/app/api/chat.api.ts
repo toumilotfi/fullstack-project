@@ -8,7 +8,7 @@ import { ChatMessage } from '../models/chat-message.model';
 })
 export class ChatApi {
   private http = inject(HttpClient);
-  private baseUrl = 'http://192.168.178.44:8080/api/v1/User';
+  private baseUrl = 'http://172.20.10.2:8080/api/v1/User';
 
   getInbox(userId: number): Observable<ChatMessage[]> {
     return this.http.get<ChatMessage[]>(`${this.baseUrl}/messages/inbox/${userId}`);

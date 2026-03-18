@@ -34,4 +34,15 @@ export class NotificationsPage implements OnInit {
       this.router.navigate(['/home']);
     }
   }
+  getIcon(name: string): string {
+  if (!name) return 'notifications-outline';
+
+  if (name.toLowerCase().includes('approved')) return 'checkmark-circle';
+  if (name.toLowerCase().includes('declined')) return 'close-circle';
+  if (name.toLowerCase().includes('revision')) return 'create-outline';
+  if (name.toLowerCase().includes('response')) return 'chatbubble-ellipses';
+  
+  return 'radio-outline'; // default
+}
+  
 }

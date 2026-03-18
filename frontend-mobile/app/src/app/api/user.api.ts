@@ -6,7 +6,7 @@ import { User } from '../models/user.model';
 @Injectable({ providedIn: 'root' })
 export class UserApi {
   private http = inject(HttpClient);
-  private baseUrl = 'http://192.168.178.44:8080/api/v1';
+  private baseUrl = 'http://172.20.10.2:8080/api/v1';
 
   login(email: string, secretPassword: string): Observable<string> {
     const params = new HttpParams().set('email', email).set('password', secretPassword);

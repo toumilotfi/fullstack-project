@@ -10,7 +10,7 @@
         
         <div class="modern-card">
           <div class="card-header">
-            <span class="task-id">REF-{{ task.id }}</span>
+            <span class="task-id">{{ task.id }}</span>
             <ion-chip [color]="task.completed ? 'success' : 'warning'">
               {{ task.completed ? 'TERMINATED' : 'ACTIVE' }}
             </ion-chip>

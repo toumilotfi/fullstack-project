@@ -6,7 +6,7 @@ import { Task } from '../models/task.model';
 @Injectable({ providedIn: 'root' })
 export class TaskApi {
   private http = inject(HttpClient);
-  private baseUrl = 'http://192.168.178.44:8080/api/v1/Task';
+  private baseUrl = 'http://172.20.10.2:8080/api/v1/Task';
 
   getAllTasks(): Observable<Task[]> {
     return this.http.get<Task[]>(`${this.baseUrl}/tasks`);

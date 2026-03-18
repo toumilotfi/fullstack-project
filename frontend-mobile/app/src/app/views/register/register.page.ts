@@ -5,7 +5,22 @@ import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
 import { AuthController } from '../../controllers/auth.controller';
 import { User } from '../../models/user.model';
+import { addIcons } from 'ionicons';
+import { 
+  personAddOutline,
+  personOutline,
+  mailOutline,
+  lockClosedOutline,
+  rocketOutline
+} from 'ionicons/icons';
 
+addIcons({
+  personAddOutline,
+  personOutline,
+  mailOutline,
+  lockClosedOutline,
+  rocketOutline
+});
 @Component({
   selector: 'app-register',
   standalone: true,
