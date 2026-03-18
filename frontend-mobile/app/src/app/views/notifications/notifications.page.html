@@ -1,34 +1,40 @@
-<ion-content class="pro-bg">
-  <div class="notif-header">
-    <h2>Notifications</h2>
-    <div class="icon-btn" (click)="notifyCtrl.clearNotifications()">
-      <ion-icon name="checkmark-done-all-outline"></ion-icon>
-    </div>
-  </div>
+<ion-header class="ion-no-border">
+  <ion-toolbar class="app-page-bg">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home" color="light"></ion-back-button>
+    </ion-buttons>
+    <ion-title style="color: white; font-weight: 800;">HQ RADAR FEED</ion-title>
+  </ion-toolbar>
+</ion-header>
 
-  <div class="notif-list">
-    <div class="glass-notif unread">
-      <div class="avatar-box">
-        <img src="https://i.pravatar.cc/150?u=boss" />
-        <div class="type-icon"><ion-icon name="chatbubble"></ion-icon></div>
-      </div>
-      <div class="content">
-        <h4>New Comment</h4>
-        <p><strong>Sarah</strong> commented on "Design System".</p>
-        <span>2 min ago</span>
-      </div>
-      <div class="status-dot"></div>
+<ion-content class="app-page-bg">
+  <div class="notif-container">
+    
+    <div *ngIf="notifyCtrl.notifications().length === 0" class="empty-state">
+      <ion-icon name="mail-open-outline"></ion-icon>
+      <p>No transmissions from HQ.</p>
     </div>
 
-    <div class="glass-notif">
-      <div class="avatar-box">
-        <div class="system-icon"><ion-icon name="calendar"></ion-icon></div>
+    <div 
+      class="glass-card" 
+      *ngFor="let n of notifyCtrl.notifications()" 
+      [class.unread]="!n.isRead"
+      (click)="onNotificationClick(n)"
+    >
+      <div class="unread-glow" *ngIf="!n.isRead"></div>
+      
+      <div class="notif-icon-box">
+        <ion-icon name="radio-outline" style="color: white; font-size: 1.5rem;"></ion-icon>
       </div>
-      <div class="content">
-        <h4>Meeting Reminder</h4>
-        <p>Team sync starts in 30 minutes.</p>
-        <span>1 hour ago</span>
+
+      <div class="card-content">
+        <div class="top-row">
+          <h4>COMMAND DIRECTIVE</h4>
+          <span class="time">{{ n.createdAt | date:'shortTime' }}</span>
+        </div>
+        <p>{{ n.message }}</p>
       </div>
     </div>
+
   </div>
 </ion-content>

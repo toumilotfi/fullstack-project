@@ -1,42 +1,41 @@
-<ion-content class="neon-bg">
-  <div class="glass-container">
-    
-    <div class="header-section">
-      <h3>Join <span class="brand">TaskFlow</span></h3>
-      <p>Create your professional identity.</p>
+<ion-content class="auth-page">
+  <div class="glass-card">
+    <div class="logo-section">
+      <div class="icon-box">
+        <ion-icon name="person-add-outline"></ion-icon>
+      </div>
+      <h2>Join TaskFlow</h2>
+      <p>Create your account to start</p>
     </div>
 
-    <div class="input-stack">
-      <div class="neon-input-group">
+    <div class="input-group">
+      <div class="glass-input">
         <ion-icon name="person-outline"></ion-icon>
-        <input type="text" placeholder=" " [(ngModel)]="user.name">
-        <label>Full Name</label>
-        <div class="glow-bar"></div>
+        <input type="text" placeholder="First Name" [(ngModel)]="user.firstName">
       </div>
-
-      <div class="neon-input-group">
+      
+      <div class="glass-input">
+        <ion-icon name="person-outline"></ion-icon>
+        <input type="text" placeholder="Last Name" [(ngModel)]="user.lastName">
+      </div>
+    
+      <div class="glass-input">
         <ion-icon name="mail-outline"></ion-icon>
-        <input type="email" placeholder=" " [(ngModel)]="user.email">
-        <label>Email Address</label>
-        <div class="glow-bar"></div>
+        <input type="email" placeholder="Email Address" [(ngModel)]="user.email">
       </div>
 
-      <div class="neon-input-group">
+      <div class="glass-input">
         <ion-icon name="lock-closed-outline"></ion-icon>
-        <input type="password" placeholder=" " [(ngModel)]="user.password">
-        <label>Password</label>
-        <div class="glow-bar"></div>
+        <input type="password" placeholder="Password" [(ngModel)]="user.secretPassword">
       </div>
     </div>
 
-    <button class="liquid-btn" (click)="handleRegister()">
-      <span>Create Account</span>
-      <div class="liquid"></div>
+    <button class="btn-primary" (click)="handleRegister()">
+      Create Account <ion-icon name="rocket-outline"></ion-icon>
     </button>
 
-    <div class="footer-text">
-      Already a member? <a routerLink="/login">Sign In</a>
+    <div class="footer-link">
+      <p>Already a member? <span routerLink="/login">Sign In</span></p>
     </div>
-
   </div>
 </ion-content>

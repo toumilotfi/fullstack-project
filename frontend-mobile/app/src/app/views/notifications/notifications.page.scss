@@ -1,44 +1,43 @@
-.pro-bg { --background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%); }
+.app-page-bg {
+  --background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+}
 
-.notif-header {
-  padding: 50px 25px 20px; display: flex; justify-content: space-between; align-items: center;
-  h2 { font-size: 1.8rem; font-weight: 800; color: white; margin: 0; }
-  .icon-btn {
-    width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.1);
-    display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem;
-    backdrop-filter: blur(10px);
+.notif-container { padding: 20px; }
+
+.glass-card {
+  background: rgba(30, 41, 59, 0.4); 
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px; padding: 20px; margin-bottom: 15px; 
+  backdrop-filter: blur(10px);
+  display: flex; align-items: center; gap: 15px;
+  position: relative; overflow: hidden;
+  transition: 0.3s; cursor: pointer;
+
+  &.unread { background: rgba(0, 255, 242, 0.05); border-color: rgba(0, 255, 242, 0.2); }
+  &:active { transform: scale(0.98); }
+
+  .unread-glow {
+    position: absolute; left: 0; top: 0; bottom: 0; width: 4px;
+    background: #00fff2; box-shadow: 0 0 15px #00fff2;
+  }
+
+  .notif-icon-box {
+    width: 45px; height: 45px; background: rgba(255,255,255,0.05);
+    border-radius: 12px; display: flex; align-items: center; justify-content: center;
+  }
+
+  .card-content {
+    flex: 1;
+    .top-row {
+      display: flex; justify-content: space-between; margin-bottom: 5px;
+      h4 { color: #00fff2; font-size: 0.7rem; font-weight: 800; letter-spacing: 1px; margin: 0; }
+      .time { color: #64748b; font-size: 0.7rem; }
+    }
+    p { color: white; font-size: 0.95rem; margin: 0; line-height: 1.4; }
   }
 }
 
-.notif-list { display: flex; flex-direction: column; gap: 15px; padding: 0 20px; }
-
-.glass-notif {
-  display: flex; align-items: center; padding: 15px; border-radius: 20px;
-  background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.05);
-  
-  &.unread {
-    background: rgba(79, 70, 229, 0.1); border-color: rgba(79, 70, 229, 0.3);
-    .status-dot { width: 8px; height: 8px; background: #6366f1; border-radius: 50%; box-shadow: 0 0 10px #6366f1; }
-  }
-
-  .avatar-box {
-    position: relative; margin-right: 15px;
-    img { width: 45px; height: 45px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.1); }
-    .type-icon {
-      position: absolute; bottom: -2px; right: -2px; width: 18px; height: 18px;
-      background: #3b82f6; border-radius: 50%; border: 2px solid #0f172a;
-      display: flex; align-items: center; justify-content: center; font-size: 10px; color: white;
-    }
-    .system-icon {
-      width: 45px; height: 45px; background: rgba(255,255,255,0.1); border-radius: 50%;
-      display: flex; align-items: center; justify-content: center; font-size: 20px; color: #94a3b8;
-    }
-  }
-
-  .content {
-    flex: 1;
-    h4 { color: white; font-size: 0.95rem; font-weight: 700; margin: 0 0 2px; }
-    p { color: #94a3b8; font-size: 0.85rem; margin: 0; line-height: 1.3; }
-    span { display: block; margin-top: 5px; font-size: 0.7rem; color: #64748b; }
-  }
+.empty-state {
+  text-align: center; padding-top: 100px; color: #475569;
+  ion-icon { font-size: 4rem; margin-bottom: 15px; color: #334155; }
 }

@@ -9,11 +9,17 @@
     <div class="input-group">
       <div class="glass-input">
         <ion-icon name="mail-outline"></ion-icon>
-        <input type="email" placeholder="Email" [(ngModel)]="email">
+        <input type="email" placeholder="Email" [(ngModel)]="credentials.email">
       </div>
       <div class="glass-input">
         <ion-icon name="lock-closed-outline"></ion-icon>
-        <input type="password" placeholder="Password" [(ngModel)]="password">
+        <input type="password" placeholder="Password" [(ngModel)]="credentials.password">
+      </div>
+    </div>
+    
+    <div class="input-group">
+      <div class="forgot-link" routerLink="/forgot-password">
+        Forgot Password?
       </div>
     </div>
 

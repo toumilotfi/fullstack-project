@@ -1,23 +1,70 @@
-<ion-content class="pro-bg">
+<ion-content class="app-page-bg" [fullscreen]="true">
   
-  <app-glass-header title="Dashboard" subtitle="Feb 20, 2026">
-    <div class="header-avatar">
-      <img src="https://i.pravatar.cc/150?u=ahmed" />
+  <div class="top-status-bar">
+    <div class="agent-signature">
+      <div class="pulse-ring"></div>
+      <div class="signature-text">
+        <span class="label">NEURAL SIGNATURE</span>
+        <p>{{ auth.currentUser()?.lastName }} // ARCH-{{ auth.currentUser()?.id }}</p>
+      </div>
     </div>
-  </app-glass-header>
-
-  <div class="section-label">
-    <h2>Ongoing Tasks</h2>
-    <span>View All</span>
   </div>
 
-  <div class="task-list-container">
-    <app-task-card 
-      *ngFor="let t of taskCtrl.tasks()" 
-      [task]="t">
-    </app-task-card>
+  <div class="main-layout">
+    <div *ngIf="activeView === 'DASHBOARD'">
+      <header class="hero-block">
+        <h1 class="agent-name">{{ auth.currentUser()?.firstName }}</h1>
+        <div class="cyber-line"></div>
+      </header>
+
+      <section class="directives-section">
+        <div class="section-meta">
+          <p>ACTIVE PROTOCOLS // {{ getActiveTasks().length }}</p>
+          <span class="line"></span>
+        </div>
+        
+        <div class="mission-stack">
+          <div class="elite-card" *ngFor="let task of getActiveTasks()">
+            <div class="card-body">
+              <div class="card-header">
+                <span class="task-ref">#0{{ task.id }}</span>
+                <span class="security-tag">LEVEL 4 SECURE</span>
+              </div>
+              <h3>{{ task.title }}</h3>
+              <p>{{ task.description }}</p>
+              
+              <div class="card-actions">
+                <button class="btn-abort" (click)="rejectTask(task)">ABORT</button>
+                <button class="btn-execute" (click)="acceptTask(task)">EXECUTE</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
   </div>
 
-  <div style="height: 100px;"></div>
-
+  <div class="command-dock">
+    <div class="dock-nav" routerLink="/profile">
+      <ion-icon name="person-outline"></ion-icon>
+      <span>Agent</span>
+    </div>
+    <div class="dock-nav" routerLink="/messaging">
+      <ion-icon name="chatbubbles-outline"></ion-icon>
+      <span>Comms</span>
+    </div>
+    <div class="dock-main" (click)="refreshDashboard()">
+      <div class="main-inner">
+        <ion-icon name="sync-outline"></ion-icon>
+      </div>
+    </div>
+    <div class="dock-nav" routerLink="/tasks">
+      <ion-icon name="layers-outline"></ion-icon>
+      <span>Archive</span>
+    </div>
+    <div class="dock-nav" routerLink="/notifications">
+      <ion-icon name="notifications-outline"></ion-icon>
+      <span>Alerts</span>
+    </div>
+  </div>
 </ion-content>

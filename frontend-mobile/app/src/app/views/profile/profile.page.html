@@ -1,35 +1,66 @@
 <ion-content class="pro-bg">
+  
   <div class="profile-card">
     <div class="avatar-ring">
-      <img src="https://i.pravatar.cc/300?u=ahmed" />
+      <img src="https://ui-avatars.com/api/?name={{ auth.currentUser()?.firstName }}+{{ auth.currentUser()?.lastName }}&background=random" />
     </div>
-    <h2>Ahmed Ali</h2>
-    <p class="role">Senior Developer</p>
+    <h2>{{ auth.currentUser()?.firstName }} {{ auth.currentUser()?.lastName }}</h2>
+    <p class="role">Field Agent</p> 
     <div class="chips">
-      <span>Pro Member</span>
-      <span>Tunisia</span>
+      <span>ID: {{ auth.currentUser()?.id }}</span>
+      <span>Active</span>
     </div>
   </div>
 
   <div class="settings-group">
-    <h3>General</h3>
-    <div class="glass-item">
-      <ion-icon name="person-outline"></ion-icon>
-      <span>Edit Profile</span>
+    <h3>Account Management</h3>
+    
+    <div class="glass-item" (click)="setOpen(true)">
+      <div class="left-content">
+        <ion-icon name="person-outline"></ion-icon>
+        <span>Edit Profile Details</span>
+      </div>
       <ion-icon name="chevron-forward" class="end"></ion-icon>
     </div>
-    <div class="glass-item">
-      <ion-icon name="notifications-outline"></ion-icon>
-      <span>Notifications</span>
-      <ion-toggle checked></ion-toggle>
-    </div>
   </div>
 
   <div class="settings-group">
-    <h3>Security</h3>
+    <h3>System</h3>
     <div class="glass-item danger" (click)="auth.logout()">
-      <ion-icon name="log-out-outline"></ion-icon>
-      <span>Sign Out</span>
+      <div class="left-content">
+        <ion-icon name="log-out-outline"></ion-icon>
+        <span>Sign Out & Disconnect</span>
+      </div>
     </div>
   </div>
+
+  <ion-modal [isOpen]="isEditOpen" (didDismiss)="setOpen(false)" class="glass-modal">
+    <ng-template>
+      <div class="modal-wrapper">
+        <div class="modal-header">
+          <h3>Update Credentials</h3>
+          <ion-icon name="close" (click)="setOpen(false)"></ion-icon>
+        </div>
+
+        <div class="input-box">
+          <label>First Name</label>
+          <input type="text" [(ngModel)]="editData.firstName">
+        </div>
+
+        <div class="input-box">
+          <label>Last Name</label>
+          <input type="text" [(ngModel)]="editData.lastName">
+        </div>
+
+        <div class="input-box">
+          <label>New Password</label>
+          <input type="password" placeholder="••••••••" [(ngModel)]="editData.secretPassword">
+        </div>
+
+        <button class="save-btn" (click)="saveChanges()">
+          TRANSMIT CHANGES
+        </button>
+      </div>
+    </ng-template>
+  </ion-modal>
 </ion-content>

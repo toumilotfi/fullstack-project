@@ -1,44 +1,5 @@
-/*
- * App Global CSS
- * ----------------------------------------------------------------------------
- * Put style rules here that you want to apply globally. These styles are for
- * the entire app and not just one component. Additionally, this file can be
- * used as an entry point to import other CSS/Sass files to be included in the
- * output CSS.
- * For more information on global stylesheets, visit the documentation:
- * https://ionicframework.com/docs/layout/global-stylesheets
- */
-
-/* Core CSS required for Ionic components to work properly */
+/* Core Ionic CSS */
 @import "@ionic/angular/css/core.css";
-
-/* Basic CSS for apps built with Ionic */
-@import "@ionic/angular/css/normalize.css";
-@import "@ionic/angular/css/structure.css";
-@import "@ionic/angular/css/typography.css";
-@import "@ionic/angular/css/display.css";
-
-/* Optional CSS utils that can be commented out */
-@import "@ionic/angular/css/padding.css";
-@import "@ionic/angular/css/float-elements.css";
-@import "@ionic/angular/css/text-alignment.css";
-@import "@ionic/angular/css/text-transformation.css";
-@import "@ionic/angular/css/flex-utils.css";
-
-/**
- * Ionic Dark Mode
- * -----------------------------------------------------
- * For more info, please see:
- * https://ionicframework.com/docs/theming/dark-mode
- */
-
-/* @import "@ionic/angular/css/palettes/dark.always.css"; */
-/* @import "@ionic/angular/css/palettes/dark.class.css"; */
-@import '@ionic/angular/css/palettes/dark.system.css';
-/* Core CSS required for Ionic components to work properly */
-@import "@ionic/angular/css/core.css";
-
-/* Basic CSS for apps built with Ionic */
 @import "@ionic/angular/css/normalize.css";
 @import "@ionic/angular/css/structure.css";
 @import "@ionic/angular/css/typography.css";
@@ -49,36 +10,44 @@
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
 
-/**
- * ==========================================
- * AHMED'S 2026 MODERN THEME (Add this below)
- * ==========================================
- */
-
-/* 1. Import the 'Inter' font from Google */
+/* Premium Font */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 
-/* 2. Set the font globally for the entire app */
 :root {
-  --ion-font-family: 'Inter', sans-serif;
+  --ion-background-color: #0f172a !important; /* Dark Slate */
+  --ion-text-color: #ffffff !important;
+  --ion-font-family: 'Inter', sans-serif !important;
+
+  /* Your Landing Page Colors */
+  --neon-indigo: #6366f1;
+  --neon-light: #818cf8;
+  --text-muted: #cbd5e1;
+  --glass-bg: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.2);
 }
 
-body {
+body, ion-content {
   font-family: 'Inter', sans-serif;
-  background: #fdfdfd; /* A cleaner default white */
+  color: white;
 }
 
-/* 3. Smooth out the page transitions */
-ion-router-outlet {
-  --animation-duration: 300ms;
+::-webkit-scrollbar { display: none; }
+
+/* 🚨 REUSABLE BACKGROUND & OVERLAY (From your landing page) */
+.app-page-bg {
+  --background: url('/assets/landing page.png') no-repeat center center / cover;
 }
 
-/* 4. Make buttons feel premium (removes the heavy grey click effect) */
-.ion-activatable {
-  --ripple-color: rgba(0, 0, 0, 0.05);
+.app-overlay {
+  width: 100%; min-height: 100%;
+  /* Fades from semi-transparent slate to solid slate at the bottom */
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.6) 0%, rgba(15, 23, 42, 0.95) 100%);
+  padding: 20px;
+  padding-bottom: 100px; /* Space for your floating tab bar */
 }
 
-/* 5. Global Scrollbar Hiding (Makes it look like a native app) */
-::-webkit-scrollbar {
-  display: none;
+/* Reusable Gradient Text */
+.text-gradient {
+  background: linear-gradient(to right, #818cf8, #c084fc);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
 }
