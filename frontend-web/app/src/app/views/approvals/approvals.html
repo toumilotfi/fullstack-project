@@ -16,7 +16,8 @@
 
     <div class="request-card glass" *ngFor="let user of adminService.pendingUsers()">
       <div class="user-profile">
-        <img src="https://i.pravatar.cc/150?u={{user.id || 99}}" class="avatar">
+        <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="avatar">
+        
         <div class="info">
           <h3>{{ user.firstName }} {{ user.lastName }}</h3>
           <span class="email">{{ user.email }}</span>
