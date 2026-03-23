@@ -2,104 +2,110 @@
 
   <!-- 🛰️ TOP BAR -->
   <div class="top-status-bar">
-  <div class="agent-signature">
+    <div class="agent-signature">
 
-    <div class="avatar-box">
-      <ion-icon name="person-circle-outline"></ion-icon>
-      <div class="pulse-ring"></div>
+      <div class="avatar-box">
+        <ion-icon name="person-circle-outline"></ion-icon>
+        <div class="pulse-ring"></div>
+      </div>
+
+      <div class="signature-text">
+        <p>
+          Hey {{ auth.currentUser()?.firstName || 'Agent' }} 👋
+        </p>
+
+        <span class="label">
+          Happy {{ today | date:'EEEE' }}, let’s get things done
+        </span>
+      </div>
+
     </div>
-
-    <div class="signature-text">
-      <p>
-        Hey {{ auth.currentUser()?.firstName || 'Agent' }} 👋
-      </p>
-     
-<span class="label">
-  Happy {{ today | date:'EEEE' }}, let’s get things done 
-</span>
-
-    </div>
-
   </div>
-</div>
 
   <!-- 🧠 MAIN -->
   <div class="main-layout">
 
     <ng-container *ngIf="activeView === 'DASHBOARD'">
 
-      <!-- HERO -->
-     
-      <!-- TASKS -->
+      <!-- 🔥 HEADER -->
       <section class="directives-section">
 
+        <div class="section-meta">
+          <p>
+            Hey {{ auth.currentUser()?.firstName || 'AGENT' }} 🚀  
+            You have {{ activeTasks.length }} tasks today
+          </p>
+          <span class="line"></span>
+        </div>
 
-<div class="section-meta">
-  <p>Hey  {{ auth.currentUser()?.firstName || 'AGENT' }}! 🚀 Ready You have  {{ activeTasks.length }} tasks today?</p>
-  <span class="line"></span>
-</div>
-        <div class="mission-stack">
+        <!-- 🔥 TASKS (SIMPLE VIEW) -->
+        <div class="task-list">
 
           <div 
-            class="elite-card"
-            *ngFor="let task of activeTasks; trackBy: trackByTaskId"
-          >
-            <div class="card-body">
+            class="modern-card"
+            *ngFor="let task of activeTasks; trackBy: trackByTaskId">
 
-              <div class="card-header">
-                <span class="task-ref">#0{{ task.id }}</span>
-                <span class="security-tag">LEVEL 4 SECURE</span>
-              </div>
+            <div class="card-header">
+              <span class="task-id">{{ task.id }}</span>
 
-              <h3>{{ task.title }}</h3>
-              <p>{{ task.description }}</p>
-
-              <div class="card-actions">
-                <button class="btn-abort" (click)="rejectTask(task)">
-                  ABORT
-                </button>
-
-                <button class="btn-execute" (click)="acceptTask(task)">
-                  EXECUTE
-                </button>
-              </div>
-
+              <ion-chip [color]="getStatusColor(task.status)">
+                {{ task.status }}
+              </ion-chip>
             </div>
+
+            <h3>{{ task.title }}</h3>
+            <p>{{ task.description }}</p>
+
           </div>
 
         </div>
+
       </section>
 
     </ng-container>
+
   </div>
 
   <!-- 🛠️ DOCK -->
   <nav class="command-dock">
 
+    <!-- PROFILE -->
     <a class="dock-nav" routerLink="/profile" routerLinkActive="active">
       <ion-icon name="person-outline"></ion-icon>
       <span>Agent</span>
     </a>
 
+    <!-- MESSAGING -->
     <a class="dock-nav" routerLink="/messaging" routerLinkActive="active">
       <ion-icon name="chatbubbles-outline"></ion-icon>
       <span>Comms</span>
     </a>
 
-    <!-- 🔥 MAIN ACTION -->
+    <!-- 🔥 REFRESH -->
     <button class="dock-main" (click)="refreshDashboard()">
       <div class="main-inner">
         <ion-icon name="sync-outline"></ion-icon>
+        <span>Refresh</span>
       </div>
     </button>
 
+    <!-- TASKS -->
     <a class="dock-nav" routerLink="/tasks" routerLinkActive="active">
       <ion-icon name="albums-outline"></ion-icon>
-      <span>Archive</span>
+      <span>Tasks</span>
     </a>
 
+    <!-- ALERTS WITH BADGE -->
     <a class="dock-nav" routerLink="/notifications" routerLinkActive="active">
-      <ion-icon name="notifications-outline"></ion-icon>
+      <div class="notif-icon-wrapper">
+        <ion-icon name="notifications-outline"></ion-icon>
+
+        <!-- 🔥 UNREAD BADGE -->
+        <span class="notif-badge" *ngIf="notifyCtrl.unreadCount() > 0">
+          {{ notifyCtrl.unreadCount() }}
+        </span>
+      </div>
+
       <span>Alerts</span>
     </a>
 

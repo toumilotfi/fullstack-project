@@ -20,24 +20,20 @@ export class MessagingPage implements OnInit, OnDestroy {
 
   ngOnInit() {
     const user = this.auth.currentUser();
-    if (user && user.id) {
-      console.log("Opening secure channel for User:", user.id);
-      this.chatCtrl.initChat(user.id); 
-    } else {
-      console.warn("No active user session found.");
+    if (user?.id) {
+      this.chatCtrl.initChat(user.id);
     }
   }
 
   ngOnDestroy() {
-    this.chatCtrl.closeChat(); 
+    this.chatCtrl.closeChat();
   }
 
   sendMessage() {
     const user = this.auth.currentUser();
-    
-    if (!this.newMessage.trim() || !user || !user.id) return;
+    if (!this.newMessage.trim() || !user?.id) return;
 
     this.chatCtrl.sendMessage(user.id, this.newMessage);
-    this.newMessage = ''; 
+    this.newMessage = '';
   }
 }

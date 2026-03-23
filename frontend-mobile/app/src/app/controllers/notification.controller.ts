@@ -13,7 +13,8 @@ export class NotificationController {
     this.notifyApi.getUserNotifications(userId).subscribe({
       next: (data: Notification[]) => {
         this.notifications.set(data);
-        const unread = data.filter(n => !n.isRead).length;
+       const unread = data.filter(n => !n.read).length;
+
         this.unreadCount.set(unread);
       },
       error: (err) => console.error("Notification Radar Offline", err)

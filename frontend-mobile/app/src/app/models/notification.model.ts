@@ -3,7 +3,7 @@ export class Notification {
   title: string;
   message: string;
   userId: number;
-  isRead: boolean;
+  read: boolean;
   createdAt?: string;
 
   constructor(data: Partial<Notification> = {}) {
@@ -11,7 +11,7 @@ export class Notification {
     this.title = data.title || 'System Alert';
     this.message = data.message || '';
     this.userId = data.userId || 0;
-    this.isRead = data.isRead || false; 
+    this.read = data.read ?? false;
     this.createdAt = data.createdAt || new Date().toISOString();
   }
 }

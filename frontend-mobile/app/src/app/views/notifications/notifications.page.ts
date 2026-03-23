@@ -23,26 +23,72 @@ export class NotificationsPage implements OnInit {
       this.notifyCtrl.loadNotifications(user.id);
     }
   }
+onNotificationClick(notification: any) {
+  if (!notification.id) return;
 
-  onNotificationClick(notification: any) {
-    if (!notification.id) return;
+  this.notifyCtrl.markRead(notification.id);
 
-    this.notifyCtrl.markRead(notification.id);
+  const match = notification.message.match(/Task #(\d+)/);
+  if (match) {
+    this.router.navigate(['/home']);
+  }
+}
 
-    const match = notification.message.match(/Task #(\d+)/);
-    if (match) {
-      this.router.navigate(['/home']);
+
+  /** 
+   * Returns the correct icon based on notification type or message content 
+   */
+
+
+
+
+  /**
+   * Returns a readable title based on type
+   */
+  getTitle(notification: any): string {
+    if (!notification) return 'HQ MESSAGE';
+
+    if (notification.type === 'GLOBAL') return 'GLOBAL BROADCAST';
+    if (notification.type === 'DIRECT') return 'DIRECTIVE';
+    if (notification.type === 'ALERT') return 'SYSTEM ALERT';
+    if (notification.type === 'NEW_USER') return 'NEW AGENT REGISTERED';
+    if (notification.type === 'TASK_REPORT') return 'TASK REPORT';
+
+    return 'HQ MESSAGE';
+  }
+ getIconClass(notification: any): string {
+  switch (notification.type) {
+    case 'GLOBAL': return 'global-icon';
+    case 'DIRECT': return 'direct-icon';
+    case 'ALERT': return 'alert-icon';
+    case 'NEW_USER': return 'user-icon';
+    case 'TASK_REPORT': return 'task-icon';
+    default: return '';
+  }
+}
+
+getIcon(notification: any): string {
+  if (!notification) return 'alert-circle-outline';
+
+  if (notification.type) {
+    switch (notification.type) {
+      case 'GLOBAL': return 'megaphone-outline';
+      case 'DIRECT': return 'shield-checkmark-outline';
+      case 'ALERT': return 'warning-outline';
+      case 'NEW_USER': return 'person-add-outline';
+      case 'TASK_REPORT': return 'document-text-outline';
     }
   }
-  getIcon(name: string): string {
-  if (!name) return 'notifications-outline';
 
-  if (name.toLowerCase().includes('approved')) return 'checkmark-circle';
-  if (name.toLowerCase().includes('declined')) return 'close-circle';
-  if (name.toLowerCase().includes('revision')) return 'create-outline';
-  if (name.toLowerCase().includes('response')) return 'chatbubble-ellipses';
-  
-  return 'radio-outline'; // default
+  const msg = notification.message?.toLowerCase() || '';
+
+  if (msg.includes('approved')) return 'checkmark-circle-outline';
+  if (msg.includes('declined')) return 'close-circle-outline';
+  if (msg.includes('revision')) return 'create-outline';
+  if (msg.includes('response')) return 'chatbubble-ellipses-outline';
+
+  return 'notifications-outline'; // fallback
 }
-  
+
+
 }

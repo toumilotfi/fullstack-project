@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ChatMessage } from '../models/chat-message.model';
 
@@ -15,6 +15,19 @@ export class ChatApi {
   }
 
   sendMessageToAdmin(userId: number, content: string): Observable<ChatMessage> {
-    return this.http.post<ChatMessage>(`${this.baseUrl}/message/admin?userId=${userId}`, content);
+    const params = new HttpParams()
+      .set('userId', userId)
+      .set('adminId', 1)
+      .set('message', content);
+
+    return this.http.post<ChatMessage>(
+      `${this.baseUrl}/message/admin`,
+      {},
+      { params }
+    );
   }
+  getSentMessages(userId: number): Observable<ChatMessage[]> {
+  return this.http.get<ChatMessage[]>(`${this.baseUrl}/messages/sent/${userId}`);
+}
+
 }

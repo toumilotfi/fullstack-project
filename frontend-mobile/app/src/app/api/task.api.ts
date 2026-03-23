@@ -19,8 +19,17 @@ export class TaskApi {
   deleteTask(id: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/tasks/${id}`);
   }
+approveTask(id: number) {
+  return this.http.put(`${this.baseUrl}/tasks/approve/${id}`, {});
+}
 
-  respondToTask(id: number, responseText: string): Observable<any> {
-    return this.http.put(`${this.baseUrl}/tasks/${id}/respond`, { response: responseText });
-  }
+respondToTask(id: number, responseText: string) {
+  return this.http.put(
+    `${this.baseUrl}/tasks/${id}/respond`,
+    { response: responseText } // ✅ clean
+  );
+}
+declineTask(id: number) {
+  return this.http.put(`${this.baseUrl}/tasks/${id}/decline`, {});
+}
 }

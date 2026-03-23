@@ -1,41 +1,65 @@
 <ion-header class="ion-no-border">
   <ion-toolbar class="app-page-bg">
+
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/home" color="light"></ion-back-button>
     </ion-buttons>
-    <ion-title style="color: white; font-weight: 800;">HQ RADAR FEED</ion-title>
+
+    <ion-title class="header-title">My Notification</ion-title>
+
+    <ion-buttons slot="end">
+      <div class="notif-bell">
+        <ion-icon name="notifications-outline"></ion-icon>
+        <span class="notif-badge" *ngIf="notifyCtrl.unreadCount() > 0">
+          {{ notifyCtrl.unreadCount() }}
+        </span>
+      </div>
+    </ion-buttons>
+
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="app-page-bg">
+
   <div class="notif-container">
-    
+
     <div *ngIf="notifyCtrl.notifications().length === 0" class="empty-state">
-      <ion-icon name="mail-open-outline"></ion-icon>
+     
       <p>No transmissions from HQ.</p>
     </div>
-    
 
     <div 
       class="glass-card" 
       *ngFor="let n of notifyCtrl.notifications()" 
-      [class.unread]="!n.isRead"
+      [class.unread]="!n.read"
       (click)="onNotificationClick(n)"
     >
-      <div class="unread-glow" *ngIf="!n.isRead"></div>
-      
-      <div class="notif-icon-box">
-        <ion-icon name="radio-outline" style="color: white; font-size: 1.5rem;"></ion-icon>
+
+      <div class="status-bar" *ngIf="!n.read"></div>
+
+      <div class="notif-icon-box" [ngClass]="getIconClass(n)">
+        <ion-icon [name]="getIcon(n)" class="notif-icon"></ion-icon>
       </div>
 
       <div class="card-content">
+
         <div class="top-row">
-          <h4>COMMAND DIRECTIVE</h4>
+          <h4>{{ getTitle(n) }}</h4>
           <span class="time">{{ n.createdAt | date:'shortTime' }}</span>
         </div>
-        <p>{{ n.message }}</p>
+
+        <!-- ICON INSIDE MESSAGE -->
+        <div class="message-row">
+         
+          <p class="message">{{ n.message }}</p>
+        </div>
+
+        <div class="red-dot" *ngIf="!n.read"></div>
+
       </div>
+
     </div>
 
   </div>
+
 </ion-content>

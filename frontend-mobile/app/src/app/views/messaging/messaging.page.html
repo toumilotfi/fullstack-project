@@ -1,33 +1,44 @@
 <ion-content class="app-page-bg">
   <div class="app-overlay chat-layout">
     
+    <!-- HEADER -->
     <div class="page-header fade-in-up">
-      
-      <h1 class="text-gradient">Secure Comms</h1>
+      <h1 class="text-gradient">Admin</h1>
     </div>
 
+    <!-- CHAT FEED -->
     <div class="chat-feed fade-in-up delay-1">
-      
-      <div *ngFor="let msg of chatCtrl.messages()" 
-           [class]="msg.senderRole === 'USER' ? 'msg-bubble sent' : 'msg-bubble received'">
-        <p>{{ msg.content }}</p>
-        <span class="time">{{ msg.createdAt | date:'HH:mm' }}</span>
+
+      <!-- MESSAGE LIST -->
+      <div *ngFor="let msg of chatCtrl.messages()"
+           class="msg-wrapper"
+           [ngClass]="{
+             'sent': msg.senderRole === 'USER',
+             'received': msg.senderRole === 'ADMIN'
+           }">
+
+        <div class="msg-bubble">
+          <p class="msg-text">{{ msg.content }}</p>
+          <span class="time">{{ msg.createdAt | date:'HH:mm' }}</span>
+        </div>
       </div>
 
-      <div class="empty-state" *ngIf="!chatCtrl.messages() || chatCtrl.messages().length === 0">
+      <!-- EMPTY STATE -->
+      <div class="empty-state" *ngIf="chatCtrl.messages().length === 0">
         <ion-icon name="chatbubbles-outline"></ion-icon>
         <p>Secure channel open. Awaiting transmissions from Admin...</p>
       </div>
-      
+
     </div>
   </div>
 </ion-content>
 
+<!-- INPUT BAR -->
 <ion-footer class="ion-no-border">
   <div class="glass-input-bar">
     <div class="input-wrapper">
       <ion-input 
-        [(ngModel)]="newMessage" 
+        [(ngModel)]="newMessage"
         placeholder="Send encrypted message..."
         (keyup.enter)="sendMessage()">
       </ion-input>

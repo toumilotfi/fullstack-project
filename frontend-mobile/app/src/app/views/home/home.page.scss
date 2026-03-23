@@ -251,3 +251,75 @@
 .main-inner:hover {
   transform: scale(1.05);
 }
+.app-page-bg { --background: #0f172a; }
+.archive-container { padding: 10px 20px 20px; }
+
+.modern-card {
+  background: rgba(30, 41, 59, 0.6);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  padding: 20px;
+  margin-bottom: 15px;
+
+  .card-header {
+    display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;
+    .task-id { color: #00fff2; font-size: 0.7rem; font-weight: 800; font-family: monospace; }
+    ion-chip { --height: 24px; font-size: 0.6rem; font-weight: 800; margin: 0; }
+  }
+
+  h3 { color: white; margin: 0 0 8px 0; font-weight: 700; font-size: 1.1rem; }
+  p { font-size: 0.9rem; color: #94a3b8; margin-bottom: 15px; }
+
+  .progress-container {
+    margin-top: 15px;
+    .progress-text {
+      display: flex; justify-content: space-between; font-size: 0.7rem; color: white;
+      font-weight: 800; margin-bottom: 6px; text-transform: uppercase;
+    }
+    ion-progress-bar { height: 6px; border-radius: 10px; --background: rgba(255,255,255,0.05); }
+  }
+}
+
+.empty-state {
+  text-align: center; padding: 100px 20px; color: #334155;
+  ion-icon { font-size: 4rem; margin-bottom: 10px; color: #bcc2cc; }
+}
+ion-chip[color="danger"] {
+  --background: rgba(244, 63, 94, 0.2);
+  --color: #cb1c39;
+}
+
+ion-chip[color="primary"] {
+  --background: rgba(59, 130, 246, 0.2);
+  --color: #3b82f6;
+}
+.notif-icon-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.notif-badge {
+  position: absolute;
+  top: -6px;
+  right: -10px;
+
+  /* FIXED SIZE */
+  width: 18px;
+  height: 18px;
+
+  background: #ff3b30;
+  color: white;
+  font-size: 0.65rem;
+  font-weight: 800;
+
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow: 0 0 8px #ff3b30;
+  animation: pulseBadge 1.5s infinite ease-in-out;
+}
+
+

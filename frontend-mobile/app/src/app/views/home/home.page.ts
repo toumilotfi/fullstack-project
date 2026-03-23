@@ -9,10 +9,11 @@ import { TaskController } from '../../controllers/task.controller';
 import { NotificationController } from '../../controllers/notification.controller';
 import { ChatController } from '../../controllers/chat.controller';
 import { Task } from '../../models/task.model';
+
 import { addIcons } from 'ionicons';
-import { 
-  personOutline, 
-  chatbubblesOutline, 
+import {
+  personOutline,
+  chatbubblesOutline,
   syncOutline,
   albumsOutline,
   notificationsOutline
@@ -25,6 +26,7 @@ addIcons({
   albumsOutline,
   notificationsOutline
 });
+
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -50,7 +52,8 @@ export class HomePage implements OnInit, OnDestroy {
 
   taskReport = '';
   isSending = false;
-today: Date = new Date();
+  today: Date = new Date();
+
   // 🚀 INIT
   ngOnInit() {
     this.refreshDashboard();
@@ -61,7 +64,7 @@ today: Date = new Date();
     this.stopPolling();
   }
 
-  // 🔁 POLLING (clean)
+  // 🔁 POLLING
   private startPolling() {
     this.poller = setInterval(() => {
       this.refreshDashboard();
@@ -69,16 +72,13 @@ today: Date = new Date();
   }
 
   private stopPolling() {
-    if (this.poller) {
-      clearInterval(this.poller);
-    }
+    if (this.poller) clearInterval(this.poller);
   }
 
-  // 📊 DATA
+  // 📊 DATA (🔥 FIX مهم)
   private updateActiveTasks() {
-    this.activeTasks = this.taskCtrl
-      .userTasks()
-      .filter(t => t.status !== 'COMPLETED'); // 🔥 FIX (مش completed boolean)
+    this.activeTasks = [...this.taskCtrl.userTasks()]
+      .filter(t => t.status !== 'COMPLETED');
   }
 
   refreshDashboard() {
@@ -89,7 +89,7 @@ today: Date = new Date();
     this.taskCtrl.loadUserTasks(user.id);
     this.notifyCtrl.loadNotifications(user.id);
 
-    this.updateActiveTasks(); // 🔥 مهم
+    this.updateActiveTasks();
   }
 
   // 🎯 ACTIONS
@@ -127,8 +127,7 @@ today: Date = new Date();
 
     this.isSending = true;
 
-    this.taskCtrl
-      .submitTaskResponse(this.activeTask.id, this.taskReport)
+    this.taskCtrl.submitTaskResponse(this.activeTask.id, this.taskReport)
       .subscribe({
         next: () => {
           this.showToast('INTEL TRANSMITTED', 'success');
@@ -145,7 +144,7 @@ today: Date = new Date();
 
   // ⚡ PERFORMANCE
   trackByTaskId(index: number, task: Task) {
-    return task.id;
+    return task.id ?? index;
   }
 
   // 🔔 TOAST
@@ -160,4 +159,22 @@ today: Date = new Date();
 
     await toast.present();
   }
+  getStatusColor(status?: string) {
+  switch (status) {
+    case 'SUBMITTED':
+      return 'success'; // 🔵 BLUE
+
+    case 'ASSIGNED':
+      return 'success'; // 🔴 RED
+
+    case 'APPROVED':
+      return 'success'; // 🟢 GREEN
+
+    case 'DECLINED':
+      return 'danger';
+
+    default:
+      return 'medium';
+  }
+}
 }

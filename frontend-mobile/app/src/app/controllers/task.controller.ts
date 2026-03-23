@@ -5,6 +5,15 @@ import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class TaskController {
+  create(arg0: { message: string; duration: number; position: string; color: string; }) {
+    throw new Error('Method not implemented.');
+  }
+  approveTask(id: number) {
+    throw new Error('Method not implemented.');
+  }
+ respondToTask(taskId: number, response: string): Observable<any> {
+  return this.taskApi.respondToTask(taskId, response);
+}
   private taskApi = inject(TaskApi);
   
   userTasks = signal<Task[]>([]);
@@ -26,7 +35,8 @@ export class TaskController {
     return this.taskApi.respondToTask(taskId, reportText);
   }
 
-  rejectTask(taskId: number): Observable<void> {
-    return this.taskApi.deleteTask(taskId);
-  }
+rejectTask(taskId: number): Observable<void> {
+  return this.taskApi.deleteTask(taskId);
+}
+
 }
