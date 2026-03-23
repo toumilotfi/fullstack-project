@@ -66,4 +66,9 @@ public class NotificationController {
     public List<Notification> getUserNotificationsStatus(@PathVariable Integer userId) {
         return notificationService.getUserNotifications(userId);
     }
-}
+
+    @PutMapping("/read/{id}")
+    public String markAsRead(@PathVariable Integer id) {
+        notificationService.markAsRead(id);
+        return "Notification marked as read";
+    } }

@@ -76,13 +76,14 @@ public class TasksController {
                 .orElseThrow(() -> new RuntimeException("Task not found"));
 
         task.setUserResponse(response);
-        task.setStatus("SUBMITTED"); 
+        task.setStatus("SUBMITTED");
         task.setResponseAt(LocalDateTime.now());
 
         Task updatedTask = taskRepository.save(task);
 
         notificationService.createNotification(1, "Task Response Received", "User responded to task: " + task.getTitle());
         return updatedTask;
+
     }
 
     @PutMapping("/tasks/approve/{id}")
@@ -90,7 +91,7 @@ public class TasksController {
         Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Task not found"));
 
-        task.setStatus("APPROVED"); 
+        task.setStatus("APPROVED");
         Task updatedTask = taskRepository.save(task);
 
         notificationService.createNotification(task.getAssignedToUserId(), "Task Approved", "Your task has been approved: " + task.getTitle());
@@ -122,4 +123,5 @@ public class TasksController {
         notificationService.createNotification(task.getAssignedToUserId(), "Revision Requested", "Admin requested changes on task: " + task.getTitle());
         return updatedTask;
     }
+
 }
