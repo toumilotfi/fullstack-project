@@ -1,0 +1,42 @@
+<div class="sidebar-wrapper">
+  <div class="logo">
+    <h2>TaskFlow <span>Admin</span></h2>
+  </div>
+
+  <nav class="nav-links">
+    <a class="nav-item" routerLink="/admin/dashboard" routerLinkActive="active">
+      <ion-icon name="grid-outline"></ion-icon> <span>Dashboard</span>
+    </a>
+
+    <a class="nav-item" routerLink="/admin/approvals" routerLinkActive="active">
+      <ion-icon name="shield-checkmark-outline"></ion-icon> <span>Approvals</span>
+    </a>
+
+    <a class="nav-item" routerLink="/admin/users" routerLinkActive="active">
+      <ion-icon name="people-outline"></ion-icon> <span>Users</span>
+    </a>
+
+    <a class="nav-item" routerLink="/admin/tasks" routerLinkActive="active">
+      <ion-icon name="rocket-outline"></ion-icon> <span>Tasks</span>
+    </a>
+
+    <a class="nav-item" routerLink="/admin/inspector" routerLinkActive="active">
+      <ion-icon name="eye-outline"></ion-icon> <span>Inspector</span>
+    </a>
+
+    <a class="nav-item" routerLink="/admin/chat" routerLinkActive="active">
+      <ion-icon name="chatbubbles-outline"></ion-icon> <span>Chat</span>
+    </a>
+  </nav>
+
+  <div class="sidebar-footer">
+    <button class="logout-btn">
+      <ion-icon name="log-out-outline"></ion-icon> <span>Sign Out</span>
+    </button>
+  </div>
+</div>
+<div class="sidebar-footer">
+  <button class="logout-btn" (click)="signOut()">
+    <ion-icon name="log-out-outline"></ion-icon> <span>Sign Out</span>
+  </button>
+</div>

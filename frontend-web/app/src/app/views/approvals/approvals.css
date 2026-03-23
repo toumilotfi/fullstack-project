@@ -1,0 +1,27 @@
+.page-container { padding: 40px; }
+.section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 35px; }
+h1 { color: white; font-weight: 800; font-size: 2.2rem; margin: 0; }
+p { color: #64748b; margin-top: 5px; }
+
+.count-badge { background: #6366f1; color: white; padding: 8px 16px; border-radius: 30px; font-weight: 700; font-size: 0.85rem; }
+
+.requests-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 25px; }
+
+.glass { background: rgba(30, 41, 59, 0.4); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.05); border-radius: 24px; }
+
+.request-card { padding: 25px; display: flex; flex-direction: column; gap: 20px; transition: 0.3s; }
+.request-card:hover { border-color: #6366f1; transform: scale(1.02); }
+
+.user-profile { display: flex; align-items: center; gap: 20px; }
+.avatar { width: 65px; height: 65px; border-radius: 50%; border: 3px solid #1e293b; }
+.info h3 { color: white; margin: 0; font-size: 1.2rem; }
+.info .email { display: block; color: #94a3b8; font-size: 0.9rem; margin: 3px 0; }
+.info .date { font-size: 0.75rem; color: #475569; font-weight: 600; }
+
+.footer-actions { display: flex; gap: 12px; }
+.btn-approve { flex: 2; background: #6366f1; color: white; border: none; padding: 14px; border-radius: 12px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
+.btn-reject { flex: 1; background: transparent; color: #f43f5e; border: 1px solid rgba(244, 63, 94, 0.3); padding: 14px; border-radius: 12px; font-weight: 600; cursor: pointer; }
+.btn-reject:hover { background: rgba(244, 63, 94, 0.1); }
+
+.empty-state { grid-column: 1 / -1; padding: 60px; text-align: center; color: #64748b; }
+.empty-state ion-icon { font-size: 4rem; color: #10b981; margin-bottom: 15px; }

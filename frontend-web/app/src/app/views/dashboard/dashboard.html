@@ -1,0 +1,168 @@
+<div class="dashboard-wrapper">
+  
+  <header class="hero-section">
+    <div class="brand">
+      <div class="live-indicator">
+        <span class="pulse-dot"></span>
+        <span class="status-text">SYSTEM ACTIVE</span>
+      </div>
+      <h1>Command Center</h1>
+      <p>Strategic Intelligence & Operative Communications</p>
+    </div>
+    
+    <div class="header-tools">
+      
+      <div class="bell-wrapper">
+        <button class="bell-btn glass" (click)="toggleNotifications()" [class.active]="showDropdown">
+          <ion-icon name="notifications"></ion-icon>
+          <span class="bell-badge" *ngIf="unreadCount > 0">{{ unreadCount }}</span>
+        </button>
+
+        <div class="notification-dropdown glass" *ngIf="showDropdown">
+          <div class="dropdown-header">
+            <h3>System Radar</h3>
+            <span class="pulse-dot"></span>
+          </div>
+          
+          <div class="dropdown-body custom-scrollbar">
+            
+            <div *ngIf="adminNotifications.length === 0" class="empty-intel">
+              <ion-icon name="checkmark-done-circle-outline"></ion-icon>
+              <p>Radar is clear. No new activity.</p>
+            </div>
+            
+            <div class="intel-item" *ngFor="let alert of adminNotifications" (click)="onRadarClick(alert)" style="cursor: pointer;">
+              <div class="intel-icon" [ngClass]="alert.colorClass">
+                <div class="intel-icon" [ngClass]="alert.colorClass">
+    
+    <svg *ngIf="alert.type === 'TASK_REPORT'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="modern-svg">
+      <path fill="currentColor" d="M427.68 351.43C402 320 383.11 304 383.11 217.14 383.11 138 323.35 77.86 256 77.86s-127.11 60.14-127.11 139.28c0 86.86-18.89 102.86-44.57 134.29-12.27 15-22.59 32.4-2.73 49.32 18.69 15.93 45.42 15.53 74.34 15.27a818.15 818.15 0 00200.14 0c28.92.26 55.65.66 74.34-15.27 19.85-16.92 9.53-34.34-2.73-49.32z"/>
+      <path fill="currentColor" d="M319.5 432c-20.5 20.09-44.96 32-63.5 32s-43-11.91-63.5-32"/>
+    </svg>
+
+    <svg *ngIf="alert.type === 'MESSAGE'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="modern-svg">
+      <path fill="currentColor" d="M424 80H88a56.06 56.06 0 00-56 56v240a56.06 56.06 0 0056 56h336a56.06 56.06 0 0056-56V136a56.06 56.06 0 00-56-56zm-14.18 92.63l-144 112a16 16 0 01-19.64 0l-144-112a16 16 0 1119.64-25.26L256 251.73l134.18-104.36a16 16 0 0119.64 25.26z"/>
+    </svg>
+
+    <svg *ngIf="alert.type === 'NEW_USER'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="modern-svg">
+      <path fill="currentColor" d="M256 48C141.31 48 48 141.31 48 256s93.31 208 208 208 208-93.31 208-208S370.69 48 256 48zm0 319.91a20 20 0 1120-20 20 20 0 01-20 20zm21.72-201.15l-5.74 122a16 16 0 01-32 0l-5.74-121.95a21.73 21.73 0 0121.5-22.69h.21a21.74 21.74 0 0121.77 22.64z"/>
+    </svg>
+
+</div>
+                <svg *ngIf="alert.type === 'TASK_REPORT'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="24" height="24" fill="currentColor">
+                  <path d="M427.68 351.43C402 320 383.11 304 383.11 217.14 383.11 138 323.35 77.86 256 77.86s-127.11 60.14-127.11 139.28c0 86.86-18.89 102.86-44.57 134.29-12.27 15-22.59 32.4-2.73 49.32 18.69 15.93 45.42 15.53 74.34 15.27a818.15 818.15 0 00200.14 0c28.92.26 55.65.66 74.34-15.27 19.85-16.92 9.53-34.34-2.73-49.32z"/>
+                  <path d="M319.5 432c-20.5 20.09-44.96 32-63.5 32s-43-11.91-63.5-32"/>
+                </svg>
+
+                <svg *ngIf="alert.type === 'MESSAGE'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="24" height="24" fill="currentColor">
+                  <path d="M424 80H88a56.06 56.06 0 00-56 56v240a56.06 56.06 0 0056 56h336a56.06 56.06 0 0056-56V136a56.06 56.06 0 00-56-56zm-14.18 92.63l-144 112a16 16 0 01-19.64 0l-144-112a16 16 0 1119.64-25.26L256 251.73l134.18-104.36a16 16 0 0119.64 25.26z"/>
+                </svg>
+
+                <svg *ngIf="alert.type === 'NEW_USER'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="24" height="24" fill="currentColor">
+                  <path d="M256 48C141.31 48 48 141.31 48 256s93.31 208 208 208 208-93.31 208-208S370.69 48 256 48zm0 319.91a20 20 0 1120-20 20 20 0 01-20 20zm21.72-201.15l-5.74 122a16 16 0 01-32 0l-5.74-121.95a21.73 21.73 0 0121.5-22.69h.21a21.74 21.74 0 0121.77 22.64z"/>
+                </svg>
+
+              </div>
+              <div class="intel-content">
+                <span class="intel-sender" [ngClass]="alert.colorClass">{{ alert.title }}</span>
+                <p class="intel-text">{{ alert.text }}</p>
+                <span class="intel-time">{{ alert.time | date:'shortTime' }}</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div> 
+      
+      <div class="date-display glass">
+        <ion-icon name="calendar-outline"></ion-icon>
+        <span>{{ today | date:'EEEE, MMM d, y' }}</span>
+      </div>
+
+    </div> 
+  </header>
+
+  <div class="stats-grid">
+    <div class="stat-card glass blue-glow">
+      <div class="icon-box blue"><ion-icon name="people-sharp"></ion-icon></div>
+      <div class="data">
+        <span class="label">Total Agents</span>
+        <h2 class="value">{{ adminService.totalUsers() }}</h2>
+      </div>
+    </div>
+    <div class="stat-card glass orange-glow">
+      <div class="icon-box orange"><ion-icon name="shield-half-sharp"></ion-icon></div>
+      <div class="data">
+        <span class="label">Pending Ops</span>
+        <h2 class="value">{{ adminService.pendingApprovals() }}</h2>
+      </div>
+    </div>
+    <div class="stat-card glass green-glow">
+      <div class="icon-box green"><ion-icon name="checkmark-done-sharp"></ion-icon></div>
+      <div class="data">
+        <span class="label">Missions Done</span>
+        <h2 class="value">{{ adminService.completedTasks() }}</h2>
+      </div>
+    </div>
+    <div class="stat-card glass purple-glow">
+      <div class="icon-box purple"><ion-icon name="analytics-sharp"></ion-icon></div>
+      <div class="data">
+        <span class="label">Efficiency</span>
+        <h2 class="value">{{ adminService.completionRate() }}%</h2>
+      </div>
+    </div>
+  </div>
+
+  <div class="comm-matrix">
+    <div class="comm-card glass broadcast">
+      <div class="card-header">
+        <h3><ion-icon name="megaphone"></ion-icon> Global Broadcast</h3>
+        <span class="target-tag">TARGET: ALL AGENTS</span>
+      </div>
+      <textarea [(ngModel)]="broadcastMessage" placeholder="Type system-wide emergency protocol..."></textarea>
+      <button class="btn-deploy deploy-red" (click)="sendGlobalAlert()">
+        <ion-icon name="flash"></ion-icon> DEPLOY TO ALL
+      </button>
+    </div>
+
+    <div class="comm-card glass targeted">
+      <div class="card-header">
+        <h3><ion-icon name="shield-checkmark"></ion-icon> Targeted Intel</h3>
+        <span class="target-tag">TARGET: SPECIFIC ID</span>
+      </div>
+      <div class="form-stack">
+        <select [(ngModel)]="targetUserId" name="targetUserId">
+          <option [ngValue]="undefined" disabled>Select Target Agent</option>
+          <option *ngFor="let user of adminService.users()" [ngValue]="user.id">
+            #{{user.id}} - {{ user.firstName }} {{ user.lastName }}
+          </option>
+        </select>
+        <input type="text" [(ngModel)]="directMessage" placeholder="Specific directive message...">
+        <button class="btn-deploy deploy-blue" (click)="sendDirectAlert()">
+          <ion-icon name="paper-plane"></ion-icon> SEND DIRECTIVE
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="activity-feed glass">
+    <div class="card-header">
+      <h3><ion-icon name="list-outline"></ion-icon> Live Communication Logs</h3>
+      <span class="log-count">{{ sentAlerts.length }} Entries</span>
+    </div>
+    <div class="feed-container custom-scrollbar">
+      <div class="feed-item" *ngFor="let alert of sentAlerts">
+        <div class="log-indicator" [class.is-direct]="alert.userId !== 0"></div>
+        <div class="log-details">
+          <span class="log-title">{{ alert.title }}</span>
+          <p class="log-message">{{ alert.message }}</p>
+        </div>
+        <div class="log-time">{{ alert.createdAt | date:'shortTime' }}</div>
+      </div>
+      <div *ngIf="sentAlerts.length === 0" class="empty-logs">
+        No transmissions recorded for this session.
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -10,6 +10,6 @@ import { IonicModule } from '@ionic/angular';
   styleUrls: ['./glass-header.component.scss']
 })
 export class GlassHeaderComponent {
-  @Input() title: string = 'TaskFlow';
-  @Input() subtitle?: string; // Optional
+  @Input() title: string = 'HQ TERMINAL';
+  @Input() subtitle?: string; // Used for "AGENT ACTIVE" or "PROTOCOL" labels
 }

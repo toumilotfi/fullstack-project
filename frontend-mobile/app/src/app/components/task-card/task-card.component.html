@@ -1,14 +1,10 @@
 <div class="glass-item">
   <div class="left-side">
-    <div class="dot" [ngClass]="{
-      'red': task.priority === 'High',
-      'yellow': task.priority === 'Medium',
-      'green': task.priority === 'Low'
-    }"></div>
+    <div class="dot" [ngClass]="task.completed ? 'green' : 'red'"></div>
     
     <div class="info">
       <h3>{{ task.title }}</h3>
-      <p>{{ task.category }} • <span class="time">{{ task.timeLeft }}</span></p>
+      <p>{{ task.description }}</p>
     </div>
   </div>
 
@@ -17,10 +13,10 @@
       <svg viewBox="0 0 36 36">
         <path class="bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
         <path class="fill" 
-          [attr.stroke-dasharray]="task.progress + ', 100'"
+          [attr.stroke-dasharray]="task.completed ? '100, 100' : '0, 100'"
           d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
       </svg>
-      <span>{{ task.progress }}%</span>
+      <span>{{ task.completed ? '100%' : '0%' }}</span>
     </div>
   </div>
 </div>

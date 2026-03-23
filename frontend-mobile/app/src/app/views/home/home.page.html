@@ -1,23 +1,108 @@
-<ion-content class="pro-bg">
-  
-  <app-glass-header title="Dashboard" subtitle="Feb 20, 2026">
-    <div class="header-avatar">
-      <img src="https://i.pravatar.cc/150?u=ahmed" />
+<ion-content class="app-page-bg" [fullscreen]="true">
+
+  <!-- 🛰️ TOP BAR -->
+  <div class="top-status-bar">
+  <div class="agent-signature">
+
+    <div class="avatar-box">
+      <ion-icon name="person-circle-outline"></ion-icon>
+      <div class="pulse-ring"></div>
     </div>
-  </app-glass-header>
 
-  <div class="section-label">
-    <h2>Ongoing Tasks</h2>
-    <span>View All</span>
+    <div class="signature-text">
+      <p>
+        Hey {{ auth.currentUser()?.firstName || 'Agent' }} 👋
+      </p>
+     
+<span class="label">
+  Happy {{ today | date:'EEEE' }}, let’s get things done 
+</span>
+
+    </div>
+
+  </div>
+</div>
+
+  <!-- 🧠 MAIN -->
+  <div class="main-layout">
+
+    <ng-container *ngIf="activeView === 'DASHBOARD'">
+
+      <!-- HERO -->
+     
+      <!-- TASKS -->
+      <section class="directives-section">
+
+
+<div class="section-meta">
+  <p>Hey  {{ auth.currentUser()?.firstName || 'AGENT' }}! 🚀 Ready You have  {{ activeTasks.length }} tasks today?</p>
+  <span class="line"></span>
+</div>
+        <div class="mission-stack">
+
+          <div 
+            class="elite-card"
+            *ngFor="let task of activeTasks; trackBy: trackByTaskId"
+          >
+            <div class="card-body">
+
+              <div class="card-header">
+                <span class="task-ref">#0{{ task.id }}</span>
+                <span class="security-tag">LEVEL 4 SECURE</span>
+              </div>
+
+              <h3>{{ task.title }}</h3>
+              <p>{{ task.description }}</p>
+
+              <div class="card-actions">
+                <button class="btn-abort" (click)="rejectTask(task)">
+                  ABORT
+                </button>
+
+                <button class="btn-execute" (click)="acceptTask(task)">
+                  EXECUTE
+                </button>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </ng-container>
   </div>
 
-  <div class="task-list-container">
-    <app-task-card 
-      *ngFor="let t of taskCtrl.tasks()" 
-      [task]="t">
-    </app-task-card>
-  </div>
+  <!-- 🛠️ DOCK -->
+  <nav class="command-dock">
 
-  <div style="height: 100px;"></div>
+    <a class="dock-nav" routerLink="/profile" routerLinkActive="active">
+      <ion-icon name="person-outline"></ion-icon>
+      <span>Agent</span>
+    </a>
+
+    <a class="dock-nav" routerLink="/messaging" routerLinkActive="active">
+      <ion-icon name="chatbubbles-outline"></ion-icon>
+      <span>Comms</span>
+    </a>
+
+    <!-- 🔥 MAIN ACTION -->
+    <button class="dock-main" (click)="refreshDashboard()">
+      <div class="main-inner">
+        <ion-icon name="sync-outline"></ion-icon>
+      </div>
+    </button>
+
+    <a class="dock-nav" routerLink="/tasks" routerLinkActive="active">
+      <ion-icon name="albums-outline"></ion-icon>
+      <span>Archive</span>
+    </a>
+
+    <a class="dock-nav" routerLink="/notifications" routerLinkActive="active">
+      <ion-icon name="notifications-outline"></ion-icon>
+      <span>Alerts</span>
+    </a>
+
+  </nav>
 
 </ion-content>

@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
-import { Task } from '../../models/task.model'; // Import your interface
+import { Task } from '../../models/task.model';
 
 @Component({
   selector: 'app-task-card',
@@ -11,5 +11,5 @@ import { Task } from '../../models/task.model'; // Import your interface
   styleUrls: ['./task-card.component.scss']
 })
 export class TaskCardComponent {
-  @Input() task!: Task; // Input data from the parent page
+  @Input() task!: Task; 
 }

@@ -1,0 +1,62 @@
+<div class="tasks-container">
+  
+  <div class="deployment-grid">
+    
+    <section class="provision-box glass">
+      <header>
+        <ion-icon name="rocket-outline"></ion-icon>
+        <h2>New Directive</h2>
+      </header>
+
+      <div class="form-body">
+        <div class="input-group">
+          <label>SELECT TARGET OPERATIVE</label>
+          <select [(ngModel)]="newTask.assignedToUserId">
+            <option [value]="0" disabled>Select Agent...</option>
+            <option *ngFor="let user of adminService.users()" [value]="user.id">
+              #{{ user.id }} - {{ user.firstName }} {{ user.lastName }}
+            </option>
+          </select>
+        </div>
+
+        <div class="input-group">
+          <label>MISSION TITLE</label>
+          <input type="text" [(ngModel)]="newTask.title" placeholder="e.g., Protocol Alpha-9">
+        </div>
+
+        <div class="input-group">
+          <label>TACTICAL DESCRIPTION</label>
+          <textarea [(ngModel)]="newTask.description" rows="5" placeholder="Input mission parameters..."></textarea>
+        </div>
+
+        <button class="deploy-btn" (click)="deployMission()" [disabled]="isDeploying">
+          {{ isDeploying ? 'TRANSMITTING...' : 'DEPLOY MISSION' }}
+        </button>
+      </div>
+    </section>
+
+    <section class="mission-feed glass">
+      <header>
+        <h3>Active Transmissions</h3>
+        <span class="count">{{ adminService.tasks().length }} Total</span>
+      </header>
+
+      <div class="feed-scroll custom-scrollbar">
+        <div class="mission-item" *ngFor="let t of adminService.tasks()">
+          <div class="status-indicator" [class.done]="t.completed"></div>
+          <div class="m-content">
+            <div class="m-top">
+              <strong>{{ t.title }}</strong>
+              <span class="m-id">#{{ t.id }}</span>
+            </div>
+            <p>Agent ID: {{ t.assignedToUserId }}</p>
+          </div>
+          <button class="m-del" (click)="deleteTask(t.id!)">
+            <ion-icon name="trash-outline"></ion-icon>
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>

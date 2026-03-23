@@ -2,8 +2,25 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { RouterModule, Router } from '@angular/router';
+import { RouterModule } from '@angular/router';
+import { AuthController } from '../../controllers/auth.controller';
+import { User } from '../../models/user.model';
+import { addIcons } from 'ionicons';
+import { 
+  personAddOutline,
+  personOutline,
+  mailOutline,
+  lockClosedOutline,
+  rocketOutline
+} from 'ionicons/icons';
 
+addIcons({
+  personAddOutline,
+  personOutline,
+  mailOutline,
+  lockClosedOutline,
+  rocketOutline
+});
 @Component({
   selector: 'app-register',
   standalone: true,
@@ -12,12 +29,23 @@ import { RouterModule, Router } from '@angular/router';
   styleUrls: ['./register.page.scss']
 })
 export class RegisterPage {
-  private router = inject(Router);
-  user = { name: '', email: '', password: '' };
+  private auth = inject(AuthController);
 
-handleRegister() {
-  console.log("Navigating to Approval...");
-  // This must match the path in app.routes.ts exactly!
-  this.router.navigate(['/approval-pending']); 
-}
+  user: User = new User({
+    firstName: '',
+    lastName: '',
+    email: '',
+    secretPassword: '',
+    userActive: false 
+  });
+
+  handleRegister() {
+    if(!this.user.firstName || !this.user.email || !this.user.secretPassword) {
+      alert("Please fill in all required fields.");
+      return;
+    }
+
+    console.log("Transmitting new agent profile to Gateway...");
+    this.auth.register(this.user);
+  }
 }

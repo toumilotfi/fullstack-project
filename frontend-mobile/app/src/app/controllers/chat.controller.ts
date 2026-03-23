@@ -1,29 +1,44 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, inject, signal, effect } from '@angular/core';
+import { ChatApi } from '../api/chat.api';
+import { WebSocketService } from '../api/websocket.service';
+import { ChatMessage } from '../models/chat-message.model';
 
-export interface Message {
-  id: number;
-  text: string;
-  time: string;
-  isMe: boolean;
+@Injectable({
+  providedIn: 'root'
+})
+export class ChatController {
+  private chatApi = inject(ChatApi);
+  private wsService = inject(WebSocketService);
+
+  messages = signal<ChatMessage[]>([]);
+
+  constructor() {
+    effect(() => {
+      const newMsg = this.wsService.incomingMessage();
+      if (newMsg) {
+        this.messages.update(prev => [...prev, newMsg]);
+      }
+    });
+  }
+initChat(userId: number) {
+  this.chatApi.getInbox(userId).subscribe({
+    next: (history: ChatMessage[]) => this.messages.set(history),
+    error: (err: any) => console.error('Failed to load history', err)
+  });
+
+  this.wsService.connect(userId);
 }
 
-@Injectable({ providedIn: 'root' })
-export class MessagingController {
-  // Signal for messages
-  public messages = signal<Message[]>([
-    { id: 1, text: 'Hey Ahmed! Did you see the new UI?', time: '10:00 AM', isMe: false },
-    { id: 2, text: 'Yeah, the Neon Glass look is fire! 🔥', time: '10:02 AM', isMe: true }
-  ]);
+  sendMessage(userId: number, content: string) {
+    this.chatApi.sendMessageToAdmin(userId, content).subscribe({
+      next: (sentMsg) => {
+        this.messages.update(prev => [...prev, sentMsg]);
+      },
+      error: (err) => console.error('Transmission failed', err)
+    });
+  }
 
-  // Logic to send a message
-  sendMessage(text: string) {
-    const newMsg: Message = {
-      id: Date.now(),
-      text: text,
-      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-      isMe: true
-    };
-    // Update the signal
-    this.messages.update(msgs => [...msgs, newMsg]);
+  closeChat() {
+    this.wsService.disconnect();
   }
 }

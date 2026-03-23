@@ -1,0 +1,39 @@
+<div class="page-container">
+  <header class="section-header">
+    <div class="title-wrap">
+      <h1>Registration Queue</h1>
+      <p>Analyze and authorize new member requests</p>
+    </div>
+    <div class="count-badge">{{ adminService.pendingUsers().length }} Pending</div>
+  </header>
+
+  <div class="requests-grid">
+    <div class="empty-state glass" *ngIf="adminService.pendingUsers().length === 0">
+      <ion-icon name="shield-checkmark"></ion-icon>
+      <h3>Queue is Empty</h3>
+      <p>All registration requests have been processed.</p>
+    </div>
+
+    <div class="request-card glass" *ngFor="let user of adminService.pendingUsers()">
+      <div class="user-profile">
+        <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="avatar">
+        
+        <div class="info">
+          <h3>{{ user.firstName }} {{ user.lastName }}</h3>
+          <span class="email">{{ user.email }}</span>
+<span class="date">Role: {{ user.role || 'AGENT' }}</span>        </div>
+      </div>
+      
+     <div class="footer-actions">
+  <button class="btn-reject" (click)="reject(user.id!)">Reject</button>
+
+  <button 
+    *ngIf="!user.userActive" 
+    (click)="approve(user.id!)" 
+    class="btn-approve">
+    <ion-icon name="person-add-outline"></ion-icon> Approve Profile
+  </button>
+</div>
+    </div>
+  </div>
+</div>

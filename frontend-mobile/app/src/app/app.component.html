@@ -1,31 +1,5 @@
 <ion-app>
-  <ion-header *ngIf="uiCtrl.showLayout()" class="ion-no-border">
-    <ion-toolbar class="glass-header">
-      <ion-title>Task<span>Flow</span></ion-title>
-      <ion-buttons slot="end">
-        <ion-button routerLink="/notifications" class="notif-btn">
-          <ion-icon name="notifications-outline"></ion-icon>
-          <div class="dot" *ngIf="notifyCtrl.unreadCount() > 0"></div>
-        </ion-button>
-      </ion-buttons>
-    </ion-toolbar>
-  </ion-header>
-
-  <ion-content id="main-content">
+  <ion-content id="main-content" [fullscreen]="true">
     <ion-router-outlet></ion-router-outlet>
   </ion-content>
-
-  <ion-footer *ngIf="uiCtrl.showLayout()" class="ion-no-border">
-    <div class="floating-tab-bar">
-      <button (click)="nav('/home')" [class.active]="currTab=='home'">
-        <ion-icon name="grid-outline"></ion-icon>
-      </button>
-      <button (click)="nav('/messaging')" [class.active]="currTab=='chat'">
-        <ion-icon name="chatbubbles-outline"></ion-icon>
-      </button>
-      <button (click)="nav('/profile')" [class.active]="currTab=='profile'">
-        <ion-icon name="person-outline"></ion-icon>
-      </button>
-    </div>
-  </ion-footer>
 </ion-app>

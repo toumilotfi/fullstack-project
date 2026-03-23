@@ -1,37 +1,39 @@
-<ion-content class="tasks-bg">
-  <div class="header-space">
-    <h1>All Tasks</h1>
-    <p>Manage your workload</p>
-  </div>
+<ion-content class="app-page-bg">
+  
+  <app-glass-header title="MISSION ARCHIVE" subtitle="HISTORY LOGS">
+    <ion-back-button defaultHref="/home" color="light"></ion-back-button>
+  </app-glass-header>
 
-  <div class="add-task-box">
-    <input type="text" placeholder="Add a new task..." [(ngModel)]="newTaskTitle" (keyup.enter)="addNewTask()">
-    <button (click)="addNewTask()">
-      <ion-icon name="add"></ion-icon>
-    </button>
-  </div>
-
-  <div class="task-list">
-    <div class="glass-item" *ngFor="let task of taskCtrl.tasks()">
-      
-      <div class="left-side">
-        <div class="dot" [ngClass]="{
-          'red': task.priority === 'High',
-          'yellow': task.priority === 'Medium',
-          'green': task.priority === 'Low'
-        }"></div>
+  <div class="archive-container">
+    <div class="task-list">
+      <ng-container *ngFor="let task of taskCtrl.userTasks()">
         
-        <div class="info">
+        <div class="modern-card">
+          <div class="card-header">
+            <span class="task-id">{{ task.id }}</span>
+            <ion-chip [color]="task.completed ? 'success' : 'warning'">
+              {{ task.completed ? 'TERMINATED' : 'ACTIVE' }}
+            </ion-chip>
+          </div>
+
           <h3>{{ task.title }}</h3>
-          <span>{{ task.category }}</span>
+          <p>{{ task.description }}</p>
+
+          <div class="progress-container">
+            <div class="progress-text">
+              <span>Neural Sync</span>
+              <span>{{ task.completed ? '100%' : '0%' }}</span>
+            </div>
+            <ion-progress-bar [value]="task.completed ? 1 : 0" [color]="task.completed ? 'success' : 'primary'"></ion-progress-bar>
+          </div>
         </div>
-      </div>
 
-      <div class="right-side">
-        <span class="status">{{ task.progress }}%</span>
-        <ion-icon name="chevron-forward" color="medium"></ion-icon>
-      </div>
+      </ng-container>
+    </div>
 
+    <div *ngIf="taskCtrl.userTasks().length === 0" class="empty-state">
+      <ion-icon name="file-tray-outline"></ion-icon>
+      <p>No mission records found in the database.</p>
     </div>
   </div>
 </ion-content>

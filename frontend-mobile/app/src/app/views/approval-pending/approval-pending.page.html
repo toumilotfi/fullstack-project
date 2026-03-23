@@ -1,22 +1,35 @@
-<ion-content class="approval-bg">
-  <div class="status-card">
+<ion-content class="auth-bg">
+  <div class="neon-mesh-container">
     
-    <div class="loader-ring">
-      <div class="ring"></div>
-      <div class="ring"></div>
-      <ion-icon name="hourglass-outline"></ion-icon>
+    <div class="glass-card status-card">
+      <div class="status-icon-container">
+        <div class="pulse-ring"></div>
+        <ion-icon name="shield-half-outline"></ion-icon>
+      </div>
+
+      <div class="header-section">
+        <h1>STATUS: <span class="neon-text">PENDING</span></h1>
+        <p>Credentials received, Agent.</p>
+      </div>
+
+      <div class="info-box">
+        <p>Lotfi (The Admin) must manually authorize your neural link before you can access active missions.</p>
+        <p class="email-display" *ngIf="registeredEmail">{{ registeredEmail }}</p>
+      </div>
+
+      <button class="action-btn-neon" (click)="checkStatus()">
+        CHECK AUTHORIZATION
+      </button>
+
+      <button class="action-btn-outline" routerLink="/login">
+        <span>BACK TO GATEWAY</span>
+      </button>
+
+      <div class="footer-note">
+        <ion-icon name="alert-circle-outline"></ion-icon>
+        Awaiting response from Spring Boot Server.
+      </div>
     </div>
 
-    <h1>Account Pending</h1>
-    <p>We are verifying your credentials.</p>
-
-    <div class="status-step">
-      <ion-icon name="checkmark-circle" color="success"></ion-icon> <span>Profile Created</span>
-    </div>
-    <div class="status-step active">
-      <ion-icon name="ellipse" class="blink"></ion-icon> <span>Admin Review</span>
-    </div>
-
-    <button class="ghost-btn" routerLink="/login">Back to Login</button>
   </div>
 </ion-content>

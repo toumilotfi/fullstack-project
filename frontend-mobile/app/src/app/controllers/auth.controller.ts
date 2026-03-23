@@ -1,36 +1,55 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { UiController } from './ui.controller';
+import { UserApi } from '../api/user.api'; 
+import { User } from '../models/user.model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthController {
+  private userApi = inject(UserApi); 
   private router = inject(Router);
-  private ui = inject(UiController);
 
-  login(email: string, pass: string) {
-    if (email && pass) {
-      // Simulate a login delay for realism
-      console.log('Logging in...');
-      this.ui.setHasLayout(true); // Show the bottom bar
-      this.router.navigate(['/home']);
-    } else {
-      alert('Please enter your email and password.');
-    }
+  currentUser = signal<User | null>(null);
+
+  login(email: string, secretPassword: string) {
+    this.userApi.login(email, secretPassword).subscribe({
+      next: (response: string) => {
+        if (response.includes("successful")) {
+          
+          this.userApi.getAllUsers().subscribe({
+            next: (users: User[]) => { 
+              const myUser = users.find(u => u.email === email);
+              if (myUser) {
+                if (!myUser.userActive) {
+                  alert("ACCOUNT LOCKED: Awaiting Admin Approval.");
+                  return;
+                }
+                this.currentUser.set(myUser);
+                this.router.navigate(['/home']);
+              }
+            }
+          });
+          
+        } else {
+          alert("ACCESS DENIED: " + response);
+        }
+      },
+      error: (err: any) => alert("CONNECTION FAILED: Is Lotfi's server running?")
+    });
   }
 
-  register(name: string, email: string, pass: string) {
-    if (name && email && pass) {
-      console.log('Registering...');
-      // Send user to "Approval Pending" instead of Home
-      this.ui.setHasLayout(false); // Hide the bottom bar
-      this.router.navigate(['/approval-pending']);
-    } else {
-      alert('Please fill in all fields.');
-    }
+  register(user: User) {
+    this.userApi.register(user).subscribe({
+      next: (savedUser: User) => {
+        alert("Registration complete! Awaiting Admin approval.");
+        this.router.navigate(['/approval-pending'], { queryParams: { email: user.email } });
+      },
+      error: (err: any) => console.error("Registration Error", err)
+    });
   }
-  
+
   logout() {
-    this.ui.setHasLayout(false);
-    this.router.navigate(['/landing']);
+    this.currentUser.set(null);
+    this.userApi.logout().subscribe(); 
+    this.router.navigate(['/login']);
   }
 }

@@ -1,54 +1,34 @@
-h1 { font-weight: 700; font-size: 26px; color: #1a1a1a; margin-bottom: 5px; }
-p { color: #6c757d; margin-bottom: 20px; }
-
-ion-segment {
-  background: #f4f5f8;
-  border-radius: 12px;
-  padding: 4px;
-}
+.app-page-bg { --background: #0f172a; }
+.archive-container { padding: 10px 20px 20px; }
 
 .modern-card {
-  margin: 0 0 16px 0;
+  background: rgba(30, 41, 59, 0.6);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: 20px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.06);
-  border: 1px solid #f0f0f0;
+  padding: 20px;
+  margin-bottom: 15px;
 
   .card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 12px;
-    
-    .due-date { font-size: 12px; color: #999; font-weight: 500; }
+    display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;
+    .task-id { color: #00fff2; font-size: 0.7rem; font-weight: 800; font-family: monospace; }
+    ion-chip { --height: 24px; font-size: 0.6rem; font-weight: 800; margin: 0; }
   }
 
-  h3 { font-weight: 700; color: #1a1a1a; margin: 0 0 8px 0; }
-  p { font-size: 14px; color: #666; margin-bottom: 15px; }
+  h3 { color: white; margin: 0 0 8px 0; font-weight: 700; font-size: 1.1rem; }
+  p { font-size: 0.9rem; color: #94a3b8; margin-bottom: 15px; }
 
   .progress-container {
-    margin: 15px 0;
+    margin-top: 15px;
     .progress-text {
-      display: flex;
-      justify-content: space-between;
-      font-size: 12px;
-      font-weight: 600;
-      margin-bottom: 6px;
+      display: flex; justify-content: space-between; font-size: 0.7rem; color: white;
+      font-weight: 800; margin-bottom: 6px; text-transform: uppercase;
     }
-    ion-progress-bar { height: 8px; border-radius: 10px; }
-  }
-
-  .card-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 10px;
-    ion-chip { --background: #f0f4ff; height: 28px; font-size: 12px; }
+    ion-progress-bar { height: 6px; border-radius: 10px; --background: rgba(255,255,255,0.05); }
   }
 }
 
 .empty-state {
-  text-align: center;
-  padding: 50px 20px;
-  color: #ccc;
-  ion-icon { font-size: 64px; }
+  text-align: center; padding: 100px 20px; color: #334155;
+  ion-icon { font-size: 4rem; margin-bottom: 10px; color: #1e293b; }
 }

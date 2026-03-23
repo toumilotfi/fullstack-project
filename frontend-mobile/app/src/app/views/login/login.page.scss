@@ -38,10 +38,26 @@
   color: white; border: none; font-weight: 700; font-size: 1rem;
   display: flex; align-items: center; justify-content: center; gap: 10px;
   box-shadow: 0 10px 25px rgba(79, 70, 229, 0.4);
+  cursor: pointer;
 }
 
 .footer-link {
   margin-top: 25px;
   p { color: #94a3b8; }
   span { color: #818cf8; font-weight: 700; cursor: pointer; }
+}
+
+.forgot-link {
+  text-align: right;
+  color: #94a3b8;
+  font-size: 0.85rem;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+
+  &:hover {
+    color: #818cf8; 
+    text-shadow: 0 0 10px rgba(129, 140, 248, 0.4);
+  }
 }

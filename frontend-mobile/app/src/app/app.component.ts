@@ -2,7 +2,6 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common'; 
 import { Router, RouterModule } from '@angular/router'; 
 import { IonicModule } from '@ionic/angular'; 
-import { UiController } from './controllers/ui.controller';
 import { NotificationController } from './controllers/notification.controller';
 import { addIcons } from 'ionicons';
 import { 
@@ -19,13 +18,29 @@ import {
   styleUrls: ['app.component.scss']
 })
 export class AppComponent {
-  public uiCtrl = inject(UiController);
-  public notifyCtrl = inject(NotificationController);
   private router = inject(Router);
+  
+  public notifyCtrl = inject(NotificationController); 
+
   public currTab = 'home';
 
+  uniCtrl = { 
+    showLayout: () => {
+      const currentUrl = this.router.url;
+      
+      if (currentUrl === '/') {
+        return false;
+      }
+      
+      const hiddenPages = ['/login', '/register', '/approval-pending', '/landing'];
+      
+      const shouldHide = hiddenPages.some(page => currentUrl.includes(page));
+      return !shouldHide; 
+    }
+  };
+
+
   constructor() {
-    // Register ALL icons for the app here
     addIcons({ gridOutline, chatbubblesOutline, personOutline, notificationsOutline, rocketOutline, checkmarkDoneOutline, timeOutline, calendarOutline, settingsOutline, logOutOutline, chevronForwardOutline, send, add });
   }
 

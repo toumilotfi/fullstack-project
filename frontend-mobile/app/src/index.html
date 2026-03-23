@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="utf-8" />
   <title>Ionic App</title>
@@ -14,13 +13,16 @@
 
   <link rel="icon" type="image/png" href="assets/icon/favicon.png" />
 
-  <!-- add to homescreen for ios -->
-  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  <script>
+    if (typeof global === 'undefined') {
+      var global = window;
+    }
+  </script>
 </head>
-
 <body>
   <app-root></app-root>
 </body>
-
 </html>
