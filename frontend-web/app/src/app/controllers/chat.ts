@@ -1,7 +1,9 @@
-import { Component, inject, OnInit, effect } from '@angular/core';
+import { Component, inject, OnInit, effect, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
+import { HttpParams } from '@angular/common/http';
+import { forkJoin } from 'rxjs';
 import { AdminService } from '../services/admin.service';
 import { AdminWebSocketService } from '../services/websocket.service';
 import { User, ChatMessage } from '../models/admin.model';
@@ -21,47 +23,102 @@ export class ChatComponent implements OnInit {
   messageText: string = '';
   chatHistory: ChatMessage[] = [];
 
+  @ViewChild('scrollArea') scrollArea!: ElementRef;
+
   constructor() {
     effect(() => {
       const msg = this.webSocket.incomingMessage();
-      if (msg && this.selectedUser && (msg.senderId === this.selectedUser.id)) {
-        this.chatHistory.push(msg);
+
+      if (
+        msg &&
+        this.selectedUser &&
+        (msg.senderId === this.selectedUser.id ||
+         msg.receiverId === this.selectedUser.id)
+      ) {
+        this.chatHistory.push(new ChatMessage(msg));
+        this.scrollToBottom();
       }
     });
   }
 
   ngOnInit() {
-     this.adminService.loadUsers();
-     this.webSocket.connect();
+    this.adminService.loadUsers();
+    this.webSocket.connect();
   }
 
-   selectUser(user: User) {
-    this.selectedUser = user;
-     this.adminService.http.get<ChatMessage[]>(`http://localhost:8080/api/v1/admin/messages/inbox`).subscribe({
-      next: (msgs: ChatMessage[]) => {
-         this.chatHistory = msgs.filter((m: ChatMessage) => 
-          m.senderId === user.id || m.receiverId === user.id
-        );
-      },
-      error: (err: any) => console.error('Comms Sync Failure:', err)
+  private scrollToBottom() {
+    setTimeout(() => {
+      if (this.scrollArea) {
+        this.scrollArea.nativeElement.scrollTop =
+          this.scrollArea.nativeElement.scrollHeight;
+      }
     });
   }
 
-   sendMessage() {
+  selectUser(user: User) {
+    this.selectedUser = user;
+
+    const inbox$ = this.adminService.http.get<ChatMessage[]>(
+      `http://localhost:8080/api/v1/admin/messages/inbox`
+    );
+
+    const sent$ = this.adminService.http.get<ChatMessage[]>(
+      `http://localhost:8080/api/v1/admin/messages`
+    );
+
+    forkJoin([inbox$, sent$]).subscribe({
+      next: ([inbox, sent]) => {
+        const all = [...inbox, ...sent];
+
+        this.chatHistory = all
+          .filter(m =>
+            m.senderId === user.id || m.receiverId === user.id
+          )
+          .map(m => new ChatMessage(m))
+          .sort(
+            (a, b) =>
+              new Date(a.createdAt).getTime() -
+              new Date(b.createdAt).getTime()
+          );
+
+        this.scrollToBottom();
+      },
+      error: err => console.error('Comms Sync Failure:', err)
+    });
+  }
+
+  sendMessage() {
     if (!this.messageText.trim() || !this.selectedUser) return;
 
-    const msg: Partial<ChatMessage> = {
-      receiverId: this.selectedUser.id,
-      content: this.messageText,
-      senderRole: 'ADMIN'  
-    };
+    const adminId = 1;
+    const userId = this.selectedUser.id!;
 
-     this.adminService.http.post<ChatMessage>(`http://localhost:8080/api/v1/admin/message/user`, msg).subscribe({
-      next: (res: ChatMessage) => {
-        this.chatHistory.push(res);
-        this.messageText = ''; // Clear input field in template
-      },
-      error: (err: any) => console.error('Transmission Failure:', err)
-    });
+    const params = new HttpParams()
+      .set('adminId', adminId)
+      .set('userId', userId)
+      .set('message', this.messageText);
+
+    this.adminService.http
+      .post<string>(
+        `http://localhost:8080/api/v1/admin/message/user`,
+        {},
+        { params }
+      )
+      .subscribe({
+        next: () => {
+          const newMsg = new ChatMessage({
+            senderId: adminId,
+            receiverId: userId,
+            senderRole: 'ADMIN',
+            content: this.messageText,
+            read: false
+          });
+
+          this.chatHistory.push(newMsg);
+          this.messageText = '';
+          this.scrollToBottom();
+        },
+        error: err => console.error('Transmission Failure:', err)
+      });
   }
 }

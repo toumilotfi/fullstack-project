@@ -9,24 +9,30 @@
     </div>
   </header>
 
+  <!-- EMPTY STATE -->
   <div class="empty-state glass" *ngIf="getPendingTasks().length === 0">
     <ion-icon name="checkmark-done-circle-outline"></ion-icon>
     <h3>Queue Clear</h3>
     <p>No missions require HQ authorization.</p>
   </div>
 
+  <!-- TASK LIST -->
   <div class="inspection-list" *ngIf="getPendingTasks().length > 0">
     <div class="review-card glass" *ngFor="let task of getPendingTasks()">
       
       <div class="card-content">
         <div class="meta">
           <span class="id-badge">TASK #{{ task.id }}</span>
-          <span class="status-indicator" [class.active-intel]="task.response">
-            {{ task.response ? 'REPORT RECEIVED' : 'AWAITING AGENT' }}
+
+          <!-- Status indicator -->
+          <span class="status-indicator" 
+                [class.active-intel]="task.userResponse">
+            {{ task.userResponse ? 'REPORT RECEIVED' : 'AWAITING AGENT' }}
           </span>
         </div>
         
         <h3>{{ task.title }}</h3>
+
         <p class="assignee">
           Operative: <strong>{{ getAgentName(task.assignedToUserId) }}</strong>
         </p>
@@ -35,22 +41,30 @@
           <p class="label">Original Orders:</p>
           <p class="orders">{{ task.description }}</p>
           
-          <div class="agent-report-area" *ngIf="task.response">
+          <!-- Agent response -->
+          <div class="agent-report-area" *ngIf="task.userResponse">
             <div class="divider"></div>
             <p class="label incoming-glow">Incoming Agent Intel:</p>
-            <p class="report-text">{{ task.response }}</p>
+            <p class="report-text">{{ task.userResponse }}</p>
           </div>
         </div>
       </div>
 
+      <!-- ACTION BUTTONS -->
       <div class="inspector-actions">
-        <button class="btn-reject" (click)="rejectTask(task)" [disabled]="processingId === task.id">
-          <ion-icon name="close-circle-outline" *ngIf="processingId !== task.id"></ion-icon>
+        <button class="btn-reject"
+                (click)="rejectTask(task)"
+                [disabled]="processingId === task.id">
+          <ion-icon name="close-circle-outline" 
+                    *ngIf="processingId !== task.id"></ion-icon>
           REJECT
         </button>
         
-        <button class="btn-verify" (click)="acceptTask(task)" [disabled]="processingId === task.id || !task.response">
-          <ion-icon name="checkmark-circle-outline" *ngIf="processingId !== task.id"></ion-icon>
+        <button class="btn-verify"
+                (click)="acceptTask(task)"
+                [disabled]="processingId === task.id || !task.userResponse">
+          <ion-icon name="checkmark-circle-outline" 
+                    *ngIf="processingId !== task.id"></ion-icon>
           AUTHORIZE
         </button>
       </div>

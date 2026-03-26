@@ -1,12 +1,13 @@
-import { Injectable, inject, signal, computed } from '@angular/core'; // ✅ Corrected from @angular/common/http
+import { Injectable, inject, signal, computed } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { User, Task, AppNotification } from '../models/admin.model';
 import { tap } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class AdminService {
-  public http = inject(HttpClient);  
-  private baseUrl = 'http://localhost:8080/api/v1';
+  public http = inject(HttpClient);
+  private baseUrl = environment.apiUrl;
 
    users = signal<User[]>([]);
   tasks = signal<Task[]>([]);
@@ -37,6 +38,11 @@ export class AdminService {
       tap(() => this.loadUsers())
     );
   }
+deleteTask(id: number) {
+  return this.http.delete(`${this.baseUrl}/Task/tasks/${id}`).pipe(
+    tap(() => this.loadTasks())
+  );
+}
 
    loadTasks() {
     return this.http.get<Task[]>(`${this.baseUrl}/Task/tasks`).subscribe((data: Task[]) => {
@@ -50,11 +56,26 @@ export class AdminService {
     );
   }
 
-   sendGlobalNotification(title: string, message: string) {
-    return this.http.post(`${this.baseUrl}/Not/notify/all`, { title, message });
-  }
+sendGlobalNotification(message: string) {
+  const body = new FormData();
+  body.append('message', message);
 
-  sendDirectNotification(userId: number, title: string, message: string) {
-    return this.http.post(`${this.baseUrl}/Not/notify/${userId}`, { title, message });
-  }
+  return this.http.post(`${this.baseUrl}/Not/notify/all`, body);
+}
+
+sendDirectNotification(userId: number, message: string) {
+  const body = new FormData();
+  body.append('message', message);
+
+  return this.http.post(`${this.baseUrl}/Not/notify/${userId}`, body);
+}
+getUserNotifications(userId: number) {
+  return this.http.get<any[]>(`${this.baseUrl}/Not/notifications/status/${userId}`);
+}
+
+
+  declineTask(id: number) {
+  return this.http.put(`${this.baseUrl}/Task/tasks/${id}/decline`, {});
+}
+
 }

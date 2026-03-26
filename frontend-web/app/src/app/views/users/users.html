@@ -2,7 +2,7 @@
   <header class="view-header">
     <div class="title-meta">
       <h1>Active Personnel</h1>
-      <p>Synchronized with Lotfi's Central Database</p>
+      <p>Manage operative accounts and access permissions.</p>
     </div>
     <button class="primary-btn" (click)="openModal()">
       <ion-icon name="person-add-sharp"></ion-icon> 
@@ -23,7 +23,7 @@
       </thead>
       <tbody>
         <tr *ngFor="let user of adminService.users()" class="table-row">
-          <td class="id-col">#{{ user.id }}</td>
+          <td class="id-col">{{ user.id }}</td>
           <td class="name-col">
             <div class="user-info">
               <span class="full-name">{{ user.firstName }} {{ user.lastName }}</span>

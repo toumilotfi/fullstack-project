@@ -1,47 +1,61 @@
 <div class="chat-container">
+  
+  <!-- SIDEBAR -->
   <aside class="user-list glass">
     <div class="list-header">
       <h3>Operatives</h3>
     </div>
+
     <div class="users">
-      <div class="user-item" 
-           *ngFor="let user of adminService.users()" 
+      <div class="user-item"
+           *ngFor="let user of adminService.users()"
            [class.active]="selectedUser?.id === user.id"
            (click)="selectUser(user)">
+           
         <div class="status-dot" [class.online]="user.userActive"></div>
+
         <div class="user-meta">
           <span class="name">{{ user.firstName }} {{ user.lastName }}</span>
-          <span class="role">{{ user.email }}</span>
+          
         </div>
       </div>
     </div>
   </aside>
 
+  <!-- CHAT WINDOW -->
   <main class="chat-window glass">
     <ng-container *ngIf="selectedUser; else noSelect">
+
       <header class="chat-header">
         <ion-icon name="person-circle-outline"></ion-icon>
         <div class="header-info">
-          <h4>{{ selectedUser.firstName }} {{ selectedUser.lastName }}</h4>
-          <span>Secure Channel Active</span>
+          <h4><span class="role">{{ selectedUser.email }}</span> </h4>
+          <span class="sub">Secure Channel Active</span>
         </div>
       </header>
 
-      <div class="message-area">
-        <div *ngFor="let msg of chatHistory" 
-             [class.sent]="msg.senderRole === 'ADMIN'" 
-             [class.received]="msg.senderRole === 'USER'"
-             class="message-bubble">
-          <p>{{ msg.content }}</p>
+      <div class="message-area" #scrollArea>
+        <div *ngFor="let msg of chatHistory"
+             class="message-bubble"
+             [class.sent]="msg.senderRole === 'ADMIN'"
+             [class.received]="msg.senderRole === 'USER'">
+
+          <p class="text">{{ msg.content }}</p>
           <span class="time">{{ msg.createdAt | date:'shortTime' }}</span>
         </div>
       </div>
 
       <footer class="input-area">
-<input type="text" [(ngModel)]="messageText" (keyup.enter)="sendMessage()" placeholder="Type an encrypted message...">        <button (click)="sendMessage()">
+        <input type="text"
+               [(ngModel)]="messageText"
+               (keyup.enter)="sendMessage()"
+               placeholder="Type an encrypted message...">
+
+        <button (click)="sendMessage()">
           <ion-icon name="send"></ion-icon>
         </button>
       </footer>
+
     </ng-container>
 
     <ng-template #noSelect>
