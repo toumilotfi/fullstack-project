@@ -4,6 +4,7 @@ import com.example.ap.models.TaskComplete;
 import com.example.ap.Repositories.TaskRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -41,7 +42,8 @@ public class TaskService {
         Task task = taskRepository.findById(taskComplete.getTaskId())
                 .orElseThrow(() -> new RuntimeException("Task not found with id: " + taskComplete.getTaskId()));
 
-        task.setCompleted(true);
+        task.setStatus("COMPLETED");
+        task.setResponseAt(LocalDateTime.now());
         Task savedTask = taskRepository.save(task);
 
         System.out.println("Admin notified: User " + taskComplete.getUsername() +

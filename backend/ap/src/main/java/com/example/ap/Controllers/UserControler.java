@@ -51,40 +51,38 @@ import java.util.List;
         notificationService.markAsRead(id);
         return "Notification marked as read";
     }
+    // SEND MESSAGE USER → ADMIN
     @PostMapping("/message/admin")
-    public String userToAdmin(
+    public ChatMessage userToAdmin(
             @RequestParam Integer userId,
             @RequestParam String message
     ) {
-        // Verify user exists
         userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        // Create chat message
         ChatMessage chat = new ChatMessage(
                 userId,
-
                 1, // admin ID
                 "USER",
                 message,
                 LocalDateTime.now()
         );
-        // Save message so user can see it later
+
         chatMessageRepository.save(chat);
-        // Send to RabbitMQ
         chatProducer.sendToAdmin(chat);
 
-        return "Message sent to admin";
+        return chat; // <-- FIX: return the message object
     }
 
-    @GetMapping("/messages/{userId}")
-    public List<ChatMessage> getUserMessages(@PathVariable Integer userId) {
+    // SENT MESSAGES (user → admin)
+    @GetMapping("/messages/sent/{userId}")
+    public List<ChatMessage> getSentMessages(@PathVariable Integer userId) {
         return chatMessageRepository.findBySenderIdOrderByCreatedAtAsc(userId);
     }
 
+    // INBOX (admin → user)
     @GetMapping("/messages/inbox/{userId}")
     public List<ChatMessage> getUserInbox(@PathVariable Integer userId) {
         return chatMessageRepository.findByReceiverIdOrderByCreatedAtAsc(userId);
     }
-
 }
