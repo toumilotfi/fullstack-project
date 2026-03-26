@@ -50,10 +50,13 @@ export class TasksComponent implements OnInit {
     this.newTask = { title: '', description: '', assignedToUserId: 0, completed: false };
   }
 
+
   deleteTask(id: number) {
-     this.adminService.deleteUser(id).subscribe({
-      next: (res: any) => this.adminService.loadTasks(),
-      error: (err: any) => console.error(err)
-    });
-  }
+  this.adminService.deleteTask(id).subscribe({
+    next: () => this.adminService.loadTasks(),
+    error: (err) => console.error(err)
+  });
+}
+
+
 }

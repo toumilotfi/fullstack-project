@@ -272,3 +272,68 @@ textarea { min-height: 130px; resize: none; }
   fill: #ffffff !important;
 }
 @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+.alert-global { color: #22d3ee; }
+.alert-direct { color: #a855f7; }
+.command-dock {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  background: linear-gradient(135deg, rgba(20, 20, 40, 0.85), rgba(10, 10, 25, 0.85));
+  backdrop-filter: blur(20px);
+
+  border-top: 2px solid rgba(0, 255, 242, 0.25);
+  box-shadow: 0 -5px 25px rgba(0, 255, 242, 0.15);
+
+  padding: 16px 25px;
+
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.command-dock {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  background: #0a0f1a;
+  border-top: 1px solid #1e293b;
+
+  padding: 14px 25px;
+
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  box-shadow: 0 -8px 20px rgba(0, 0, 0, 0.6);
+}
+.dock-nav {
+  color: #94a3b8;
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  transition: 0.25s ease;
+}
+
+.dock-nav ion-icon {
+  font-size: 1.6rem;
+  transition: 0.25s ease;
+}
+
+.dock-nav.active,
+.dock-nav:hover {
+  color: #00fff2;
+}
+
+.dock-nav.active ion-icon,
+.dock-nav:hover ion-icon {
+  color: #00fff2;
+  transform: translateY(-3px);
+}

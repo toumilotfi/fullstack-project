@@ -2,6 +2,7 @@ import { Injectable, signal } from '@angular/core';
 import { Client } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
 import { ChatMessage } from '../models/admin.model';
+import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class AdminWebSocketService {
@@ -10,17 +11,29 @@ export class AdminWebSocketService {
 
   constructor() {
     this.stompClient = new Client({
-       webSocketFactory: () => new SockJS('http://172.21.0.1:8080/chat'),
+      webSocketFactory: () => new SockJS(`${environment.wsUrl}/chat`),
       reconnectDelay: 5000,
+      debug: () => {}, // silence logs
+
       onConnect: () => {
-        console.log('Connected to Lotfi\'s RabbitMQ Broker');
-         this.stompClient.subscribe('/topic/admin', (msg) => {
+        console.log("Connected to Lotfi's RabbitMQ Broker");
+
+        this.stompClient.subscribe('/topic/admin', (msg) => {
           this.incomingMessage.set(JSON.parse(msg.body));
         });
       }
     });
   }
 
-  connect() { this.stompClient.activate(); }
-  disconnect() { this.stompClient.deactivate(); }
+  connect() {
+    if (!this.stompClient.active) {
+      this.stompClient.activate();
+    }
+  }
+
+  disconnect() {
+    if (this.stompClient.active) {
+      this.stompClient.deactivate();
+    }
+  }
 }

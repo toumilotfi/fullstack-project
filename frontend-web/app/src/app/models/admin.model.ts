@@ -19,25 +19,30 @@ export class User {
     this.createdAt = data.createdAt;
   }
 }
-
- export class Task {
-  id?: number;
+export class Task {
+  id: number;
   title: string;
   description: string;
   assignedToUserId: number;
-  completed: boolean;
-   response?: string; 
+  userResponse?: string;
+  status?: string;
   createdAt?: string;
+  responseAt?: string;
+  completed?: boolean;
 
   constructor(data: Partial<Task> = {}) {
-    this.id = data.id;
-    this.title = data.title || '';
-    this.description = data.description || '';
-    this.assignedToUserId = data.assignedToUserId || 0;
-    this.completed = data.completed ?? false;
-    this.response = data.response || '';  
+    this.id = data.id ?? 0;
+    this.title = data.title ?? '';
+    this.description = data.description ?? '';
+    this.assignedToUserId = data.assignedToUserId ?? 0;
+    this.userResponse = data.userResponse ?? '';   // ✔ FIXED
+    this.status = data.status ?? 'PENDING';
     this.createdAt = data.createdAt;
+    this.responseAt = data.responseAt;
+    this.completed = data.completed ?? false;
   }
+
+
 }
 
 export class ChatMessage {
@@ -59,6 +64,10 @@ export class ChatMessage {
     this.read = data.read ?? false;
   }
 }
+
+
+
+
 
 export class AppNotification {
   id?: number;

@@ -14,14 +14,14 @@
           <select [(ngModel)]="newTask.assignedToUserId">
             <option [value]="0" disabled>Select Agent...</option>
             <option *ngFor="let user of adminService.users()" [value]="user.id">
-              #{{ user.id }} - {{ user.firstName }} {{ user.lastName }}
+              {{ user.id }} - {{ user.firstName }} {{ user.lastName }}
             </option>
           </select>
         </div>
 
         <div class="input-group">
           <label>MISSION TITLE</label>
-          <input type="text" [(ngModel)]="newTask.title" placeholder="e.g., Protocol Alpha-9">
+          <input type="text" [(ngModel)]="newTask.title" placeholder="">
         </div>
 
         <div class="input-group">
@@ -43,11 +43,13 @@
 
       <div class="feed-scroll custom-scrollbar">
         <div class="mission-item" *ngFor="let t of adminService.tasks()">
+         
           <div class="status-indicator" [class.done]="t.completed"></div>
+           <span class="m-id">{{ t.id }}</span>
           <div class="m-content">
             <div class="m-top">
               <strong>{{ t.title }}</strong>
-              <span class="m-id">#{{ t.id }}</span>
+              
             </div>
             <p>Agent ID: {{ t.assignedToUserId }}</p>
           </div>

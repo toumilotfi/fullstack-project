@@ -1,16 +1,17 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { AdminService } from '../services/admin.service';  
-import { User } from '../models/admin.model';  
+import { AdminService } from '../services/admin.service';
+import { User } from '../models/admin.model';
 
 @Component({
   selector: 'app-users',
   standalone: true,
   imports: [CommonModule, FormsModule, IonicModule],
   templateUrl: '../views/users/users.html',
-  styleUrl: '../views/users/users.css'
+  styleUrl: '../views/users/users.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UsersComponent implements OnInit {
   public adminService = inject(AdminService);
@@ -41,13 +42,13 @@ export class UsersComponent implements OnInit {
 
   save() {
      if (this.isEditing && this.formData.id) {
-       this.adminService.http.put(`http://localhost:8080/api/v1/admin/users/${this.formData.id}`, this.formData)
+       this.adminService.http.put(`http://172.21.0.1:8080/api/v1/admin/users/${this.formData.id}`, this.formData)
         .subscribe({
           next: (res: any) => { this.adminService.loadUsers(); this.closeModal(); },
           error: (err: any) => console.error(err)
         });
     } else {
-       this.adminService.http.post(`http://localhost:8080/api/v1/admin/users/new`, this.formData)
+       this.adminService.http.post(`http://172.21.0.1:8080/api/v1/admin/users/new`, this.formData)
         .subscribe({
           next: (res: any) => { this.adminService.loadUsers(); this.closeModal(); },
           error: (err: any) => console.error(err)
