@@ -27,7 +27,7 @@ export class WebSocketService {
     this.stompClient.onConnect = () => {
       console.log('Connected to Secure WebSocket');
 
-      // 🔥 1. Listen to ALL admin messages
+      // Listen to ALL admin messages
       this.stompClient?.subscribe('/topic/admin', (message: Message) => {
         if (!message.body) return;
 
@@ -39,7 +39,6 @@ export class WebSocketService {
         }
       });
 
-      // 🔥 2. Optional: personal channel if backend supports it
       this.stompClient?.subscribe(`/topic/user/${userId}`, (message: Message) => {
         if (!message.body) return;
 

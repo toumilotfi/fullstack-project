@@ -11,7 +11,7 @@
           <div class="card-header">
             <span class="task-id">#{{ task.id }}</span>
 
-            <!-- ✅ FIX status -->
+            <!--FIX status -->
             <ion-chip [color]="getStatusColor(task.status || 'ASSIGNED')">
               {{ task.status || 'ASSIGNED' }}
             </ion-chip>
@@ -21,7 +21,7 @@
           <h3>{{ task.title }}</h3>
           <p>{{ task.description }}</p>
 
-          <!-- 🔥 RESPONSE BOX -->
+          <!-- RESPONSE BOX -->
           <div *ngIf="(task.status || 'ASSIGNED') === 'ASSIGNED'" class="response-box">
 
             <ion-textarea
@@ -40,7 +40,7 @@
 
           </div>
 
-          <!-- 🔁 REVISION MODE -->
+          <!--  REVISION MODE -->
           <div *ngIf="task.status === 'REVISION_REQUESTED'" class="response-box">
 
             <ion-textarea
@@ -59,7 +59,7 @@
 
           </div>
 
-          <!-- 📊 PROGRESS -->
+          <!--  PROGRESS -->
           <div class="progress-container">
             <div class="progress-text">
               <span>Status</span>
