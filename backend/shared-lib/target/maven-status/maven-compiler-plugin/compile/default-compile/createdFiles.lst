@@ -1,0 +1,7 @@
+com\example\shared\dto\LoginRequest.class
+com\example\shared\security\JwtUtil.class
+com\example\shared\event\UserApprovedEvent.class
+com\example\shared\dto\UserDTO.class
+com\example\shared\dto\AuthResponse.class
+com\example\shared\event\EmailEvent.class
+com\example\shared\event\NotificationEvent.class
