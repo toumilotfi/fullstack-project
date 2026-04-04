@@ -33,7 +33,7 @@ public class User {
     @Column(name = "password", nullable = false)
     private String secretPassword;
 
-    @Column(name = "userA")
+    @Column(name = "user_a")
     private Boolean userActive = true;
 
     @Column(name = "created_at", nullable = false)
