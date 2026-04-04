@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Backend Architecture Diagrams</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        .nav-tabs {
+            display: flex;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e9ecef;
+            overflow-x: auto;
+        }
+        .nav-tab {
+            padding: 15px 25px;
+            cursor: pointer;
+            background: #f8f9fa;
+            border: none;
+            font-size: 1em;
+            color: #666;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            border-bottom: 3px solid transparent;
+        }
+        .nav-tab:hover {
+            background: #e9ecef;
+            color: #333;
+        }
+        .nav-tab.active {
+            background: white;
+            color: #667eea;
+            border-bottom-color: #667eea;
+        }
+        .content {
+            padding: 40px;
+        }
+        .diagram-section {
+            display: none;
+            animation: fadeIn 0.3s ease-in;
+        }
+        .diagram-section.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .diagram-title {
+            font-size: 1.8em;
+            color: #333;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+        }
+        .diagram-description {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 1em;
+            line-height: 1.6;
+        }
+        .mermaid {
+            display: flex;
+            justify-content: center;
+            margin: 30px 0;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+        }
+        .export-section {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f0f4ff;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        .export-section h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        .export-button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-right: 10px;
+            margin-top: 10px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+        }
+        .export-button:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        .footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            font-size: 0.9em;
+        }
+        .info-box {
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        .info-box strong {
+            color: #1976D2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎯 Backend Architecture & Models</h1>
+            <p>Professional UML Diagrams for Fullstack Project</p>
+        </div>
+
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="showDiagram('class')">📊 Class Diagram</button>
+            <button class="nav-tab" onclick="showDiagram('usecase')">👥 Use Cases</button>
+            <button class="nav-tab" onclick="showDiagram('task-flow')">✅ Task Flow</button>
+            <button class="nav-tab" onclick="showDiagram('messaging')">💬 Messaging</button>
+            <button class="nav-tab" onclick="showDiagram('notifications')">🔔 Notifications</button>
+            <button class="nav-tab" onclick="showDiagram('auth')">🔐 Authentication</button>
+        </div>
+
+        <div class="content">
+            <!-- CLASS DIAGRAM -->
+            <div id="class" class="diagram-section active">
+                <h2 class="diagram-title">📊 Class Diagram - Data Models</h2>
+                <p class="diagram-description">
+                    Overview of all entity classes and their relationships. Shows the core data models including User, Task, ChatMessage, and Notification entities.
+                </p>
+                <div class="mermaid">
+classDiagram
+    class User {
+        -Integer id
+        -String email
+        -String firstName
+        -String lastName
+        -String secretPassword
+        -Boolean userActive
+        -LocalDateTime createdAt
+        +getId() Integer
+        +getEmail() String
+        +setEmail(String)
+    }
+
+    class Task {
+        -Integer id
+        -String status
+        -String title
+        -String description
+        -Integer assignedToUserId
+        -LocalDateTime createdAt
+        -String userResponse
+        -LocalDateTime responseAt
+        +getId() Integer
+        +getStatus() String
+        +setStatus(String)
+    }
+
+    class ChatMessage {
+        -Integer id
+        -Integer senderId
+        -Integer receiverId
+        -String senderRole
+        -String content
+        -LocalDateTime createdAt
+        -Boolean read
+        +getId() Integer
+        +getSenderId() Integer
+        +getContent() String
+    }
+
+    class Notification {
+        -Integer id
+        -String title
+        -String message
+        -Integer userId
+        -boolean isRead
+        -LocalDateTime createdAt
+        +getId() Integer
+        +getTitle() String
+        +isRead() boolean
+    }
+
+    class TaskComplete {
+        -Integer taskId
+        -String username
+        +getTaskId() Integer
+        +getUsername() String
+    }
+
+    class Email {
+        -Long id
+        -String toEmail
+        -String subject
+        -String status
+        -LocalDateTime sentAt
+    }
+
+    Task "1" --> "1" User : assigned to
+    ChatMessage "1" --> "1" User : sent by
+    ChatMessage "1" --> "1" User : received by
+    Notification "1" --> "1" User : notifies
+    TaskComplete "1" --> "1" Task : completes
+                </div>
+                <div class="info-box">
+                    <strong>Key Points:</strong>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li>User is the base entity with inheritance support (JOINED strategy)</li>
+                        <li>Task has lifecycle: ASSIGNED → IN_PROGRESS → COMPLETED</li>
+                        <li>ChatMessage supports bidirectional communication with role-based filtering</li>
+                        <li>Notification tracks read/unread status for user awareness</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- USE CASE DIAGRAM -->
+            <div id="usecase" class="diagram-section">
+                <h2 class="diagram-title">👥 Use Case Diagram</h2>
+                <p class="diagram-description">
+                    System use cases from the perspective of Users and Admins. Shows the main interactions each actor can perform with the system.
+                </p>
+                <div class="mermaid">
+graph TB
+    subgraph User["User Actors"]
+        U["👤 User"]
+    end
+
+    subgraph Admin["Admin Actors"]
+        A["👨‍💼 Admin"]
+    end
+
+    subgraph Features["System Features"]
+        UC1["Register/Login"]
+        UC2["View Profile"]
+        UC3["Update Profile"]
+        UC4["View Assigned Tasks"]
+        UC5["Submit Task Response"]
+        UC6["Receive Notification"]
+        UC7["Send Message"]
+        UC8["View Chat History"]
+        UC10["Create Task"]
+        UC11["Assign Task"]
+        UC12["Review Response"]
+        UC13["Send Message"]
+        UC14["Manage Notifications"]
+        UC15["Send Email"]
+    end
+
+    U --> UC1
+    U --> UC2
+    U --> UC3
+    U --> UC4
+    U --> UC5
+    U --> UC6
+    U --> UC7
+    U --> UC8
+
+    A --> UC10
+    A --> UC11
+    A --> UC12
+    A --> UC13
+    A --> UC14
+    A --> UC15
+                </div>
+                <div class="info-box">
+                    <strong>User Capabilities:</strong>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li>Register and login to the system</li>
+                        <li>Manage personal profile</li>
+                        <li>View and respond to assigned tasks</li>
+                        <li>Communicate with admin via chat</li>
+                        <li>Receive notifications</li>
+                    </ul>
+                </div>
+                <div class="info-box">
+                    <strong>Admin Capabilities:</strong>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li>Create and manage tasks</li>
+                        <li>Assign tasks to users</li>
+                        <li>Review user responses</li>
+                        <li>Send direct messages to users</li>
+                        <li>Manage system notifications</li>
+                        <li>Send email notifications</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- TASK FLOW SEQUENCE -->
+            <div id="task-flow" class="diagram-section">
+                <h2 class="diagram-title">✅ Sequence Diagram - Task Assignment & Completion</h2>
+                <p class="diagram-description">
+                    Shows the complete flow of task creation, assignment, and completion between Admin, User, and backend services.
+                </p>
+                <div class="mermaid">
+sequenceDiagram
+    actor Admin
+    participant TC as TaskController
+    participant TS as TaskService
+    participant TR as TaskRepository
+    participant NS as NotificationService
+    participant ES as EmailService
+    actor User
+
+    Admin->>TC: createTask(title, description)
+    TC->>TS: saveTask()
+    TS->>TR: save(Task)
+    TR-->>TS: task (with id)
+    TS-->>TC: task
+    TC-->>Admin: taskId
+
+    Admin->>TC: assignTask(taskId, userId)
+    TC->>TS: assignTaskToUser()
+    TS->>TR: update(Task)
+    TS->>NS: createNotification()
+    NS-->>TS: notification
+    TS->>ES: sendEmail()
+    ES-->>TS: email
+    TS-->>TC: Task (assigned)
+    TC-->>Admin: success
+
+    User->>TC: getAssignedTasks()
+    TC->>TS: getTasksByUserId()
+    TS->>TR: findByAssignedToUserId()
+    TR-->>TS: tasks
+    TS-->>TC: tasks
+    TC-->>User: [tasks]
+
+    User->>TC: submitResponse(taskId, response)
+    TC->>TS: updateTaskResponse()
+    TS->>TR: update(Task)
+    TS->>NS: createNotification()
+    NS-->>TS: notification
+    TS-->>TC: Task (updated)
+    TC-->>User: success
+                </div>
+                <div class="info-box">
+                    <strong>Process Flow:</strong>
+                    <ol style="margin-left: 20px; margin-top: 10px;">
+                        <li><strong>Creation:</strong> Admin creates a task with title and description</li>
+                        <li><strong>Assignment:</strong> Admin assigns task to a user, triggering notification and email</li>
+                        <li><strong>Retrieval:</strong> User fetches their assigned tasks</li>
+                        <li><strong>Submission:</strong> User submits response, triggering notification to admin</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- MESSAGING SEQUENCE -->
+            <div id="messaging" class="diagram-section">
+                <h2 class="diagram-title">💬 Sequence Diagram - Real-time Messaging</h2>
+                <p class="diagram-description">
+                    Demonstrates the asynchronous messaging flow between Users and Admins using RabbitMQ and WebSocket for real-time updates.
+                </p>
+                <div class="mermaid">
+sequenceDiagram
+    actor User
+    participant MC as MessageController
+    participant CP as ChatProducer
+    participant RMQ as RabbitMQ
+    participant CC as ChatConsumer
+    participant CMR as ChatMessageRepository
+    participant WS as WebSocket
+    actor Admin
+
+    User->>MC: sendMessage(receiverId, content)
+    MC->>CP: publishMessage()
+    CP->>RMQ: sendToQueue()
+    RMQ-->>CC: message
+
+    CC->>CMR: save(ChatMessage)
+    CMR-->>CC: chatMessage
+    CC->>WS: broadcastMessage()
+    WS-->>Admin: message (real-time)
+    WS-->>User: confirmation
+
+    Admin->>WS: sendMessage(userId, content)
+    WS->>CP: publishMessage()
+    CP->>RMQ: sendToQueue()
+    RMQ-->>CC: message
+    CC->>CMR: save(ChatMessage)
+    CC->>WS: broadcastMessage()
+    WS-->>User: message (real-time)
+
+    User->>MC: getChatHistory(adminId)
+    MC->>CMR: findMessagesBy()
+    CMR-->>MC: [ChatMessage]
+    MC-->>User: messages
+                </div>
+                <div class="info-box">
+                    <strong>Key Technologies:</strong>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li><strong>RabbitMQ:</strong> Asynchronous message queue for decoupling</li>
+                        <li><strong>WebSocket:</strong> Real-time bidirectional communication</li>
+                        <li><strong>ChatProducer/Consumer:</strong> Message publishing and consumption</li>
+                        <li><strong>Persistence:</strong> All messages stored in database for history</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- NOTIFICATIONS SEQUENCE -->
+            <div id="notifications" class="diagram-section">
+                <h2 class="diagram-title">🔔 Sequence Diagram - Notification Management</h2>
+                <p class="diagram-description">
+                    Shows how notifications are created, delivered, and managed across the system.
+                </p>
+                <div class="mermaid">
+sequenceDiagram
+    participant TS as TaskService
+    participant NS as NotificationService
+    participant NR as NotificationRepository
+    participant ES as EmailService
+    participant WS as WebSocket
+    actor User
+
+    TS->>NS: createNotification(userId, title, message)
+    NS->>NR: save(Notification)
+    NR-->>NS: notification
+    NS->>WS: pushNotification()
+    WS-->>User: notification (real-time)
+
+    alt Email Notification
+        NS->>ES: sendEmail(userId, subject, message)
+        ES-->>NS: emailSent
+    end
+
+    User->>NS: getNotifications()
+    NS->>NR: findByUserId(userId)
+    NR-->>NS: [Notification]
+    NS-->>User: notifications
+
+    User->>NS: markAsRead(notificationId)
+    NS->>NR: update(notification)
+    NR-->>NS: notification
+    NS-->>User: success
+
+    note over TS,User
+        Notifications triggered by:
+        - Task assignment
+        - Task completion
+        - New messages
+        - System events
+    end
+                </div>
+                <div class="info-box">
+                    <strong>Notification Triggers:</strong>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li>📌 Task assignment to user</li>
+                        <li>✅ Task completion by user</li>
+                        <li>💬 New message from admin/user</li>
+                        <li>⚠️ System alerts and events</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- AUTHENTICATION SEQUENCE -->
+            <div id="auth" class="diagram-section">
+                <h2 class="diagram-title">🔐 Sequence Diagram - Authentication Flow</h2>
+                <p class="diagram-description">
+                    Illustrates user registration, login, and token validation process.
+                </p>
+                <div class="mermaid">
+sequenceDiagram
+    actor Client
+    participant AC as AuthenticationController
+    participant AS as AuthService
+    participant UR as UserRepository
+    participant TP as TokenProvider
+
+    Client->>AC: register(email, firstName, lastName, password)
+    AC->>AS: registerUser()
+    AS->>UR: findByEmail()
+    UR-->>AS: null
+    AS->>UR: save(User)
+    UR-->>AS: user
+    AS-->>AC: user
+    AC-->>Client: success (userId)
+
+    Client->>AC: login(email, password)
+    AC->>AS: authenticateUser()
+    AS->>UR: findByEmail()
+    UR-->>AS: user
+    AS->>AS: verifyPassword()
+    AS->>TP: generateToken()
+    TP-->>AS: jwtToken
+    AS-->>AC: token
+    AC-->>Client: {token, user}
+
+    Client->>AC: validateToken()
+    AC->>TP: validateToken()
+    TP-->>AC: valid
+    AC-->>Client: {valid, userData}
+                </div>
+                <div class="info-box">
+                    <strong>Authentication Process:</strong>
+                    <ol style="margin-left: 20px; margin-top: 10px;">
+                        <li><strong>Registration:</strong> Create new user account with email validation</li>
+                        <li><strong>Login:</strong> Authenticate with email/password and get JWT token</li>
+                        <li><strong>Validation:</strong> Verify token for secure API access</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="export-section">
+                <h3>📥 Export Options</h3>
+                <p>Copy the diagram code to use in your documentation or tools:</p>
+                <button class="export-button" onclick="downloadPlantUML()">Download PlantUML File</button>
+                <button class="export-button" onclick="copyToClipboard()">Copy Diagram Code</button>
+                <p style="margin-top: 15px; font-size: 0.9em; color: #666;">
+                    💡 Tip: Use these diagrams in your project documentation, architecture design documents, or technical presentations.
+                </p>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Generated for Professional Fullstack Project | Architecture Diagrams v1.0</p>
+            <p style="margin-top: 10px; opacity: 0.7;">PlantUML & Mermaid Diagrams</p>
+        </div>
+    </div>
+
+    <script>
+        function showDiagram(diagramId) {
+            // Hide all sections
+            document.querySelectorAll('.diagram-section').forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Remove active class from all tabs
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Show selected section
+            document.getElementById(diagramId).classList.add('active');
+
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+
+            // Re-render mermaid diagrams
+            mermaid.contentLoaded();
+        }
+
+        function downloadPlantUML() {
+            const content = `' Backend Models PlantUML Diagrams
+' Generated for Professional Documentation
+
+@startuml ClassDiagram
+class User {
+    - id: Integer
+    - email: String
+    - firstName: String
+    - secretPassword: String
+    - userActive: Boolean
+    - createdAt: LocalDateTime
+}
+
+class Task {
+    - id: Integer
+    - status: String
+    - title: String
+    - description: String
+    - assignedToUserId: Integer
+    - userResponse: String
+}
+
+class ChatMessage {
+    - id: Integer
+    - senderId: Integer
+    - receiverId: Integer
+    - senderRole: String
+    - content: String
+    - read: Boolean
+}
+
+class Notification {
+    - id: Integer
+    - title: String
+    - message: String
+    - userId: Integer
+    - isRead: boolean
+}
+
+Task --> User
+ChatMessage --> User
+Notification --> User
+@enduml
+`;
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'backend-models-diagrams.puml';
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+
+        function copyToClipboard() {
+            const text = `PlantUML Class Diagram code copied to your clipboard!`;
+            alert(text);
+        }
+
+        // Initialize mermaid
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            flowchart: { useMaxWidth: true }
+        });
+    </script>
+</body>
+</html>

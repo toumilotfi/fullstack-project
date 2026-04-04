@@ -1,0 +1,408 @@
+' ============================================================================
+' BACKEND MODELS - CLASS DIAGRAM
+' ============================================================================
+
+@startuml ClassDiagram
+!theme plain
+skinparam classBackgroundColor #F0F0F0
+skinparam classBorderColor #333
+skinparam arrowColor #333
+
+' ---- ENTITIES ----
+
+class User {
+    - id: Integer
+    - email: String
+    - firstName: String
+    - lastName: String
+    - secretPassword: String
+    - userActive: Boolean
+    - createdAt: LocalDateTime
+    --
+    + getId(): Integer
+    + getEmail(): String
+    + getFirstName(): String
+    + getLastName(): String
+    + getUserActive(): Boolean
+    + getCreatedAt(): LocalDateTime
+    + setEmail(String): void
+    + setFirstName(String): void
+    + setLastName(String): void
+    + setUserActive(Boolean): void
+}
+
+class Task {
+    - id: Integer
+    - status: String
+    - title: String
+    - description: String
+    - assignedToUserId: Integer
+    - createdAt: LocalDateTime
+    - userResponse: String
+    - responseAt: LocalDateTime
+    --
+    + getId(): Integer
+    + getStatus(): String
+    + getTitle(): String
+    + getDescription(): String
+    + getAssignedToUserId(): Integer
+    + getCreatedAt(): LocalDateTime
+    + getUserResponse(): String
+    + getResponseAt(): LocalDateTime
+    + setStatus(String): void
+    + setTitle(String): void
+}
+
+class ChatMessage {
+    - id: Integer
+    - senderId: Integer
+    - receiverId: Integer
+    - senderRole: String
+    - content: String
+    - createdAt: LocalDateTime
+    - read: Boolean
+    --
+    + getId(): Integer
+    + getSenderId(): Integer
+    + getReceiverId(): Integer
+    + getSenderRole(): String
+    + getContent(): String
+    + getCreatedAt(): LocalDateTime
+    + getRead(): Boolean
+    + setSenderId(Integer): void
+    + setContent(String): void
+    + setRead(Boolean): void
+}
+
+class Notification {
+    - id: Integer
+    - title: String
+    - message: String
+    - userId: Integer
+    - isRead: boolean
+    - createdAt: LocalDateTime
+    --
+    + getId(): Integer
+    + getTitle(): String
+    + getMessage(): String
+    + getUserId(): Integer
+    + isRead(): boolean
+    + getCreatedAt(): LocalDateTime
+    + setTitle(String): void
+    + setMessage(String): void
+    + setRead(boolean): void
+}
+
+' ---- DATA TRANSFER OBJECTS ----
+
+class TaskComplete {
+    - taskId: Integer
+    - username: String
+    --
+    + getTaskId(): Integer
+    + getUsername(): String
+    + setTaskId(Integer): void
+    + setUsername(String): void
+}
+
+class Email {
+    - id: Long
+    - toEmail: String
+    - subject: String
+    - status: String
+    - sentAt: LocalDateTime
+}
+
+' ---- RELATIONSHIPS ----
+
+Task "1" --> "1" User : assigned to
+ChatMessage "1" --> "1" User : sent by (senderId)
+ChatMessage "1" --> "1" User : received by (receiverId)
+Notification "1" --> "1" User : notifies
+TaskComplete "1" --> "1" Task : completes
+
+note right of User
+    Base user entity
+    Supports inheritance
+    (JOINED strategy)
+end note
+
+note right of Task
+    Task assignment workflow
+    Status: ASSIGNED, IN_PROGRESS,
+            COMPLETED, etc.
+end note
+
+note right of ChatMessage
+    Real-time messaging
+    Between User and Admin
+    Role-based communication
+end note
+
+note right of Notification
+    User notifications
+    Task-related or system
+    Read/unread tracking
+end note
+
+@enduml
+
+
+' ============================================================================
+' USE CASE DIAGRAM
+' ============================================================================
+
+@startuml UseCaseDiagram
+!theme plain
+skinparam actorBackgroundColor #FFE6CC
+skinparam usecaseBackgroundColor #E6F2FF
+skinparam usecaseBorderColor #333
+
+left to right direction
+
+actor User
+actor Admin
+
+rectangle TaskManagementSystem {
+    usecase "Register/Login" as UC1
+    usecase "View Profile" as UC2
+    usecase "Update Profile" as UC3
+    usecase "View Assigned Tasks" as UC4
+    usecase "Submit Task Response" as UC5
+    usecase "Receive Task Notification" as UC6
+    usecase "Send Message to Admin" as UC7
+    usecase "Receive Message from Admin" as UC8
+    usecase "View Chat History" as UC9
+
+    usecase "Create Task" as UC10
+    usecase "Assign Task to User" as UC11
+    usecase "Review Task Response" as UC12
+    usecase "Send Message to User" as UC13
+    usecase "Manage Notifications" as UC14
+    usecase "Send Email Notification" as UC15
+}
+
+User --> UC1
+User --> UC2
+User --> UC3
+User --> UC4
+User --> UC5
+User --> UC6
+User --> UC7
+User --> UC8
+User --> UC9
+
+Admin --> UC10
+Admin --> UC11
+Admin --> UC12
+Admin --> UC13
+Admin --> UC14
+Admin --> UC15
+
+UC4 .> UC6 : triggers
+UC5 .> UC12 : triggers
+UC7 .> UC13 : triggers
+UC11 .> UC6 : triggers
+UC10 .> UC11 : includes
+UC15 .> UC6 : includes
+
+@enduml
+
+
+' ============================================================================
+' SEQUENCE DIAGRAM 1: Task Assignment Flow
+' ============================================================================
+
+@startuml SequenceDiagram_TaskFlow
+!theme plain
+skinparam sequenceActorBackgroundColor #FFE6CC
+skinparam sequenceParticipantBackgroundColor #E6F2FF
+skinparam arrowColor #333
+
+title Task Assignment and Completion Flow
+
+actor Admin
+participant "TaskController" as TC
+participant "TaskService" as TS
+participant "TaskRepository" as TR
+participant "NotificationService" as NS
+participant "EmailService" as ES
+actor User
+
+Admin -> TC: createTask(title, description)
+TC -> TS: saveTask()
+TS -> TR: save(Task)
+TR --> TS: task (id)
+TS --> TC: task
+TC --> Admin: taskId
+
+Admin -> TC: assignTask(taskId, userId)
+TC -> TS: assignTaskToUser()
+TS -> TR: update(Task)
+TS -> NS: createNotification()
+NS --> TS: notification
+TS -> ES: sendEmail()
+ES --> TS: email
+TS --> TC: Task (assigned)
+TC --> Admin: success
+
+User -> TC: getAssignedTasks()
+TC -> TS: getTasksByUserId()
+TS -> TR: findByAssignedToUserId()
+TR --> TS: tasks
+TS --> TC: tasks
+TC --> User: [tasks]
+
+User -> TC: submitResponse(taskId, response)
+TC -> TS: updateTaskResponse()
+TS -> TR: update(Task)
+TS -> NS: createNotification()
+NS --> TS: notification
+TS --> TC: Task (updated)
+TC --> User: success
+
+@enduml
+
+
+' ============================================================================
+' SEQUENCE DIAGRAM 2: Messaging Flow
+' ============================================================================
+
+@startuml SequenceDiagram_Messaging
+!theme plain
+skinparam sequenceActorBackgroundColor #FFE6CC
+skinparam sequenceParticipantBackgroundColor #E6F2FF
+skinparam arrowColor #333
+
+title User-Admin Messaging Flow
+
+actor User
+participant "MessageController" as MC
+participant "ChatProducer" as CP
+participant "RabbitMQ" as RMQ
+participant "ChatConsumer" as CC
+participant "ChatMessageRepository" as CMR
+participant "WebSocket" as WS
+actor Admin
+
+User -> MC: sendMessage(receiverId, content)
+MC -> CP: publishMessage()
+CP -> RMQ: sendToQueue()
+RMQ --> CC: message
+
+CC -> CMR: save(ChatMessage)
+CMR --> CC: chatMessage
+CC -> WS: broadcastMessage()
+WS --> Admin: message (real-time)
+WS --> User: confirmation
+
+Admin -> WS: sendMessage(userId, content)
+WS -> CP: publishMessage()
+CP -> RMQ: sendToQueue()
+RMQ --> CC: message
+CC -> CMR: save(ChatMessage)
+CC -> WS: broadcastMessage()
+WS --> User: message (real-time)
+
+User -> MC: getChatHistory(adminId)
+MC -> CMR: findMessagesBy()
+CMR --> MC: [ChatMessage]
+MC --> User: messages
+
+@enduml
+
+
+' ============================================================================
+' SEQUENCE DIAGRAM 3: Notification Flow
+' ============================================================================
+
+@startuml SequenceDiagram_Notifications
+!theme plain
+skinparam sequenceActorBackgroundColor #FFE6CC
+skinparam sequenceParticipantBackgroundColor #E6F2FF
+skinparam arrowColor #333
+
+title Notification Creation and Delivery Flow
+
+participant "TaskService" as TS
+participant "NotificationService" as NS
+participant "NotificationRepository" as NR
+participant "EmailService" as ES
+participant "WebSocket" as WS
+actor User
+
+TS -> NS: createNotification(userId, title, message)
+NS -> NR: save(Notification)
+NR --> NS: notification
+NS -> WS: pushNotification()
+WS --> User: notification (real-time)
+
+alt Email Notification
+    NS -> ES: sendEmail(userId, subject, message)
+    ES --> NS: emailSent
+end
+
+User -> NS: getNotifications()
+NS -> NR: findByUserId(userId)
+NR --> NS: [Notification]
+NS --> User: notifications
+
+User -> NS: markAsRead(notificationId)
+NS -> NR: update(notification)
+NR --> NS: notification
+NS --> User: success
+
+note over TS, User
+    Notifications triggered by:
+    - Task assignment
+    - Task completion
+    - New messages
+    - System events
+end note
+
+@enduml
+
+
+' ============================================================================
+' SEQUENCE DIAGRAM 4: Authentication Flow
+' ============================================================================
+
+@startuml SequenceDiagram_Auth
+!theme plain
+skinparam sequenceActorBackgroundColor #FFE6CC
+skinparam sequenceParticipantBackgroundColor #E6F2FF
+skinparam arrowColor #333
+
+title User Authentication and Registration
+
+actor Client
+participant "AuthenticationController" as AC
+participant "AuthService" as AS
+participant "UserRepository" as UR
+participant "TokenProvider" as TP
+
+Client -> AC: register(email, firstName, lastName, password)
+AC -> AS: registerUser()
+AS -> UR: findByEmail()
+UR --> AS: null
+AS -> UR: save(User)
+UR --> AS: user
+AS --> AC: user
+AC --> Client: success (userId)
+
+Client -> AC: login(email, password)
+AC -> AS: authenticateUser()
+AS -> UR: findByEmail()
+UR --> AS: user
+AS -> AS: verifyPassword()
+AS -> TP: generateToken()
+TP --> AS: jwtToken
+AS --> AC: token
+AC --> Client: {token, user}
+
+Client -> AC: validateToken()
+AC -> TP: validateToken()
+TP --> AC: valid
+AC --> Client: {valid, userData}
+
+@enduml
