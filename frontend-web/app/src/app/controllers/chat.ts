@@ -7,6 +7,7 @@ import { forkJoin } from 'rxjs';
 import { AdminService } from '../services/admin.service';
 import { AdminWebSocketService } from '../services/websocket.service';
 import { User, ChatMessage } from '../models/admin.model';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-chat',
@@ -59,11 +60,11 @@ export class ChatComponent implements OnInit {
     this.selectedUser = user;
 
     const inbox$ = this.adminService.http.get<ChatMessage[]>(
-      `http://localhost:8080/api/v1/admin/messages/inbox`
+      `${environment.apiUrl}/admin/messages/inbox`
     );
 
     const sent$ = this.adminService.http.get<ChatMessage[]>(
-      `http://localhost:8080/api/v1/admin/messages`
+      `${environment.apiUrl}/admin/messages`
     );
 
     forkJoin([inbox$, sent$]).subscribe({
@@ -100,7 +101,7 @@ export class ChatComponent implements OnInit {
 
     this.adminService.http
       .post<string>(
-        `http://localhost:8080/api/v1/admin/message/user`,
+        `${environment.apiUrl}/admin/message/user`,
         {},
         { params }
       )

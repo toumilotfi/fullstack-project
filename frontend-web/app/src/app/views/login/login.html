@@ -1,0 +1,45 @@
+<div class="login-wrapper">
+  <div class="login-card glass">
+    <div class="brand">
+      <div class="live-indicator">
+        <span class="pulse-dot"></span>
+        <span class="status-text">SECURE ACCESS</span>
+      </div>
+      <h1>Command Center</h1>
+      <p>Administrator Authentication Required</p>
+    </div>
+
+    <form class="login-form" (ngSubmit)="login()">
+      <div class="field-group">
+        <label>Email</label>
+        <input
+          type="email"
+          [(ngModel)]="email"
+          name="email"
+          placeholder="admin@example.com"
+          autocomplete="username"
+          required
+        />
+      </div>
+
+      <div class="field-group">
+        <label>Password</label>
+        <input
+          type="password"
+          [(ngModel)]="password"
+          name="password"
+          placeholder="••••••••"
+          autocomplete="current-password"
+          required
+        />
+      </div>
+
+      <div class="error-msg" *ngIf="errorMsg">{{ errorMsg }}</div>
+
+      <button type="submit" class="login-btn" [disabled]="loading">
+        <span *ngIf="!loading">AUTHENTICATE</span>
+        <span *ngIf="loading">CONNECTING...</span>
+      </button>
+    </form>
+  </div>
+</div>

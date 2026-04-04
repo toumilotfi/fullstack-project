@@ -1,39 +1,28 @@
 import { Injectable, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserApi } from '../api/user.api'; 
+import { UserApi } from '../api/user.api';
 import { User } from '../models/user.model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthController {
-  private userApi = inject(UserApi); 
+  private userApi = inject(UserApi);
   private router = inject(Router);
 
   currentUser = signal<User | null>(null);
 
   login(email: string, secretPassword: string) {
     this.userApi.login(email, secretPassword).subscribe({
-      next: (response: string) => {
-        if (response.includes("successful")) {
-          
-          this.userApi.getAllUsers().subscribe({
-            next: (users: User[]) => { 
-              const myUser = users.find(u => u.email === email);
-              if (myUser) {
-                if (!myUser.userActive) {
-                  alert("ACCOUNT LOCKED: Awaiting Admin Approval.");
-                  return;
-                }
-                this.currentUser.set(myUser);
-                this.router.navigate(['/home']);
-              }
-            }
-          });
-          
-        } else {
-          alert("ACCESS DENIED: " + response);
+      next: response => {
+        if (!response.user.userActive) {
+          alert('ACCOUNT LOCKED: Awaiting Admin Approval.');
+          return;
         }
+
+        localStorage.setItem('auth_token', response.token);
+        this.currentUser.set(new User(response.user));
+        this.router.navigate(['/home']);
       },
-      error: (err: any) => alert("CONNECTION FAILED: Is Lotfi's server running?")
+      error: () => alert("CONNECTION FAILED: Is Lotfi's server running?")
     });
   }
 
@@ -49,7 +38,8 @@ export class AuthController {
 
   logout() {
     this.currentUser.set(null);
-    this.userApi.logout().subscribe(); 
+    localStorage.removeItem('auth_token');
+    this.userApi.logout().subscribe();
     this.router.navigate(['/login']);
   }
 }

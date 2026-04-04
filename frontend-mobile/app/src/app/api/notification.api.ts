@@ -2,11 +2,12 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Notification } from '../models/notification.model';
+import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class NotificationApi {
   private http = inject(HttpClient);
-  private baseUrl = 'http://172.20.10.2:8080/api/v1';
+  private baseUrl = environment.apiUrl;
 
 getUserNotifications(userId: number): Observable<Notification[]> {
     return this.http.get<Notification[]>(`${this.baseUrl}/Not/notifications/status/${userId}`);

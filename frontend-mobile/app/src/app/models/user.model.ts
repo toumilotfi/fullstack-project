@@ -3,6 +3,7 @@ export class User {
   email: string;
   firstName: string;
   lastName?: string;
+  role?: string;
   secretPassword?: string;
   userActive: boolean;
   createdAt?: string;
@@ -12,6 +13,7 @@ export class User {
     this.email = data.email || '';
     this.firstName = data.firstName || '';
     this.lastName = data.lastName || '';
+    this.role = data.role || 'USER';
     this.secretPassword = data.secretPassword || '';
     this.userActive = data.userActive ?? false;
     this.createdAt = data.createdAt || new Date().toISOString();

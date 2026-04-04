@@ -1,4 +1,5 @@
 export const environment = {
-  production: false, // or true for prod
-  wsUrl: 'http://192.168.178.44:8080/ws' // 🚨 Matches Lotfi's Spring Boot configuration
+  production: true,
+  apiUrl: 'http://localhost:8080/api/v1',
+  wsUrl: 'http://localhost:8080/chat'
 };
