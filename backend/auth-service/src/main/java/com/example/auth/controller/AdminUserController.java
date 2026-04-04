@@ -35,7 +35,7 @@ public class AdminUserController {
     }
 
     @GetMapping("/users/{id}")
-    public ResponseEntity<UserDTO> getUserById(@PathVariable Integer id,
+    public ResponseEntity<UserDTO> getUserById(@PathVariable("id") Integer id,
                                                @RequestHeader(value = "X-User-Role", required = false) String role) {
         if (!"ADMIN".equals(role)) {
             return ResponseEntity.status(403).build();
@@ -53,7 +53,7 @@ public class AdminUserController {
     }
 
     @PutMapping("/users/{id}")
-    public ResponseEntity<UserDTO> updateUser(@PathVariable Integer id,
+    public ResponseEntity<UserDTO> updateUser(@PathVariable("id") Integer id,
                                               @RequestBody User user,
                                               @RequestHeader(value = "X-User-Role", required = false) String role) {
         if (!"ADMIN".equals(role)) {
@@ -63,7 +63,7 @@ public class AdminUserController {
     }
 
     @DeleteMapping("/users/{id}")
-    public ResponseEntity<String> deleteUser(@PathVariable Integer id,
+    public ResponseEntity<String> deleteUser(@PathVariable("id") Integer id,
                                              @RequestHeader(value = "X-User-Role", required = false) String role) {
         if (!"ADMIN".equals(role)) {
             return ResponseEntity.status(403).build();
@@ -73,7 +73,7 @@ public class AdminUserController {
     }
 
     @PutMapping("/users/approve/{id}")
-    public ResponseEntity<UserDTO> approveUser(@PathVariable Integer id,
+    public ResponseEntity<UserDTO> approveUser(@PathVariable("id") Integer id,
                                                @RequestHeader(value = "X-User-Role", required = false) String role) {
         if (!"ADMIN".equals(role)) {
             return ResponseEntity.status(403).build();

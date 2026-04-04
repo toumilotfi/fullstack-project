@@ -36,12 +36,12 @@ public class AuthController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<UserDTO> updateUser(@PathVariable Integer id, @RequestBody User user) {
+    public ResponseEntity<UserDTO> updateUser(@PathVariable("id") Integer id, @RequestBody User user) {
         return ResponseEntity.ok(authService.updateUser(id, user));
     }
 
     @PostMapping("/forgot-password")
-    public ResponseEntity<String> forgotPassword(@RequestParam String email) {
+    public ResponseEntity<String> forgotPassword(@RequestParam("email") String email) {
         return ResponseEntity.ok(authService.forgotPassword(email));
     }
 }
