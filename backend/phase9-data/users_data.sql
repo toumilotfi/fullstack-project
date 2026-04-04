@@ -23,7 +23,7 @@ SET row_security = off;
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: lotfi
 --
 
-COPY public.users (id, user_a, created_at, email, f_name, l_name, password) FROM stdin;
+COPY public.users (id, usera, created_at, email, f_name, l_name, password) FROM stdin;
 5	t	2026-03-26 12:04:13.805001	lotfitoumi5@gmail.com	lotfi	toumi	123456
 9	f	2026-04-03 00:10:14.846669	lotfitumi5@gmail.com	lotfi	toumi	tghtuiu
 10	f	2026-04-03 01:55:43.647943	lotfitjumi5@gmail.com	lotfi	toumi	hkhlk
