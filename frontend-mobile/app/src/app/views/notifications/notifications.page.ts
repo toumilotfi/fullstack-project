@@ -28,8 +28,11 @@ onNotificationClick(notification: any) {
 
   this.notifyCtrl.markRead(notification.id);
 
-  const match = notification.message.match(/Task #(\d+)/);
-  if (match) {
+  const title = (notification.title || '').toLowerCase();
+  const isTaskRelated = title.includes('task') || title.includes('mission') ||
+      title.includes('revision') || title.includes('approved') || title.includes('assigned');
+
+  if (isTaskRelated) {
     this.router.navigate(['/home']);
   }
 }

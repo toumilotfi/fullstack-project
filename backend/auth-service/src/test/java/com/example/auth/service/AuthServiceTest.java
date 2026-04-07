@@ -18,6 +18,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
 
+import org.springframework.web.server.ResponseStatusException;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -69,10 +71,10 @@ class AuthServiceTest {
         when(userRepository.findByEmail("alice@example.com")).thenReturn(Optional.of(user));
         when(passwordEncoder.matches("secret", "encoded-secret")).thenReturn(true);
 
-        RuntimeException exception = assertThrows(RuntimeException.class,
+        ResponseStatusException exception = assertThrows(ResponseStatusException.class,
                 () -> authService.login("alice@example.com", "secret"));
 
-        assertEquals("Account is not active. Please wait for admin approval.", exception.getMessage());
+        assertEquals("Account is not active. Please wait for admin approval.", exception.getReason());
     }
 
     @Test

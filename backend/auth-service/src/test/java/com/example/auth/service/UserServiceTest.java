@@ -13,6 +13,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.List;
 import java.util.Optional;
@@ -43,6 +44,7 @@ class UserServiceTest {
     @BeforeEach
     void setUp() {
         userService = new UserService(userRepository, passwordEncoder, rabbitTemplate, authService);
+        ReflectionTestUtils.setField(userService, "frontendUrl", "http://localhost:4200");
     }
 
     @Test
@@ -124,6 +126,7 @@ class UserServiceTest {
         assertEquals("approved@example.com", eventCaptor.getValue().getToEmail());
         assertEquals("Account Approved", eventCaptor.getValue().getSubject());
         assertEquals(true, eventCaptor.getValue().isHtml());
+        assertEquals(true, eventCaptor.getValue().getBody().contains("http://localhost:4200/login"));
     }
 
     @Test

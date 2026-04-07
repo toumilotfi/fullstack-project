@@ -24,7 +24,7 @@ export class NotificationController {
   markRead(notificationId: number) {
     this.notifyApi.markAsRead(notificationId).subscribe(() => {
       this.notifications.update(prev => 
-        prev.map(n => n.id === notificationId ? { ...n, isRead: true } : n)
+        prev.map(n => n.id === notificationId ? { ...n, read: true } : n)
       );
       this.unreadCount.update(count => count > 0 ? count - 1 : 0);
     });

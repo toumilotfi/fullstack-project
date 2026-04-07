@@ -134,7 +134,7 @@ class TaskServiceTest {
                 org.mockito.Mockito.eq("event.notification.task"),
                 eventCaptor.capture()
         );
-        assertEquals(null, eventCaptor.getValue().getUserId());
+        assertEquals(1, eventCaptor.getValue().getUserId());
         assertEquals("TASK_RESPONDED", eventCaptor.getValue().getEventType());
     }
 
@@ -174,7 +174,7 @@ class TaskServiceTest {
                 org.mockito.Mockito.eq("event.notification.task"),
                 eventCaptor.capture()
         );
-        assertEquals(null, eventCaptor.getValue().getUserId());
+        assertEquals(42, eventCaptor.getValue().getUserId());
         assertEquals("TASK_DECLINED", eventCaptor.getValue().getEventType());
     }
 

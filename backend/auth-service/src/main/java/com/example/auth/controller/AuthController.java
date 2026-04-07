@@ -6,6 +6,7 @@ import com.example.shared.dto.AuthResponse;
 import com.example.shared.dto.LoginRequest;
 import com.example.shared.dto.UserDTO;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -36,12 +39,18 @@ public class AuthController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<UserDTO> updateUser(@PathVariable Integer id, @RequestBody User user) {
+    public ResponseEntity<UserDTO> updateUser(@PathVariable("id") Integer id, @RequestBody User user) {
         return ResponseEntity.ok(authService.updateUser(id, user));
     }
 
     @PostMapping("/forgot-password")
-    public ResponseEntity<String> forgotPassword(@RequestParam String email) {
+    public ResponseEntity<String> forgotPassword(@RequestParam("email") String email) {
         return ResponseEntity.ok(authService.forgotPassword(email));
+    }
+
+    @GetMapping("/check-status")
+    public ResponseEntity<Map<String, Boolean>> checkApprovalStatus(@RequestParam("email") String email) {
+        boolean active = authService.isUserActive(email);
+        return ResponseEntity.ok(Map.of("active", active));
     }
 }

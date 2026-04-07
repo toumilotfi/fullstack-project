@@ -7,6 +7,9 @@ import {
   platformBrowserDynamicTesting
 } from '@angular/platform-browser-dynamic/testing';
 
+// SockJS expects a Node-style global in the test browser environment.
+(globalThis as typeof globalThis & { global?: typeof globalThis }).global = globalThis;
+
 // First, initialize the Angular testing environment.
 getTestBed().initTestEnvironment(
   BrowserDynamicTestingModule,

@@ -21,6 +21,9 @@ public class UserService {
     private final RabbitTemplate rabbitTemplate;
     private final AuthService authService;
 
+    @org.springframework.beans.factory.annotation.Value("${frontend.url:http://localhost:4200}")
+    private String frontendUrl;
+
     public UserService(UserRepository userRepository,
                        PasswordEncoder passwordEncoder,
                        RabbitTemplate rabbitTemplate,
@@ -90,7 +93,7 @@ public class UserService {
 
         String htmlBody = "<html><body><h1>Account Approved</h1>"
                 + "<p>Your account has been approved. You can now login.</p>"
-                + "<a href='http://localhost:3000/login'>Login Here</a></body></html>";
+                + "<a href='" + frontendUrl + "/login'>Login Here</a></body></html>";
         EmailEvent emailEvent = new EmailEvent(user.getEmail(), "Account Approved", htmlBody, true);
         rabbitTemplate.convertAndSend(RabbitConfig.EVENT_EXCHANGE, "event.email.approval", emailEvent);
 

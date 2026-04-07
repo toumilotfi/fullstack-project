@@ -9,6 +9,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.List;
 
@@ -27,6 +28,7 @@ class TaskControllerTest {
     @BeforeEach
     void setUp() {
         controller = new TaskController(taskService);
+        ReflectionTestUtils.setField(controller, "gatewaySecret", "gw-secret");
     }
 
     @Test
@@ -93,7 +95,7 @@ class TaskControllerTest {
     void approveTaskReturnsUpdatedTask() {
         when(taskService.approveTask(7)).thenReturn(task(7, "Approved"));
 
-        ResponseEntity<Task> response = controller.approveTask(7);
+        ResponseEntity<Task> response = controller.approveTask(7, "ADMIN", "gw-secret");
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals("Approved", response.getBody().getTitle());
@@ -103,7 +105,7 @@ class TaskControllerTest {
     void declineTaskReturnsUpdatedTask() {
         when(taskService.declineTask(8)).thenReturn(task(8, "Declined"));
 
-        ResponseEntity<Task> response = controller.declineTask(8);
+        ResponseEntity<Task> response = controller.declineTask(8, "ADMIN", "gw-secret");
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(8, response.getBody().getId());
@@ -113,7 +115,7 @@ class TaskControllerTest {
     void requestRevisionReturnsUpdatedTask() {
         when(taskService.requestRevision(9)).thenReturn(task(9, "Revision"));
 
-        ResponseEntity<Task> response = controller.requestRevision(9);
+        ResponseEntity<Task> response = controller.requestRevision(9, "ADMIN", "gw-secret");
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals("Revision", response.getBody().getTitle());

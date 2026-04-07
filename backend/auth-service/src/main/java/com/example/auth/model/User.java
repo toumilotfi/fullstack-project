@@ -33,8 +33,8 @@ public class User {
     @Column(name = "password", nullable = false)
     private String secretPassword;
 
-    @Column(name = "userA")
-    private Boolean userActive = true;
+    @Column(name = "usera")
+    private Boolean userActive = false;
 
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;

@@ -10,6 +10,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.List;
 
@@ -28,11 +29,12 @@ class AdminUserControllerTest {
     @BeforeEach
     void setUp() {
         controller = new AdminUserController(userService);
+        ReflectionTestUtils.setField(controller, "gatewaySecret", "gw-secret");
     }
 
     @Test
     void getAllUsersRejectsNonAdmins() {
-        ResponseEntity<List<UserDTO>> response = controller.getAllUsers("USER");
+        ResponseEntity<List<UserDTO>> response = controller.getAllUsers("USER", "gw-secret");
 
         assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
     }
@@ -41,15 +43,22 @@ class AdminUserControllerTest {
     void getAllUsersReturnsDtosForAdmins() {
         when(userService.getAllUsers()).thenReturn(List.of(new UserDTO(1, "one@example.com", "One", "User", "USER", true)));
 
-        ResponseEntity<List<UserDTO>> response = controller.getAllUsers("ADMIN");
+        ResponseEntity<List<UserDTO>> response = controller.getAllUsers("ADMIN", "gw-secret");
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(1, response.getBody().size());
     }
 
     @Test
+    void getAllUsersRejectsMissingGatewaySecret() {
+        ResponseEntity<List<UserDTO>> response = controller.getAllUsers("ADMIN", null);
+
+        assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
+    }
+
+    @Test
     void getUserByIdRejectsNonAdmins() {
-        ResponseEntity<UserDTO> response = controller.getUserById(1, null);
+        ResponseEntity<UserDTO> response = controller.getUserById(1, null, "gw-secret");
 
         assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
     }
@@ -58,7 +67,7 @@ class AdminUserControllerTest {
     void getUserByIdReturnsDtoForAdmins() {
         when(userService.getUserById(2)).thenReturn(new UserDTO(2, "two@example.com", "Two", "User", "USER", true));
 
-        ResponseEntity<UserDTO> response = controller.getUserById(2, "ADMIN");
+        ResponseEntity<UserDTO> response = controller.getUserById(2, "ADMIN", "gw-secret");
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(2, response.getBody().getId());
@@ -66,7 +75,7 @@ class AdminUserControllerTest {
 
     @Test
     void createUserRejectsNonAdmins() {
-        ResponseEntity<UserDTO> response = controller.createUser(new User(), "USER");
+        ResponseEntity<UserDTO> response = controller.createUser(new User(), "USER", "gw-secret");
 
         assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
     }
@@ -76,7 +85,7 @@ class AdminUserControllerTest {
         User user = new User();
         when(userService.createUser(user)).thenReturn(new UserDTO(3, "three@example.com", "Three", "User", "USER", true));
 
-        ResponseEntity<UserDTO> response = controller.createUser(user, "ADMIN");
+        ResponseEntity<UserDTO> response = controller.createUser(user, "ADMIN", "gw-secret");
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(3, response.getBody().getId());
@@ -84,7 +93,7 @@ class AdminUserControllerTest {
 
     @Test
     void updateUserRejectsNonAdmins() {
-        ResponseEntity<UserDTO> response = controller.updateUser(4, new User(), "USER");
+        ResponseEntity<UserDTO> response = controller.updateUser(4, new User(), "USER", "gw-secret");
 
         assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
     }
@@ -94,7 +103,7 @@ class AdminUserControllerTest {
         User user = new User();
         when(userService.updateUser(4, user)).thenReturn(new UserDTO(4, "four@example.com", "Four", "User", "USER", true));
 
-        ResponseEntity<UserDTO> response = controller.updateUser(4, user, "ADMIN");
+        ResponseEntity<UserDTO> response = controller.updateUser(4, user, "ADMIN", "gw-secret");
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(4, response.getBody().getId());
@@ -102,14 +111,14 @@ class AdminUserControllerTest {
 
     @Test
     void deleteUserRejectsNonAdmins() {
-        ResponseEntity<String> response = controller.deleteUser(5, "USER");
+        ResponseEntity<String> response = controller.deleteUser(5, "USER", "gw-secret");
 
         assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
     }
 
     @Test
     void deleteUserReturnsSuccessForAdmins() {
-        ResponseEntity<String> response = controller.deleteUser(5, "ADMIN");
+        ResponseEntity<String> response = controller.deleteUser(5, "ADMIN", "gw-secret");
 
         verify(userService).deleteUser(5);
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -118,7 +127,7 @@ class AdminUserControllerTest {
 
     @Test
     void approveUserRejectsNonAdmins() {
-        ResponseEntity<UserDTO> response = controller.approveUser(6, "USER");
+        ResponseEntity<UserDTO> response = controller.approveUser(6, "USER", "gw-secret");
 
         assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
     }
@@ -127,7 +136,7 @@ class AdminUserControllerTest {
     void approveUserReturnsDtoForAdmins() {
         when(userService.approveUser(6)).thenReturn(new UserDTO(6, "six@example.com", "Six", "User", "USER", true));
 
-        ResponseEntity<UserDTO> response = controller.approveUser(6, "ADMIN");
+        ResponseEntity<UserDTO> response = controller.approveUser(6, "ADMIN", "gw-secret");
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(6, response.getBody().getId());
@@ -135,7 +144,7 @@ class AdminUserControllerTest {
 
     @Test
     void testEmailRejectsNonAdmins() {
-        ResponseEntity<String> response = controller.testEmail("USER");
+        ResponseEntity<String> response = controller.testEmail("USER", "gw-secret");
 
         assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
     }
@@ -144,7 +153,7 @@ class AdminUserControllerTest {
     void testEmailReturnsMessageForAdmins() {
         when(userService.testEmail()).thenReturn("Test email event published.");
 
-        ResponseEntity<String> response = controller.testEmail("ADMIN");
+        ResponseEntity<String> response = controller.testEmail("ADMIN", "gw-secret");
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals("Test email event published.", response.getBody());

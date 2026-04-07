@@ -8,8 +8,10 @@ import com.example.shared.dto.UserDTO;
 import com.example.shared.event.EmailEvent;
 import com.example.shared.security.JwtUtil;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -34,14 +36,14 @@ public class AuthService {
 
     public AuthResponse login(String email, String password) {
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("Invalid email or password."));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid email or password."));
 
         if (!passwordEncoder.matches(password, user.getSecretPassword())) {
-            throw new RuntimeException("Invalid email or password.");
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid email or password.");
         }
 
         if (!user.getUserActive()) {
-            throw new RuntimeException("Account is not active. Please wait for admin approval.");
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Account is not active. Please wait for admin approval.");
         }
 
         String token = jwtUtil.generateToken(user.getId(), user.getEmail(), user.getRole());
@@ -59,7 +61,7 @@ public class AuthService {
 
     public UserDTO updateUser(Integer id, User updatedUser) {
         User existing = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
 
         if (updatedUser.getFirstName() != null) {
             existing.setFirstName(updatedUser.getFirstName());
@@ -77,7 +79,7 @@ public class AuthService {
 
     public String forgotPassword(String email) {
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("Email not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Email not found"));
 
         String tempPassword = UUID.randomUUID().toString().substring(0, 8);
         user.setSecretPassword(passwordEncoder.encode(tempPassword));
@@ -88,6 +90,12 @@ public class AuthService {
         rabbitTemplate.convertAndSend(RabbitConfig.EVENT_EXCHANGE, "event.email.forgot-password", event);
 
         return "Temporary password sent to your email.";
+    }
+
+    public boolean isUserActive(String email) {
+        return userRepository.findByEmail(email)
+                .map(User::getUserActive)
+                .orElse(false);
     }
 
     public UserDTO toDTO(User user) {

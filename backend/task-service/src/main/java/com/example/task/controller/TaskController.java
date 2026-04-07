@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,8 +21,15 @@ public class TaskController {
 
     private final TaskService taskService;
 
+    @org.springframework.beans.factory.annotation.Value("${gateway.internal-secret:}")
+    private String gatewaySecret;
+
     public TaskController(TaskService taskService) {
         this.taskService = taskService;
+    }
+
+    private boolean isUnauthorized(String role, String secret) {
+        return !"ADMIN".equals(role) || !gatewaySecret.equals(secret);
     }
 
     @PostMapping("/tasks")
@@ -35,38 +43,53 @@ public class TaskController {
     }
 
     @GetMapping("/tasks/{id}")
-    public ResponseEntity<Task> getTask(@PathVariable Integer id) {
+    public ResponseEntity<Task> getTask(@PathVariable("id") Integer id) {
         return ResponseEntity.ok(taskService.getTaskById(id));
     }
 
     @PutMapping("/tasks/{id}")
-    public ResponseEntity<Task> updateTask(@PathVariable Integer id, @RequestBody Task task) {
+    public ResponseEntity<Task> updateTask(@PathVariable("id") Integer id, @RequestBody Task task) {
         return ResponseEntity.ok(taskService.updateTask(id, task));
     }
 
     @DeleteMapping("/tasks/{id}")
-    public ResponseEntity<Void> deleteTask(@PathVariable Integer id) {
+    public ResponseEntity<Void> deleteTask(@PathVariable("id") Integer id) {
         taskService.deleteTask(id);
         return ResponseEntity.ok().build();
     }
 
     @PutMapping("/tasks/{id}/respond")
-    public ResponseEntity<Task> respondToTask(@PathVariable Integer id, @RequestBody String response) {
+    public ResponseEntity<Task> respondToTask(@PathVariable("id") Integer id, @RequestBody String response) {
         return ResponseEntity.ok(taskService.respondToTask(id, response));
     }
 
     @PutMapping("/tasks/approve/{id}")
-    public ResponseEntity<Task> approveTask(@PathVariable Integer id) {
+    public ResponseEntity<Task> approveTask(@PathVariable("id") Integer id,
+                                            @RequestHeader(value = "X-User-Role", required = false) String role,
+                                            @RequestHeader(value = "X-Gateway-Secret", required = false) String gwSecret) {
+        if (isUnauthorized(role, gwSecret)) {
+            return ResponseEntity.status(403).build();
+        }
         return ResponseEntity.ok(taskService.approveTask(id));
     }
 
     @PutMapping("/tasks/{id}/decline")
-    public ResponseEntity<Task> declineTask(@PathVariable Integer id) {
+    public ResponseEntity<Task> declineTask(@PathVariable("id") Integer id,
+                                            @RequestHeader(value = "X-User-Role", required = false) String role,
+                                            @RequestHeader(value = "X-Gateway-Secret", required = false) String gwSecret) {
+        if (isUnauthorized(role, gwSecret)) {
+            return ResponseEntity.status(403).build();
+        }
         return ResponseEntity.ok(taskService.declineTask(id));
     }
 
     @PutMapping("/tasks/{id}/request-revision")
-    public ResponseEntity<Task> requestRevision(@PathVariable Integer id) {
+    public ResponseEntity<Task> requestRevision(@PathVariable("id") Integer id,
+                                                @RequestHeader(value = "X-User-Role", required = false) String role,
+                                                @RequestHeader(value = "X-Gateway-Secret", required = false) String gwSecret) {
+        if (isUnauthorized(role, gwSecret)) {
+            return ResponseEntity.status(403).build();
+        }
         return ResponseEntity.ok(taskService.requestRevision(id));
     }
 }

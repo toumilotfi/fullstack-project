@@ -64,7 +64,7 @@ public class TaskService {
         task.setResponseAt(LocalDateTime.now());
         Task saved = taskRepository.save(task);
 
-        publishNotification(null, "Task Response Received",
+        publishNotification(1, "Task Response Received",
                 "A response was submitted for task: " + task.getTitle(), "TASK_RESPONDED");
         return saved;
     }
@@ -84,7 +84,7 @@ public class TaskService {
         task.setStatus("DECLINED");
         Task saved = taskRepository.save(task);
 
-        publishNotification(null, "Mission Declined",
+        publishNotification(task.getAssignedToUserId(), "Mission Declined",
                 "Task declined: " + task.getTitle(), "TASK_DECLINED");
         return saved;
     }

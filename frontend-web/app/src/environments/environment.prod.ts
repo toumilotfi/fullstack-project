@@ -1,5 +1,7 @@
+const runtimeConfig = globalThis.__appConfig ?? {};
+
 export const environment = {
   production: true,
-  apiUrl: '/api/v1',
-  wsUrl: window.location.origin
+  apiUrl: runtimeConfig.apiUrl ?? '/api/v1',
+  wsUrl: runtimeConfig.wsUrl ?? '/chat'
 };

@@ -22,8 +22,9 @@ export class AdminService {
   });
 
    loadUsers() {
-    return this.http.get<User[]>(`${this.baseUrl}/admin/users`).subscribe((data: User[]) => {
-      this.users.set(data);
+    return this.http.get<User[]>(`${this.baseUrl}/admin/users`).subscribe({
+      next: (data: User[]) => this.users.set(data),
+      error: (err: any) => console.error('Failed to load users', err)
     });
   }
 
@@ -45,8 +46,9 @@ deleteTask(id: number) {
 }
 
    loadTasks() {
-    return this.http.get<Task[]>(`${this.baseUrl}/Task/tasks`).subscribe((data: Task[]) => {
-      this.tasks.set(data);
+    return this.http.get<Task[]>(`${this.baseUrl}/Task/tasks`).subscribe({
+      next: (data: Task[]) => this.tasks.set(data),
+      error: (err: any) => console.error('Failed to load tasks', err)
     });
   }
 
