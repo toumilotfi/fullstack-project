@@ -36,7 +36,7 @@ export class Task {
     this.description = data.description ?? '';
     this.assignedToUserId = data.assignedToUserId ?? 0;
     this.userResponse = data.userResponse ?? '';   // ✔ FIXED
-    this.status = data.status ?? 'PENDING';
+    this.status = data.status ?? 'ASSIGNED';
     this.createdAt = data.createdAt;
     this.responseAt = data.responseAt;
     this.completed = data.completed ?? false;

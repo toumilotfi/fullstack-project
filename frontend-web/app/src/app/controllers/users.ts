@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
@@ -12,7 +12,6 @@ import { environment } from '../../environments/environment';
   imports: [CommonModule, FormsModule, IonicModule],
   templateUrl: '../views/users/users.html',
   styleUrl: '../views/users/users.css',
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UsersComponent implements OnInit {
   public adminService = inject(AdminService);

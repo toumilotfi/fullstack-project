@@ -1,5 +1,5 @@
 import { Injectable, inject, signal, computed } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { User, Task, AppNotification } from '../models/admin.model';
 import { tap } from 'rxjs';
 import { environment } from '../../environments/environment';
@@ -15,15 +15,16 @@ export class AdminService {
    totalUsers = computed(() => this.users().length);
   pendingApprovals = computed(() => this.users().filter((u: User) => !u.userActive).length);
   pendingUsers = computed(() => this.users().filter((u: User) => !u.userActive));
-  completedTasks = computed(() => this.tasks().filter((t: Task) => t.completed).length);
+  completedTasks = computed(() => this.tasks().filter((t: Task) => t.status === 'APPROVED').length);
   completionRate = computed(() => {
     if (this.tasks().length === 0) return 0;
     return Math.round((this.completedTasks() / this.tasks().length) * 100);
   });
 
    loadUsers() {
-    return this.http.get<User[]>(`${this.baseUrl}/admin/users`).subscribe((data: User[]) => {
-      this.users.set(data);
+    return this.http.get<User[]>(`${this.baseUrl}/admin/users`).subscribe({
+      next: (data: User[]) => this.users.set(data),
+      error: (err: any) => console.error('Failed to load users', err)
     });
   }
 
@@ -45,8 +46,9 @@ deleteTask(id: number) {
 }
 
    loadTasks() {
-    return this.http.get<Task[]>(`${this.baseUrl}/Task/tasks`).subscribe((data: Task[]) => {
-      this.tasks.set(data);
+    return this.http.get<Task[]>(`${this.baseUrl}/Task/tasks`).subscribe({
+      next: (data: Task[]) => this.tasks.set(data),
+      error: (err: any) => console.error('Failed to load tasks', err)
     });
   }
 
@@ -57,17 +59,13 @@ deleteTask(id: number) {
   }
 
 sendGlobalNotification(message: string) {
-  const body = new FormData();
-  body.append('message', message);
-
-  return this.http.post(`${this.baseUrl}/Not/notify/all`, body);
+  const params = new HttpParams().set('message', message);
+  return this.http.post(`${this.baseUrl}/Not/notify/all`, {}, { params });
 }
 
 sendDirectNotification(userId: number, message: string) {
-  const body = new FormData();
-  body.append('message', message);
-
-  return this.http.post(`${this.baseUrl}/Not/notify/${userId}`, body);
+  const params = new HttpParams().set('message', message);
+  return this.http.post(`${this.baseUrl}/Not/notify/${userId}`, {}, { params });
 }
 getUserNotifications(userId: number) {
   return this.http.get<any[]>(`${this.baseUrl}/Not/notifications/status/${userId}`);

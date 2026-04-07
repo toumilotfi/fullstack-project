@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { IonicModule } from '@ionic/angular'; // <--- Import Ionic
+import { RouterOutlet } from '@angular/router';
+import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  // We MUST add IonicModule here so <ion-app> works
-  imports: [IonicModule, CommonModule], 
+  imports: [IonicModule, CommonModule, RouterOutlet],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

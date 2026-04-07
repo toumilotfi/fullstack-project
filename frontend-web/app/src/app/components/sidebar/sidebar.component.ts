@@ -16,7 +16,10 @@ export class SidebarComponent {
   webSocket = inject(AdminWebSocketService);
 
   signOut() {
-    if (typeof localStorage !== 'undefined') localStorage.removeItem('admin_token');
+    if (typeof localStorage !== 'undefined') {
+      localStorage.removeItem('admin_token');
+      localStorage.removeItem('admin_user');
+    }
     this.webSocket.disconnect();
     this.router.navigate(['/login']);
   }

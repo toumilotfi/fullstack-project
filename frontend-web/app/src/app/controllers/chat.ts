@@ -88,10 +88,27 @@ export class ChatComponent implements OnInit {
     });
   }
 
+  private getAdminId(): number {
+    try {
+      const stored = localStorage.getItem('admin_user');
+      if (stored) {
+        const user = JSON.parse(stored);
+        if (user?.id) return user.id;
+      }
+      const token = localStorage.getItem('admin_token');
+      if (!token) return 0;
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return payload.userId ?? payload.id ?? 0;
+    } catch {
+      return 0;
+    }
+  }
+
   sendMessage() {
     if (!this.messageText.trim() || !this.selectedUser) return;
 
-    const adminId = 1;
+    const adminId = this.getAdminId();
+    if (!adminId) return;
     const userId = this.selectedUser.id!;
 
     const params = new HttpParams()

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { IonicModule } from '@ionic/angular';
 import { environment } from '../../environments/environment';
 import { User } from '../models/admin.model';
 
@@ -14,7 +15,7 @@ interface AuthResponse {
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, IonicModule],
   templateUrl: '../views/login/login.html',
   styleUrl: '../views/login/login.css'
 })
@@ -44,6 +45,7 @@ export class LoginComponent {
           return;
         }
         localStorage.setItem('admin_token', response.token);
+        localStorage.setItem('admin_user', JSON.stringify(response.user));
         this.router.navigate(['/admin/dashboard']);
       },
       error: () => {

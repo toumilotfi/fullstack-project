@@ -11,7 +11,7 @@ export class AdminWebSocketService {
 
   constructor() {
     this.stompClient = new Client({
-      webSocketFactory: () => new SockJS(`${environment.wsUrl}/chat`),
+      webSocketFactory: () => new SockJS(`${environment.wsUrl}`),
       reconnectDelay: 5000,
       debug: () => {}, // silence logs
 
