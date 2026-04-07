@@ -27,7 +27,8 @@ approveTask(id: number) {
 respondToTask(id: number, responseText: string) {
   return this.http.put(
     `${this.baseUrl}/tasks/${id}/respond`,
-    { response: responseText } // ✅ clean
+    JSON.stringify(responseText),
+    { headers: { 'Content-Type': 'application/json' } }
   );
 }
 declineTask(id: number) {

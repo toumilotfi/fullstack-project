@@ -2,8 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { RouterModule, ActivatedRoute, Router } from '@angular/router';
-import { UserApi } from '../../api/user.api'; 
-import { User } from '../../models/user.model';
+import { UserApi } from '../../api/user.api';
 
 @Component({
   selector: 'app-approval-pending',
@@ -35,13 +34,10 @@ export class ApprovalPendingPage implements OnInit {
       return;
     }
 
-    // Hits GET /api/v1/admin/users to find the current user's state
-    this.userApi.getAllUsers().subscribe({
-      next: (users: User[]) => {
-        const myUser = users.find(u => u.email === this.registeredEmail);
-        
-        if (myUser && myUser.userActive) {
-          alert("ACCESS GRANTED: Lotfi has approved your account. Proceed to login.");
+    this.userApi.checkApprovalStatus(this.registeredEmail).subscribe({
+      next: (result) => {
+        if (result.active) {
+          alert("ACCESS GRANTED: Your account has been approved. Proceed to login.");
           this.router.navigate(['/login']);
         } else {
           alert("STATUS: LOCKED. HQ is still reviewing your credentials.");

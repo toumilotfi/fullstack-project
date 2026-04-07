@@ -27,23 +27,16 @@ export class WebSocketService {
     this.stompClient.onConnect = () => {
       console.log('Connected to Secure WebSocket');
 
-      // Listen to ALL admin messages
-      this.stompClient?.subscribe('/topic/admin', (message: Message) => {
+      // Listen for messages sent from admin to this user
+      this.stompClient?.subscribe('/topic/user', (message: Message) => {
         if (!message.body) return;
 
         const chatMsg: ChatMessage = JSON.parse(message.body);
 
-        // Only messages intended for this user
+        // Only process messages addressed to this user
         if (chatMsg.receiverId === userId) {
           this.incomingMessage.set(chatMsg);
         }
-      });
-
-      this.stompClient?.subscribe(`/topic/user/${userId}`, (message: Message) => {
-        if (!message.body) return;
-
-        const chatMsg: ChatMessage = JSON.parse(message.body);
-        this.incomingMessage.set(chatMsg);
       });
     };
 

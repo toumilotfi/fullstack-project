@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, OnDestroy } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule, ToastController } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
@@ -50,6 +50,14 @@ export class HomePage implements OnInit, OnDestroy {
   activeTask: Task | null = null;
   activeTasks: Task[] = [];
 
+  constructor() {
+    // Reactively update activeTasks whenever the signal changes (after API response arrives)
+    effect(() => {
+      this.activeTasks = this.taskCtrl.userTasks()
+        .filter((t: Task) => t.status !== 'APPROVED' && t.status !== 'DECLINED');
+    });
+  }
+
   taskReport = '';
   isSending = false;
   today: Date = new Date();
@@ -78,7 +86,7 @@ export class HomePage implements OnInit, OnDestroy {
   // 📊 DATA (🔥 FIX مهم)
   private updateActiveTasks() {
     this.activeTasks = [...this.taskCtrl.userTasks()]
-      .filter(t => t.status !== 'COMPLETED');
+      .filter(t => t.status !== 'APPROVED' && t.status !== 'DECLINED');
   }
 
   refreshDashboard() {
@@ -88,8 +96,7 @@ export class HomePage implements OnInit, OnDestroy {
 
     this.taskCtrl.loadUserTasks(user.id);
     this.notifyCtrl.loadNotifications(user.id);
-
-    this.updateActiveTasks();
+    // activeTasks is updated reactively via effect() when userTasks signal changes
   }
 
   // 🎯 ACTIONS
@@ -162,16 +169,19 @@ export class HomePage implements OnInit, OnDestroy {
   getStatusColor(status?: string) {
   switch (status) {
     case 'SUBMITTED':
-      return 'success'; // 🔵 BLUE
+      return 'warning';
 
     case 'ASSIGNED':
-      return 'success'; // 🔴 RED
+      return 'primary';
 
     case 'APPROVED':
-      return 'success'; // 🟢 GREEN
+      return 'success';
 
     case 'DECLINED':
       return 'danger';
+
+    case 'REVISION_REQUESTED':
+      return 'tertiary';
 
     default:
       return 'medium';

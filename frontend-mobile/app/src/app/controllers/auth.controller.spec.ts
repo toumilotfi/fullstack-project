@@ -73,7 +73,7 @@ describe('AuthController', () => {
 
     controller.login('user@example.com', 'secret');
 
-    expect(window.alert).toHaveBeenCalledWith("CONNECTION FAILED: Is Lotfi's server running?");
+    expect(window.alert).toHaveBeenCalledWith('CONNECTION FAILED: Unable to reach the server. Please try again later.');
   });
 
   it('clears the stored token on logout', () => {

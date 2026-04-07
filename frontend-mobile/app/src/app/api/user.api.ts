@@ -35,7 +35,8 @@ export class UserApi {
     return this.http.post(`${this.baseUrl}/User/logout`, {});
   }
 
-  getAllUsers(): Observable<User[]> {
-    return this.http.get<User[]>(`${this.baseUrl}/admin/users`);
+  checkApprovalStatus(email: string): Observable<{ active: boolean }> {
+    const params = new HttpParams().set('email', email);
+    return this.http.get<{ active: boolean }>(`${this.baseUrl}/auth/check-status`, { params });
   }
 }

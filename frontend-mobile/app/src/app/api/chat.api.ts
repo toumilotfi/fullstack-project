@@ -18,7 +18,6 @@ export class ChatApi {
   sendMessageToAdmin(userId: number, content: string): Observable<ChatMessage> {
     const params = new HttpParams()
       .set('userId', userId)
-      .set('adminId', 1)
       .set('message', content);
 
     return this.http.post<ChatMessage>(

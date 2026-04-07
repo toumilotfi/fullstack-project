@@ -1,5 +1,4 @@
 export interface Task {
-completed: any;
   id?: number;
   title: string;
   description: string;
@@ -11,5 +10,6 @@ completed: any;
   userResponse?: string;
   responseAt?: string;
 
+  createdAt?: string;
   tempResponse?: string;
 }

@@ -15,7 +15,7 @@ import { Task } from '../../models/task.model';
   styleUrls: ['./task-card.component.scss']
 })
 
-export class TasksPage implements OnInit {
+export class TaskCardComponent implements OnInit {
 
   public auth = inject(AuthController);
   public taskCtrl = inject(TaskController);
