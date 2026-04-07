@@ -1,17 +1,215 @@
-# fullstack-project
-1 Project Overview This project aims to design and implement a Distributed Task Management System based on a microservices architecture. The system allows an Administrator to assign tasks to users or groups, while end users can track and update task statuses using web and mobile applications. The main goal is to demonstrate core concepts of distributed systems through a real-world use case.
+# Fullstack Project
 
-2 Client Applications The system includes two frontend applications:- An Angular Web Dashboard designed for administrators to manage users, groups, and tasks.- An Ionic Mobile Application developed for end users, enabling cross-platform access on Android and iOS devices. Both applications communicate with the backend exclusively through an API Gateway using RESTful APIs secured with JWT authentication.
+Distributed task management system built as a microservices-based backend with separate web and mobile clients.
 
-3 System Architecture The system follows a microservices-based distributed architecture. All incoming requests from frontend clients pass through an API Gateway, which routes them to the appropriate backend service. Backend Services:- API Gateway: Single entry point responsible for request routing and security enforcement.- Authentication Service: Handles user authentication and authorization using JWT tokens.- User Service: Manages users and groups within the system.- Task Service: Responsible for task creation, assignment, and status tracking.- Notification Service: Sends asynchronous notifications when task-related events occur.
+## Overview
 
-4 Distributed Systems Concepts This project applies several fundamental distributed systems concepts:- Microservices Architecture- Asynchronous, Event-Driven Communication- Service Isolation and Fault Tolerance- Scalability and Load Balancing- Eventual Consistency
+The project is organized around a Spring Boot / Spring Cloud backend and two frontend clients:
 
-Technology Stack Frontend: Angular (Admin Dashboard), Ionic (Mobile Application) Backend: Java, Spring Boot, Spring Cloud Database: PostgreSQL (Database per Service) Messaging: Kafka or RabbitMQ Containerization: Docker and Docker Compose
+- `frontend-web/app`: Angular web dashboard
+- `frontend-mobile/app`: Ionic + Angular mobile client
+- `backend`: Java 21 microservices, PostgreSQL, RabbitMQ, Docker Compose
 
+The main use case is task assignment and tracking across users, with asynchronous messaging and notifications handled by dedicated services.
 
+## Architecture
 
+Frontend clients talk to the system through the API Gateway.
 
+Backend services:
 
+- `service-registry`: Eureka service discovery
+- `api-gateway`: single entry point for backend APIs
+- `auth-service`: authentication and JWT handling
+- `task-service`: task management
+- `messaging-service`: messaging and websocket-related features
+- `notification-service`: notifications and email integration
+- `shared-lib`: shared backend code used by the services
 
+Infrastructure:
 
+- PostgreSQL database per service
+- RabbitMQ for async messaging
+- Docker Compose for local orchestration
+
+## Repository Structure
+
+```text
+backend/            Spring Boot microservices and Docker Compose stack
+frontend-web/app/   Angular web application
+frontend-mobile/app/Ionic Angular mobile application
+docs/               Project documentation
+diagram/            Diagrams and architecture assets
+```
+
+Note: `backend/ap` is a legacy module and is not part of the active Maven multi-module backend build.
+
+## Tech Stack
+
+- Java 21
+- Spring Boot 3.2
+- Spring Cloud 2023.0
+- PostgreSQL 17
+- RabbitMQ 3
+- Angular 21 for the web app
+- Ionic + Angular 20 for the mobile app
+- Docker and Docker Compose
+
+## Service Ports
+
+### Core services
+
+- API Gateway: `http://localhost:8080`
+- Auth Service: `http://localhost:8081`
+- Task Service: `http://localhost:8082`
+- Messaging Service: `http://localhost:8083`
+- Notification Service: `http://localhost:8084`
+- Service Registry: `http://localhost:8761`
+
+### Databases
+
+- Auth DB: `localhost:5433`
+- Task DB: `localhost:5434`
+- Messaging DB: `localhost:5435`
+- Notification DB: `localhost:5436`
+
+### Messaging and frontend
+
+- RabbitMQ AMQP: `localhost:5672`
+- RabbitMQ Management: `http://localhost:15672`
+- Web app: `http://localhost:4200`
+
+## Quick Start With Docker
+
+### 1. Prepare backend environment
+
+Copy the backend env template:
+
+```powershell
+Copy-Item backend\.env.example backend\.env
+```
+
+The default development placeholders are safe local defaults such as:
+
+- `DB_USERNAME=appuser`
+- `DB_PASSWORD=change-me`
+- `RABBITMQ_USERNAME=guest`
+- `RABBITMQ_PASSWORD=guest`
+
+Update any values you want to customize in `backend/.env`.
+
+### 2. Start the backend stack
+
+```powershell
+Set-Location backend
+docker compose up --build
+```
+
+This starts:
+
+- 4 PostgreSQL containers
+- RabbitMQ
+- Eureka service registry
+- API Gateway
+- Auth, Task, Messaging, and Notification services
+- the web frontend container
+
+## Local Development
+
+### Prerequisites
+
+- JDK 21
+- Docker Desktop
+- Node.js and npm
+- IntelliJ IDEA for backend development
+- Android Studio / Xcode if you want native mobile builds
+
+### Backend
+
+The backend is a Maven multi-module project rooted in `backend/pom.xml`.
+
+Modules:
+
+- `shared-lib`
+- `service-registry`
+- `api-gateway`
+- `auth-service`
+- `task-service`
+- `messaging-service`
+- `notification-service`
+
+If you do not have Maven installed locally, you can compile with a Maven container:
+
+```powershell
+docker run --rm `
+  -v "C:\fullstack-project\backend:/workspace" `
+  -v "C:\Users\$env:USERNAME\.m2:/root/.m2" `
+  -w /workspace `
+  maven:3.9.9-eclipse-temurin-21 `
+  mvn -o compile -DskipTests
+```
+
+### Running services from IntelliJ
+
+Use the `local` Spring profile for local IDE runs:
+
+```text
+-Dspring.profiles.active=local
+```
+
+The local profile files already point services at:
+
+- `127.0.0.1` instead of `localhost`
+- per-service DB ports (`5433` to `5436`)
+- `sslmode=disable`
+
+This avoids IPv6 / SSL negotiation issues on Windows.
+
+### Important Docker Desktop note
+
+On Windows, Docker Desktop port forwarding can occasionally go stale for a specific Postgres container. The symptom looks like one of these:
+
+- `FATAL: database "..._db" does not exist`
+- `java.io.EOFException`
+- `The connection attempt failed`
+
+If that happens while the container itself is healthy, restart only the affected DB container:
+
+```powershell
+docker restart auth-db
+docker restart task-db
+docker restart messaging-db
+docker restart notification-db
+```
+
+## Frontend Development
+
+### Web app
+
+```powershell
+Set-Location frontend-web\app
+npm install
+npm start
+```
+
+### Mobile app
+
+```powershell
+Set-Location frontend-mobile\app
+npm install
+npm start
+```
+
+For native mobile workflows, continue with the normal Ionic / Capacitor commands from `frontend-mobile/app`.
+
+## Default Local URLs
+
+- Web API base URL: `http://localhost:8080/api/v1`
+- Web socket URL setting: `http://localhost:8080/chat`
+- Frontend URL: `http://localhost:4200`
+
+## Notes
+
+- `backend/.env.example` is the source of truth for local environment variables.
+- The root `README.md` is for the whole repository.
+- `backend/README.md` can be used for backend-only details if you want to expand service-level documentation later.
