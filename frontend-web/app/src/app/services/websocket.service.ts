@@ -11,12 +11,12 @@ export class AdminWebSocketService {
 
   constructor() {
     this.stompClient = new Client({
-      webSocketFactory: () => new SockJS(`${environment.wsUrl}/chat`),
+      webSocketFactory: () => new SockJS(`${environment.wsUrl}`),
       reconnectDelay: 5000,
-      debug: () => {}, // silence logs
+      debug: () => {},
 
       onConnect: () => {
-        console.log("Connected to Lotfi's RabbitMQ Broker");
+        console.log('Connected to WebSocket Broker');
 
         this.stompClient.subscribe('/topic/admin', (msg) => {
           this.incomingMessage.set(JSON.parse(msg.body));

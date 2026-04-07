@@ -7,6 +7,7 @@ import { forkJoin } from 'rxjs';
 import { AdminService } from '../services/admin.service';
 import { AdminWebSocketService } from '../services/websocket.service';
 import { User, ChatMessage } from '../models/admin.model';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-chat',
@@ -55,15 +56,31 @@ export class ChatComponent implements OnInit {
     });
   }
 
+  private getAdminId(): number {
+    try {
+      const stored = localStorage.getItem('admin_user');
+      if (stored) {
+        const user = JSON.parse(stored);
+        if (user?.id) return user.id;
+      }
+      const token = localStorage.getItem('admin_token');
+      if (!token) return 0;
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return payload.userId ?? payload.id ?? 0;
+    } catch {
+      return 0;
+    }
+  }
+
   selectUser(user: User) {
     this.selectedUser = user;
 
     const inbox$ = this.adminService.http.get<ChatMessage[]>(
-      `http://localhost:8080/api/v1/admin/messages/inbox`
+      `${environment.apiUrl}/admin/messages/inbox`
     );
 
     const sent$ = this.adminService.http.get<ChatMessage[]>(
-      `http://localhost:8080/api/v1/admin/messages`
+      `${environment.apiUrl}/admin/messages`
     );
 
     forkJoin([inbox$, sent$]).subscribe({
@@ -90,7 +107,8 @@ export class ChatComponent implements OnInit {
   sendMessage() {
     if (!this.messageText.trim() || !this.selectedUser) return;
 
-    const adminId = 1;
+    const adminId = this.getAdminId();
+    if (!adminId) return;
     const userId = this.selectedUser.id!;
 
     const params = new HttpParams()
@@ -100,7 +118,7 @@ export class ChatComponent implements OnInit {
 
     this.adminService.http
       .post<string>(
-        `http://localhost:8080/api/v1/admin/message/user`,
+        `${environment.apiUrl}/admin/message/user`,
         {},
         { params }
       )

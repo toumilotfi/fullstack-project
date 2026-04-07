@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, OnDestroy } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule, ToastController } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
@@ -54,6 +54,14 @@ export class HomePage implements OnInit, OnDestroy {
   isSending = false;
   today: Date = new Date();
 
+  constructor() {
+    // Reactively update activeTasks whenever the signal changes (after API response arrives)
+    effect(() => {
+      this.activeTasks = this.taskCtrl.userTasks()
+        .filter((t: Task) => t.status !== 'APPROVED' && t.status !== 'DECLINED');
+    });
+  }
+
   // 🚀 INIT
   ngOnInit() {
     this.refreshDashboard();
@@ -75,10 +83,10 @@ export class HomePage implements OnInit, OnDestroy {
     if (this.poller) clearInterval(this.poller);
   }
 
-  // 📊 DATA (🔥 FIX مهم)
+  // 📊 DATA
   private updateActiveTasks() {
     this.activeTasks = [...this.taskCtrl.userTasks()]
-      .filter(t => t.status !== 'COMPLETED');
+      .filter(t => t.status !== 'APPROVED' && t.status !== 'DECLINED');
   }
 
   refreshDashboard() {
@@ -88,8 +96,7 @@ export class HomePage implements OnInit, OnDestroy {
 
     this.taskCtrl.loadUserTasks(user.id);
     this.notifyCtrl.loadNotifications(user.id);
-
-    this.updateActiveTasks();
+    // activeTasks is updated reactively via effect() when userTasks signal changes
   }
 
   // 🎯 ACTIONS
@@ -160,21 +167,24 @@ export class HomePage implements OnInit, OnDestroy {
     await toast.present();
   }
   getStatusColor(status?: string) {
-  switch (status) {
-    case 'SUBMITTED':
-      return 'success'; // 🔵 BLUE
+    switch (status) {
+      case 'SUBMITTED':
+        return 'warning';
 
-    case 'ASSIGNED':
-      return 'success'; // 🔴 RED
+      case 'ASSIGNED':
+        return 'primary';
 
-    case 'APPROVED':
-      return 'success'; // 🟢 GREEN
+      case 'APPROVED':
+        return 'success';
 
-    case 'DECLINED':
-      return 'danger';
+      case 'DECLINED':
+        return 'danger';
 
-    default:
-      return 'medium';
+      case 'REVISION_REQUESTED':
+        return 'tertiary';
+
+      default:
+        return 'medium';
+    }
   }
-}
 }

@@ -119,7 +119,7 @@
       <div class="data">
         <span class="label">Pending Missions</span>
         <h2 class="value">
-          {{ adminService.tasks().filter(t => t.status === 'PENDING' || t.status === 'SUBMITTED').length }}
+          {{ adminService.tasks().filter(t => t.status === 'ASSIGNED' || t.status === 'SUBMITTED').length }}
         </h2>
       </div>
     </div>

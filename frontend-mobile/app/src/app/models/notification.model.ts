@@ -11,7 +11,7 @@ export class Notification {
     this.title = data.title || 'System Alert';
     this.message = data.message || '';
     this.userId = data.userId || 0;
-    this.read = data.read ?? false;
+    this.read = data.read ?? (data as any).isRead ?? false;
     this.createdAt = data.createdAt || new Date().toISOString();
   }
 }

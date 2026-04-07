@@ -44,7 +44,7 @@
       <div class="feed-scroll custom-scrollbar">
         <div class="mission-item" *ngFor="let t of adminService.tasks()">
          
-          <div class="status-indicator" [class.done]="t.completed"></div>
+          <div class="status-indicator" [class.done]="t.status === 'APPROVED'"></div>
            <span class="m-id">{{ t.id }}</span>
           <div class="m-content">
             <div class="m-top">

@@ -1,8 +1,9 @@
 import { Component, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
-import { AdminService } from '../services/admin.service'; 
-import { Task, User } from '../models/admin.model';  
+import { AdminService } from '../services/admin.service';
+import { Task, User } from '../models/admin.model';
+import { environment } from '../../environments/environment';
 @Component({
   selector: 'app-inspector',
   standalone: true,
@@ -28,7 +29,7 @@ export class InspectorComponent implements OnInit {
   }
 getPendingTasks(): Task[] {
   return this.adminService.tasks().filter((t: Task) =>
-    t.status === 'SUBMITTED' || t.status === 'PENDING'
+    t.status === 'SUBMITTED'
   );
 }
 
@@ -37,7 +38,7 @@ acceptTask(task: Task) {
   this.processingId = task.id;
 
   this.adminService.http.put(
-    `http://localhost:8080/api/v1/Task/tasks/approve/${task.id}`,
+    `${environment.apiUrl}/Task/tasks/approve/${task.id}`,
     {}
   ).subscribe({
     next: () => {
@@ -53,13 +54,20 @@ acceptTask(task: Task) {
 
 rejectTask(task: Task) {
   if (!task.id) return;
+  this.processingId = task.id;
 
   this.adminService.http.put(
-    `http://localhost:8080/api/v1/Task/tasks/${task.id}/decline`,
+    `${environment.apiUrl}/Task/tasks/${task.id}/decline`,
     {}
   ).subscribe({
-    next: () => this.adminService.loadTasks(),
-    error: (err) => console.error(err)
+    next: () => {
+      this.adminService.loadTasks();
+      this.processingId = null;
+    },
+    error: (err) => {
+      console.error('Decline Failed', err);
+      this.processingId = null;
+    }
   });
 }
 

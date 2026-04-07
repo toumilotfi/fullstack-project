@@ -1,0 +1,30 @@
+<div class="login-wrapper">
+  <div class="login-card glass">
+    <div class="logo-section">
+      <ion-icon name="shield-checkmark-outline"></ion-icon>
+      <h1>TaskFlow Admin</h1>
+      <p>Secure Command Center Access</p>
+    </div>
+
+    <div class="form-section">
+      <div class="input-group">
+        <ion-icon name="mail-outline"></ion-icon>
+        <input type="email" [(ngModel)]="email" placeholder="Admin Email" (keyup.enter)="login()">
+      </div>
+
+      <div class="input-group">
+        <ion-icon name="lock-closed-outline"></ion-icon>
+        <input type="password" [(ngModel)]="password" placeholder="Password" (keyup.enter)="login()">
+      </div>
+
+      <div class="error-msg" *ngIf="errorMsg">
+        <ion-icon name="alert-circle-outline"></ion-icon>
+        {{ errorMsg }}
+      </div>
+
+      <button class="login-btn" (click)="login()" [disabled]="loading">
+        {{ loading ? 'AUTHENTICATING...' : 'ACCESS SYSTEM' }}
+      </button>
+    </div>
+  </div>
+</div>

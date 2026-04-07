@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { AdminService } from '../services/admin.service';
 import { User } from '../models/admin.model';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-users',
@@ -42,13 +43,13 @@ export class UsersComponent implements OnInit {
 
   save() {
      if (this.isEditing && this.formData.id) {
-       this.adminService.http.put(`http://172.21.0.1:8080/api/v1/admin/users/${this.formData.id}`, this.formData)
+       this.adminService.http.put(`${environment.apiUrl}/admin/users/${this.formData.id}`, this.formData)
         .subscribe({
           next: (res: any) => { this.adminService.loadUsers(); this.closeModal(); },
           error: (err: any) => console.error(err)
         });
     } else {
-       this.adminService.http.post(`http://172.21.0.1:8080/api/v1/admin/users/new`, this.formData)
+       this.adminService.http.post(`${environment.apiUrl}/admin/users/new`, this.formData)
         .subscribe({
           next: (res: any) => { this.adminService.loadUsers(); this.closeModal(); },
           error: (err: any) => console.error(err)
