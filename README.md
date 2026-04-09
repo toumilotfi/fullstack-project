@@ -457,6 +457,168 @@ are not LTS and may cause unexpected issues.
 
 ---
 
+## Testing
+
+This project has two separate test suites: **backend unit tests** (Java) and **frontend unit tests** (TypeScript).
+Neither suite requires a running database, Docker, or any backend service — they use mocks to simulate all external dependencies.
+
+---
+
+### Backend Tests (Java — JUnit 5 + Mockito)
+
+#### What is tested
+
+Each microservice has its own test folder under `src/test/java`. The tests are organized by layer:
+
+| Test file pattern | Layer | What it verifies |
+|---|---|---|
+| `*ServiceTest.java` | Service (business logic) | Core logic: login, register, password encoding, task assignment, email events |
+| `*ControllerTest.java` | Controller (unit) | Controller methods return correct responses and call the right service methods |
+| `*WebMvcTest.java` | Controller (HTTP slice) | HTTP request/response: correct status codes, headers, JSON body |
+| `*ConfigTest.java` | Configuration | Beans are wired correctly (RabbitMQ queues, JWT config, WebSocket config) |
+
+#### Test coverage by service
+
+| Service | Test files |
+|---|---|
+| `auth-service` | `AuthServiceTest`, `AuthControllerTest`, `AdminUserControllerTest`, `UserLogoutControllerTest`, `PasswordMigrationRunnerTest`, `UserTest` |
+| `task-service` | `TaskServiceTest`, `TaskControllerTest`, `TaskControllerWebMvcTest` |
+| `messaging-service` | `UserMessageControllerTest`, `AdminMessageControllerTest`, `ChatProducerTest`, `ChatConsumerTest`, `WebSocketConfigTest`, `RabbitConfigTest` |
+| `notification-service` | `NotificationServiceTest`, `EmailServiceTest`, `NotificationControllerTest`, `EmailEventListenerTest`, `NotificationEventListenerTest` |
+| `api-gateway` | `JwtAuthFilterTest`, `GatewayRoutesConfigTest`, `JwtConfigTest` |
+| `shared-lib` | `JwtUtilTest` |
+
+#### How to run backend tests
+
+**Run all tests across all services:**
+```bash
+cd backend
+mvn test
+```
+
+**Run tests for one specific service:**
+```bash
+cd backend/auth-service
+mvn test
+
+# or from the backend root:
+mvn test -pl auth-service
+```
+
+**Run a single test class:**
+```bash
+cd backend/auth-service
+mvn test -Dtest=AuthServiceTest
+```
+
+**Run a single test method:**
+```bash
+mvn test -Dtest=AuthServiceTest#loginReturnsTokenAndMappedUserForActiveAccount
+```
+
+**Skip tests during build (for faster startup):**
+```bash
+mvn clean install -DskipTests
+```
+
+#### Example — what AuthServiceTest checks
+
+```
+loginReturnsTokenAndMappedUserForActiveAccount  → login with correct credentials returns JWT token
+loginRejectsInactiveUsers                       → inactive account gets 403 Forbidden
+registerEncodesPasswordSetsDefaultsAndReturnsDto → new user gets BCrypt password, role=USER, active=false
+updateUserEncodesNewPasswordsBeforeSaving        → password update is BCrypt-encoded before saving
+forgotPasswordPersistsEncodedTempPasswordAndPublishesEmailEvent → temp password is 8 chars and email event is published to RabbitMQ
+```
+
+---
+
+### Frontend Tests (TypeScript — Jasmine + Karma)
+
+#### What is tested
+
+The web admin panel (`frontend-web`) has unit tests for components and services.
+All HTTP calls are intercepted and mocked — no real backend is needed.
+
+| Test file | What it verifies |
+|---|---|
+| `login.spec.ts` | Admin login stores token, blocks non-admin users |
+| `dashboard.spec.ts` | Dashboard loads and displays data correctly |
+| `tasks.spec.ts` | Task list renders and task actions work |
+| `inspector.spec.ts` | User inspector component behaviour |
+| `admin.spec.ts` | Admin service HTTP calls go to correct endpoints |
+| `sidebar.spec.ts` | Sidebar navigation renders correctly |
+| `admin.model.spec.ts` | Data model mapping from API responses |
+| `environment.spec.ts` | Environment config values are set correctly |
+
+#### How to run frontend tests
+
+**Web Admin Panel:**
+```bash
+cd frontend-web/app
+npm test
+```
+
+This opens a browser (Chrome by default) and runs all tests with live output.
+Press `Ctrl+C` to stop.
+
+**Run tests once without watch mode (useful for CI):**
+```bash
+cd frontend-web/app
+npx ng test --watch=false
+```
+
+**Mobile App:**
+```bash
+cd frontend-mobile/app
+npm test
+```
+
+#### Example — what login.spec.ts checks
+
+```
+stores admin auth state and navigates to dashboard on success
+  → POSTs to /api/v1/auth/login with email and password
+  → stores admin_token and admin_user in localStorage
+  → navigates to /admin/dashboard
+
+blocks non-admin users from entering the dashboard
+  → shows "ACCESS DENIED: Administrator credentials required."
+  → does NOT store anything in localStorage
+  → does NOT navigate away
+```
+
+---
+
+### Running All Tests Together
+
+To run everything (backend + frontend) in one go:
+
+```bash
+# Backend — from the backend folder
+cd backend
+mvn test
+
+# Web frontend — from the frontend-web folder
+cd ../frontend-web/app
+npm test -- --watch=false
+
+# Mobile frontend — from the frontend-mobile folder
+cd ../../frontend-mobile/app
+npm test -- --watch=false
+```
+
+---
+
+### Important Notes About the Tests
+
+- **No database or Docker required** — all external dependencies (database, RabbitMQ, HTTP calls) are mocked.
+- **Tests run against compiled code** — always rebuild (`mvn clean install`) before running tests if you changed Java code.
+- **Frontend tests need Chrome** — Karma uses Chrome by default. If Chrome is not installed, install it or configure a headless browser in `karma.conf.js`.
+- **Test failures do not block the app** — tests are only for verifying correctness during development. The app runs independently of the test results.
+
+---
+
 ## Environment Variables Reference
 
 | Variable | Required | Description |

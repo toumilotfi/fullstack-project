@@ -1,13 +1,13 @@
 spring:
   datasource:
     url: jdbc:postgresql://127.0.0.1:5436/notification_db?sslmode=disable
-    username: appuser
-    password: change-me
+    username: ${DB_USERNAME:appuser}
+    password: ${DB_PASSWORD:change-me}
   rabbitmq:
     host: 127.0.0.1
     port: 5672
-    username: guest
-    password: guest
+    username: ${RABBITMQ_USERNAME:guest}
+    password: ${RABBITMQ_PASSWORD:guest}
   mail:
     username: ${MAIL_USERNAME:change-me@example.com}
     password: ${MAIL_PASSWORD:change-me}

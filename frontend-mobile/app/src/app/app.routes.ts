@@ -13,5 +13,5 @@ export const routes: Routes = [
   { path: 'messaging', canActivate: [authGuard], loadComponent: () => import('./views/messaging/messaging.page').then(m => m.MessagingPage) },
   { path: 'notifications', canActivate: [authGuard], loadComponent: () => import('./views/notifications/notifications.page').then(m => m.NotificationsPage) },
   { path: 'tasks', canActivate: [authGuard], loadComponent: () => import('./views/tasks/tasks.page').then(m => m.TasksPage) },
-  { path: 'tasks-card', canActivate: [authGuard], loadComponent: () => import('./components/task-card/task-card.component').then(m => m.TasksPage) }
+  { path: 'tasks-card', canActivate: [authGuard], loadComponent: () => import('./components/task-card/task-card.component').then(m => m.TaskCardComponent) }
 ];

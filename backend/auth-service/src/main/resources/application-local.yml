@@ -1,16 +1,20 @@
 spring:
   datasource:
     url: jdbc:postgresql://127.0.0.1:5433/auth_db?sslmode=disable
-    username: appuser
-    password: change-me
+    username: ${DB_USERNAME:appuser}
+    password: ${DB_PASSWORD:change-me}
   rabbitmq:
     host: 127.0.0.1
     port: 5672
-    username: guest
-    password: guest
+    username: ${RABBITMQ_USERNAME:guest}
+    password: ${RABBITMQ_PASSWORD:guest}
 
 jwt:
   secret: ${JWT_SECRET:change-me-use-a-long-random-secret-value}
 
 gateway:
   internal-secret: ${GATEWAY_INTERNAL_SECRET:change-me}
+
+password:
+  migration:
+    enabled: true
