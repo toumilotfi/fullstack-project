@@ -20,14 +20,3 @@ backend/.env
 **/node_modules/
 **/dist/
 
-# Logs
-**/*.log
-.claude
-plan.md
-plan4.md
-plan6.md
-tasks.md
-tasks4.md
-tasks6.md
-diagram/
-docs/
