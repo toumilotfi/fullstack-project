@@ -194,86 +194,32 @@ Use this when you want to edit code and see changes without rebuilding Docker im
 
 ### Step 1: Configure application-local.yml files
 
-Each service has an `application-local.yml` file. Update all of them with your actual credentials.
+Each service has an `application-local.yml` file under `src/main/resources/`. Open each one and replace the placeholder values with your own credentials.
 
-**`backend/auth-service/src/main/resources/application-local.yml`:**
-```yaml
-spring:
-  datasource:
-    url: jdbc:postgresql://127.0.0.1:5433/auth_db?sslmode=disable
-    username: yourdbuser
-    password: yourdbpassword
-  rabbitmq:
-    host: 127.0.0.1
-    port: 5672
-    username: yourrabbituser
-    password: yourrabbitpassword
+**What to change in each file:**
 
-jwt:
-  secret: your-jwt-secret
+| Service | Values to update |
+|---|---|
+| `auth-service` | DB username & password, RabbitMQ username & password, JWT secret, Gateway secret |
+| `task-service` | DB username & password, RabbitMQ username & password, Gateway secret |
+| `messaging-service` | DB username & password, RabbitMQ username & password, Gateway secret |
+| `notification-service` | DB username & password, RabbitMQ username & password, Gateway secret, Gmail address, Gmail App Password |
 
-gateway:
-  internal-secret: your-gateway-secret
+**Replace these placeholders:**
 
-password:
-  migration:
-    enabled: true
-```
+| Placeholder in file | Replace with |
+|---|---|
+| `appuser` | your DB username |
+| `change-me` (DB password) | your DB password |
+| `guest` (RabbitMQ username) | your RabbitMQ username |
+| `guest` (RabbitMQ password) | your RabbitMQ password |
+| `change-me-use-a-long-random-secret-value` | your JWT secret (`auth-service` only) |
+| `change-me` (gateway secret) | your gateway secret |
+| `change-me@example.com` | your Gmail address (`notification-service` only) |
+| `change-me` (mail password) | your Gmail App Password (`notification-service` only) |
+| `no-reply@example.com` | your Gmail address (`notification-service` only) |
 
-**`backend/task-service/src/main/resources/application-local.yml`:**
-```yaml
-spring:
-  datasource:
-    url: jdbc:postgresql://127.0.0.1:5434/task_db?sslmode=disable
-    username: yourdbuser
-    password: yourdbpassword
-  rabbitmq:
-    host: 127.0.0.1
-    port: 5672
-    username: yourrabbituser
-    password: yourrabbitpassword
-
-gateway:
-  internal-secret: your-gateway-secret
-```
-
-**`backend/messaging-service/src/main/resources/application-local.yml`:**
-```yaml
-spring:
-  datasource:
-    url: jdbc:postgresql://127.0.0.1:5435/messaging_db?sslmode=disable
-    username: yourdbuser
-    password: yourdbpassword
-  rabbitmq:
-    host: 127.0.0.1
-    port: 5672
-    username: yourrabbituser
-    password: yourrabbitpassword
-
-gateway:
-  internal-secret: your-gateway-secret
-```
-
-**`backend/notification-service/src/main/resources/application-local.yml`:**
-```yaml
-spring:
-  datasource:
-    url: jdbc:postgresql://127.0.0.1:5436/notification_db?sslmode=disable
-    username: yourdbuser
-    password: yourdbpassword
-  rabbitmq:
-    host: 127.0.0.1
-    port: 5672
-    username: yourrabbituser
-    password: yourrabbitpassword
-  mail:
-    username: your-email@gmail.com
-    password: your-gmail-app-password
-    from: your-email@gmail.com
-
-gateway:
-  internal-secret: your-gateway-secret
-```
+> The DB and RabbitMQ credentials must match what you used when starting the Docker containers.
 
 ### Step 2: Start infrastructure (databases + RabbitMQ)
 
