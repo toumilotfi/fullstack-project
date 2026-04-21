@@ -2,23 +2,41 @@
 
 A microservices-based task management platform (Spring Boot + Angular + Ionic) with real-time messaging and email notifications.
 
+## Requirements
+
+- Docker + Docker Compose
+- Node.js 18+ and npm
+
 ## Quick Start
 
-**Requirements:** Docker + Docker Compose.
+### 1. Start the backend
 
 ```bash
 cd backend
 docker-compose up --build -d
 ```
 
-That's it. The whole system (4 microservices, 4 databases, API Gateway, Eureka, RabbitMQ, web frontend) starts in a single command.
+This starts all microservices, databases, API Gateway, Eureka, and RabbitMQ. Wait ~60 seconds for all services to register.
 
-Wait ~60 seconds for all services to register with Eureka, then open:
+### 2. Start the web frontend
 
-- **Web admin panel:** http://localhost:4200
-- **API Gateway:** http://localhost:8080
-- **Eureka dashboard:** http://localhost:8761
-- **RabbitMQ management:** http://localhost:15672 (guest / guest)
+```bash
+cd frontend-web/app
+npm install
+npm start
+```
+
+Opens at http://localhost:4200
+
+### 3. Start the mobile frontend
+
+```bash
+cd frontend-mobile/app
+npm install
+ionic serve
+```
+
+Opens at http://localhost:8100
 
 ## Default Admin Account
 
@@ -27,9 +45,20 @@ Email:    lotfitoumi56@gmail.com
 Password: admin123
 ```
 
+## Service URLs
+
+| Component | URL |
+|---|---|
+| Web admin panel | http://localhost:4200 |
+| Mobile app | http://localhost:8100 |
+| API Gateway | http://localhost:8080 |
+| Eureka dashboard | http://localhost:8761 |
+| RabbitMQ management | http://localhost:15672 (guest / guest) |
+
 ## Stop the System
 
 ```bash
+cd backend
 docker-compose down
 ```
 
