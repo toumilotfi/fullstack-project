@@ -9,7 +9,21 @@ A microservices-based task management platform (Spring Boot + Angular + Ionic) w
 
 ## Quick Start
 
-### 1. Start the backend
+### 1. Configure the `.env` file (optional — only for email notifications)
+
+If you want email notifications to work, copy `.env.example` to `.env` inside the `backend/` folder and fill in your Gmail credentials:
+
+```env
+MAIL_USERNAME=your-email@gmail.com
+MAIL_PASSWORD=your-gmail-app-password
+MAIL_FROM=your-email@gmail.com
+```
+
+> **Note:** `MAIL_PASSWORD` is **not** your normal Gmail password. You must generate a **Gmail App Password** from your Google Account:
+> Google Account → Security → 2-Step Verification → App passwords → Generate.
+> Without this, email notifications will fail but the rest of the system works fine.
+
+### 2. Start the backend
 
 ```bash
 cd backend
